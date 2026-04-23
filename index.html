@@ -2,1052 +2,1931 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<meta name="theme-color" content="#C8102E">
-<title>亞尼克 YTM 客服 QA 知識庫</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>亞尼克YTM客服助手</title>
 <style>
-    :root {
-        --brand-red: #C8102E;
-        --brand-red-dark: #9A0821;
-        --brand-red-light: #E8847A;
-        --brand-red-bg: #FDF3F4;
-        --text-main: #2A2A2A;
-        --text-sub: #6B6B6B;
-        --border: #E8E0E0;
-        --bg: #FAFAFA;
-        --card-bg: #FFFFFF;
-        --warning-bg: #FFF5E6;
-        --warning-border: #F5A623;
-        --urgent-bg: #FFE8E8;
-        --urgent-border: #D0021B;
-        --internal-bg: #F0F4FF;
-        --internal-border: #5B7CC9;
-        --shadow: 0 2px 8px rgba(200,16,46,0.08);
-        --shadow-hover: 0 6px 20px rgba(200,16,46,0.18);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    html { scroll-behavior: smooth; }
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, "PingFang TC", "Microsoft JhengHei", "Heiti TC", sans-serif;
-        background: var(--bg);
-        color: var(--text-main);
-        line-height: 1.7;
-        min-height: 100vh;
-        padding-bottom: 60px;
-    }
-    /* ===== Header ===== */
-    .header {
-        background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
-        color: #fff;
-        padding: 20px 20px 24px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
-    .header-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        max-width: 1200px;
-        margin: 0 auto 12px;
-        gap: 12px;
-    }
-    .brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        flex: 1;
-        min-width: 0;
-    }
-    .brand-logo {
-        width: 42px;
-        height: 42px;
-        background: #fff;
-        color: var(--brand-red);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 900;
-        font-size: 18px;
-        flex-shrink: 0;
-        letter-spacing: -1px;
-    }
-    .brand-text h1 {
-        font-size: 18px;
-        font-weight: 700;
-        margin: 0;
-        line-height: 1.3;
-    }
-    .brand-text .subtitle {
-        font-size: 12px;
-        opacity: 0.9;
-        margin-top: 2px;
-    }
-    .header-btn {
-        background: rgba(255,255,255,0.2);
-        color: #fff;
-        border: 1px solid rgba(255,255,255,0.3);
-        padding: 8px 14px;
-        border-radius: 20px;
-        font-size: 13px;
-        cursor: pointer;
-        transition: all 0.2s;
-        white-space: nowrap;
-    }
-    .header-btn:hover { background: rgba(255,255,255,0.3); }
-    /* ===== Search Bar ===== */
-    .search-wrap {
-        max-width: 1200px;
-        margin: 0 auto;
-        position: relative;
-    }
-    .search-input {
-        width: 100%;
-        padding: 12px 42px 12px 42px;
-        border: none;
-        border-radius: 24px;
-        font-size: 15px;
-        background: #fff;
-        color: var(--text-main);
-        outline: none;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    .search-icon {
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 18px;
-        color: var(--text-sub);
-        pointer-events: none;
-    }
-    .search-clear {
-        position: absolute;
-        right: 12px;
-        top: 50%;
-        transform: translateY(-50%);
-        background: #eee;
-        border: none;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        cursor: pointer;
-        color: #888;
-        display: none;
-        font-size: 14px;
-        line-height: 1;
-    }
-    .search-clear.show { display: flex; align-items: center; justify-content: center; }
-    /* ===== Container ===== */
-    .container {
-        max-width: 1200px;
-        margin: 24px auto;
-        padding: 0 16px;
-    }
-    /* ===== Category Grid ===== */
-    .section-title {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin: 4px 4px 14px;
-        font-size: 15px;
-        font-weight: 700;
-        color: var(--text-main);
-    }
-    .section-title::before {
-        content: '';
-        width: 4px;
-        height: 16px;
-        background: var(--brand-red);
-        border-radius: 2px;
-    }
-    .section-title .count {
-        color: var(--text-sub);
-        font-weight: 400;
-        font-size: 13px;
-        margin-left: auto;
-    }
-    .category-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 12px;
-        margin-bottom: 28px;
-    }
-    .cat-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-radius: 12px;
-        padding: 18px 12px;
-        text-align: center;
-        cursor: pointer;
-        transition: all 0.2s;
-        box-shadow: var(--shadow);
-        position: relative;
-    }
-    .cat-card:hover {
-        transform: translateY(-3px);
-        box-shadow: var(--shadow-hover);
-        border-color: var(--brand-red-light);
-    }
-    .cat-card.active {
-        background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
-        color: #fff;
-        border-color: var(--brand-red);
-    }
-    .cat-card.active .cat-count { color: rgba(255,255,255,0.85); }
-    .cat-icon { font-size: 32px; margin-bottom: 6px; }
-    .cat-name { font-size: 14px; font-weight: 600; }
-    .cat-count { font-size: 12px; color: var(--text-sub); margin-top: 3px; }
-    .cat-card.all {
-        background: linear-gradient(135deg, #fff 0%, var(--brand-red-bg) 100%);
-    }
-    .cat-card.all.active {
-        background: linear-gradient(135deg, var(--brand-red) 0%, var(--brand-red-dark) 100%);
-    }
-    /* ===== QA Cards ===== */
-    .qa-list { display: grid; gap: 12px; }
-    .qa-card {
-        background: var(--card-bg);
-        border: 1px solid var(--border);
-        border-left: 4px solid var(--brand-red);
-        border-radius: 10px;
-        padding: 16px 18px;
-        transition: all 0.2s;
-        box-shadow: var(--shadow);
-        cursor: pointer;
-    }
-    .qa-card:hover { box-shadow: var(--shadow-hover); }
-    .qa-card.urgent { border-left-color: var(--urgent-border); background: var(--urgent-bg); }
-    .qa-card.internal { border-left-color: var(--internal-border); background: var(--internal-bg); }
-    .qa-title {
-        font-size: 16px;
-        font-weight: 700;
-        color: var(--text-main);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        flex-wrap: wrap;
-    }
-    .qa-title .badge {
-        font-size: 11px;
-        padding: 2px 8px;
-        border-radius: 10px;
-        font-weight: 600;
-    }
-    .qa-title .badge.urgent { background: var(--urgent-border); color: #fff; }
-    .qa-title .badge.internal { background: var(--internal-border); color: #fff; }
-    .qa-content {
-        margin-top: 10px;
-        color: var(--text-main);
-        white-space: pre-wrap;
-        word-break: break-word;
-        font-size: 14.5px;
-        line-height: 1.75;
-    }
-    .qa-tags {
-        margin-top: 10px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
-    .qa-tag {
-        font-size: 11px;
-        padding: 2px 10px;
-        background: #F5F0F0;
-        color: var(--text-sub);
-        border-radius: 10px;
-    }
-    /* 色彩文字語法 */
-    .c-red { color: var(--brand-red); font-weight: 700; }
-    .c-orange { color: #E8851A; font-weight: 600; }
-    .c-green { color: #1F8A3F; font-weight: 600; }
-    .c-blue { color: #1F5FB8; font-weight: 600; }
-    .c-purple { color: #7B2CBF; font-weight: 600; }
-    /* ===== Empty state ===== */
-    .empty {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--text-sub);
-    }
-    .empty-icon { font-size: 56px; margin-bottom: 16px; opacity: 0.5; }
-    /* ===== Station Table ===== */
-    .station-controls {
-        display: flex;
-        gap: 8px;
-        flex-wrap: wrap;
-        margin-bottom: 14px;
-    }
-    .filter-btn {
-        padding: 6px 14px;
-        border: 1px solid var(--border);
-        background: #fff;
-        color: var(--text-sub);
-        border-radius: 16px;
-        font-size: 13px;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-    .filter-btn:hover { border-color: var(--brand-red); color: var(--brand-red); }
-    .filter-btn.active {
-        background: var(--brand-red);
-        color: #fff;
-        border-color: var(--brand-red);
-    }
-    .station-table-wrap {
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        border: 1px solid var(--border);
-    }
-    .station-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-    }
-    .station-table th {
-        background: var(--brand-red);
-        color: #fff;
-        padding: 10px 12px;
-        text-align: left;
-        font-weight: 600;
-        font-size: 13px;
-        white-space: nowrap;
-    }
-    .station-table td {
-        padding: 10px 12px;
-        border-top: 1px solid var(--border);
-        vertical-align: top;
-    }
-    .station-table tr:hover { background: var(--brand-red-bg); }
-    .station-line {
-        display: inline-block;
-        padding: 2px 8px;
-        border-radius: 10px;
-        font-size: 11px;
-        color: #fff;
-        font-weight: 600;
-        white-space: nowrap;
-    }
-    .line-松山新店線 { background: #008659; }
-    .line-板南線 { background: #0070BD; }
-    .line-淡水信義線 { background: #E3002C; }
-    .line-中和新蘆線 { background: #F5A623; }
-    .line-文湖線 { background: #B57A25; }
-    .grade-B { background: #FFEFB8; color: #8B6914; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-    .grade-C { background: #E0F0E0; color: #2A6B2A; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
-    .station-table .mobile-only { display: none; }
-    /* ===== Modal ===== */
-    .modal-bg {
-        position: fixed;
-        inset: 0;
-        background: rgba(0,0,0,0.5);
-        display: none;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-        padding: 20px;
-    }
-    .modal-bg.show { display: flex; }
-    .modal {
-        background: #fff;
-        border-radius: 12px;
-        padding: 24px;
-        max-width: 90%;
-        width: 380px;
-        max-height: 90vh;
-        overflow-y: auto;
-    }
-    .modal.wide { width: 640px; }
-    .modal h3 {
-        color: var(--brand-red);
-        margin-bottom: 14px;
-        font-size: 18px;
-    }
-    .modal .btns {
-        display: flex;
-        gap: 10px;
-        margin-top: 16px;
-        justify-content: flex-end;
-    }
-    .btn {
-        padding: 8px 18px;
-        border: 1px solid var(--border);
-        background: #fff;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 14px;
-        transition: all 0.2s;
-    }
-    .btn:hover { border-color: var(--brand-red); }
-    .btn-primary {
-        background: var(--brand-red);
-        color: #fff;
-        border-color: var(--brand-red);
-    }
-    .btn-primary:hover { background: var(--brand-red-dark); border-color: var(--brand-red-dark); }
-    .btn-danger {
-        background: #fff;
-        color: var(--urgent-border);
-        border-color: var(--urgent-border);
-    }
-    .btn-danger:hover { background: var(--urgent-border); color: #fff; }
-    .modal input, .modal textarea, .modal select {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        font-size: 14px;
-        margin-bottom: 10px;
-        font-family: inherit;
-    }
-    .modal textarea { min-height: 180px; resize: vertical; line-height: 1.6; }
-    .modal label {
-        display: block;
-        font-size: 13px;
-        font-weight: 600;
-        color: var(--text-sub);
-        margin-bottom: 5px;
-    }
-    .field-hint {
-        font-size: 12px;
-        color: var(--text-sub);
-        margin-top: -6px;
-        margin-bottom: 10px;
-    }
-    .checkbox-row {
-        display: flex;
-        gap: 18px;
-        margin-bottom: 10px;
-    }
-    .checkbox-row label {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        cursor: pointer;
-        font-size: 13px;
-        margin-bottom: 0;
-    }
-    .checkbox-row input[type="checkbox"] {
-        width: auto;
-        margin: 0;
-    }
-    /* ===== Admin mode ===== */
-    body.admin-mode .admin-only { display: inline-block; }
-    .admin-only { display: none; }
-    .admin-bar {
-        background: var(--brand-red-dark);
-        color: #fff;
-        padding: 10px 16px;
-        display: none;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 14px;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-    body.admin-mode .admin-bar { display: flex; }
-    .admin-bar .ab-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .admin-bar button {
-        background: rgba(255,255,255,0.2);
-        color: #fff;
-        border: 1px solid rgba(255,255,255,0.3);
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 13px;
-        cursor: pointer;
-    }
-    .admin-bar button:hover { background: rgba(255,255,255,0.3); }
-    .qa-actions { display: none; margin-top: 10px; gap: 8px; }
-    body.admin-mode .qa-actions { display: flex; }
-    .qa-actions .btn { padding: 4px 12px; font-size: 12px; }
-    /* ===== RWD ===== */
-    @media (max-width: 640px) {
-        .brand-text h1 { font-size: 15px; }
-        .brand-text .subtitle { font-size: 11px; }
-        .category-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
-        .cat-card { padding: 12px 4px; }
-        .cat-icon { font-size: 26px; }
-        .cat-name { font-size: 12px; }
-        .cat-count { font-size: 10px; }
-        .container { padding: 0 12px; }
-        .qa-card { padding: 14px; }
-        .qa-title { font-size: 15px; }
-        .qa-content { font-size: 14px; }
-        .station-table { font-size: 12px; }
-        .station-table th, .station-table td { padding: 8px 6px; }
-        .station-table .hide-mobile { display: none; }
-        .station-table .mobile-only { display: table-cell; }
-    }
-    @media (max-width: 400px) {
-        .category-grid { grid-template-columns: repeat(2, 1fr); }
-    }
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+  --brand: #C8102E;
+  --brand-dark: #A00D24;
+  --brand-light: #E8847A;
+  --brand-bg: #FFF5F5;
+  --success: #2D9F60;
+  --text: #2C2C2C;
+  --text-light: #6B6B6B;
+  --border: #E8E0E0;
+  --bg: #FAF7F5;
+  --white: #FFFFFF;
+  --shadow: 0 2px 8px rgba(200,16,46,0.08);
+  --shadow-hover: 0 6px 20px rgba(200,16,46,0.15);
+  --radius: 12px;
+  --fs: 16px;
+}
+html { font-size: var(--fs); }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", "PingFang TC", "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
 
-    /* ===== Toast ===== */
-    .toast {
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%) translateY(100px);
-        background: #2a2a2a;
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 24px;
-        font-size: 14px;
-        z-index: 2000;
-        transition: transform 0.3s;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    }
-    .toast.show { transform: translateX(-50%) translateY(0); }
+/* ========= Header with LOGO ========= */
+.header {
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
+  color: var(--white);
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(200,16,46,0.2);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.logo-box {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  flex-shrink: 0;
+}
+.logo-svg { height: 38px; width: auto; display: block; }
 
-    /* Loading */
-    .loading {
-        text-align: center;
-        padding: 60px 20px;
-        color: var(--text-sub);
-    }
+.header-center {
+  flex: 1;
+  min-width: 180px;
+}
+.header h1 {
+  font-size: 1.25rem;
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+.header-contact {
+  font-size: 0.8rem;
+  opacity: 0.95;
+  line-height: 1.6;
+}
+.header-contact div { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.header-contact strong { color: #FFE082; margin-right: 4px; }
 
-    /* Help text */
-    .help-panel {
-        background: var(--brand-red-bg);
-        border-left: 3px solid var(--brand-red);
-        padding: 10px 14px;
-        border-radius: 0 6px 6px 0;
-        font-size: 13px;
-        color: var(--text-sub);
-        margin-bottom: 14px;
-        line-height: 1.6;
-    }
-    .help-panel code {
-        background: #fff;
-        padding: 1px 6px;
-        border-radius: 3px;
-        color: var(--brand-red);
-        font-size: 12px;
-    }
+.header-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.btn-icon {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: var(--white);
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+.btn-icon:hover { background: rgba(255,255,255,0.28); }
+
+@media (max-width: 640px) {
+  .header-inner { gap: 10px; }
+  .header h1 { font-size: 1.05rem; }
+  .header-contact { font-size: 0.72rem; }
+  .logo-svg { height: 32px; }
+  .btn-icon { padding: 5px 10px; font-size: 0.75rem; }
+}
+
+/* ========= Marquee ========= */
+.marquee-wrap {
+  background: #FFF8E1;
+  border-bottom: 1px solid #F5D98E;
+  overflow: hidden;
+  padding: 8px 0;
+}
+.marquee {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee 40s linear infinite;
+  font-size: 0.85rem;
+  color: #8B4513;
+}
+@keyframes marquee {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+
+/* ========= Update Banner ========= */
+.update-banner {
+  background: #E8F5E9;
+  border: 1px solid #81C784;
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+  color: #1B5E20;
+}
+.update-banner.show { display: flex; }
+.update-banner button {
+  background: #2E7D32;
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+}
+
+/* ========= Search ========= */
+.search-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.search-box input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  color: var(--text);
+  background: transparent;
+  padding: 4px 0;
+  font-family: inherit;
+}
+.search-icon { color: var(--brand); font-size: 1.2rem; }
+.search-clear {
+  background: var(--border);
+  border: none;
+  border-radius: 50%;
+  width: 24px; height: 24px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--text-light);
+  display: none;
+}
+.search-clear.show { display: block; }
+
+/* ========= Categories ========= */
+.categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+@media (max-width: 768px) { .categories { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .categories { grid-template-columns: repeat(2, 1fr); } }
+
+.category-card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+}
+.category-card:hover {
+  border-color: var(--brand);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.category-card.active {
+  background: var(--brand);
+  color: var(--white);
+  border-color: var(--brand);
+}
+.category-card .icon { font-size: 2rem; display: block; margin-bottom: 6px; }
+.category-card .name { font-size: 0.9rem; font-weight: 600; }
+.category-card .count {
+  position: absolute;
+  top: 6px; right: 8px;
+  background: var(--brand);
+  color: var(--white);
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+.category-card.active .count { background: var(--white); color: var(--brand); }
+
+/* ========= Section Title ========= */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--brand);
+  margin: 16px 0 12px;
+  padding-left: 12px;
+  border-left: 4px solid var(--brand);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.section-title .count-badge {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* ========= QA Cards ========= */
+.qa-list { display: flex; flex-direction: column; gap: 12px; }
+.qa-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.qa-card:hover { box-shadow: var(--shadow-hover); }
+.qa-header {
+  padding: 14px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  user-select: none;
+}
+.qa-header:hover { background: var(--brand-bg); }
+.qa-title {
+  flex: 1;
+  font-weight: 600;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.qa-arrow {
+  color: var(--brand);
+  font-size: 1rem;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.qa-card.open .qa-arrow { transform: rotate(180deg); }
+.qa-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background: var(--brand-bg);
+}
+.qa-card.open .qa-content { max-height: 10000px; }
+.qa-body {
+  padding: 16px;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.8;
+  color: var(--text);
+  border-top: 1px solid var(--border);
+}
+.qa-body img { max-width: 100%; height: auto; border-radius: 8px; margin: 8px 0; display: block; }
+.qa-body a { color: var(--brand); text-decoration: underline; word-break: break-all; }
+.video-wrap {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  margin: 10px 0;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #000;
+}
+.video-wrap iframe, .video-wrap video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
+}
+
+.qa-tags {
+  padding: 0 16px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  font-size: 0.75rem;
+  padding: 3px 10px;
+  background: var(--border);
+  color: var(--text-light);
+  border-radius: 12px;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: inline-block;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.badge-urgent { background: #FFE5E5; color: #C8102E; border: 1px solid #C8102E; }
+.badge-internal { background: #FFF3CD; color: #856404; border: 1px solid #FFC107; }
+
+.ct-red { color: #C8102E; font-weight: 700; }
+.ct-orange { color: #E67E22; font-weight: 600; }
+.ct-green { color: #2D9F60; font-weight: 600; }
+.ct-blue { color: #2E78B8; font-weight: 600; }
+.ct-purple { color: #8E44AD; font-weight: 600; }
+
+/* ========= Stations ========= */
+.station-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.station-filter {
+  padding: 6px 14px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--text-light);
+  transition: all 0.2s;
+  user-select: none;
+}
+.station-filter:hover { border-color: var(--brand); color: var(--brand); }
+.station-filter.active {
+  background: var(--brand);
+  color: var(--white);
+  border-color: var(--brand);
+}
+.station-search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+  outline: none;
+  font-family: inherit;
+}
+.station-search:focus { border-color: var(--brand); }
+
+.table-wrap {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.station-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 700px;
+}
+.station-table th {
+  background: var(--brand);
+  color: var(--white);
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  white-space: nowrap;
+}
+.station-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.station-table tr:hover { background: var(--brand-bg); }
+.line-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #fff;
+}
+.line-板南線 { background: #1E4A8C; }
+.line-淡水信義線 { background: #C8102E; }
+.line-松山新店線 { background: #2E8B3C; }
+.line-中和新蘆線 { background: #E8A300; }
+.line-文湖線 { background: #8B5A2B; }
+.line-高雄捷運紅線 { background: #E30613; }
+.line-門市YTM { background: #555; }
+.grade-B { color: #2E78B8; font-weight: 600; }
+.grade-C { color: #E67E22; font-weight: 600; }
+.grade-門市 { color: #555; font-weight: 600; }
+
+/* ========= Empty ========= */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+}
+.empty-state .big { font-size: 3rem; margin-bottom: 10px; }
+
+/* ========= Modal ========= */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  overflow-y: auto;
+}
+.modal.show { display: flex; }
+.modal-content {
+  background: var(--white);
+  border-radius: var(--radius);
+  max-width: 900px;
+  width: 100%;
+  max-height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+.modal-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--brand);
+  color: var(--white);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.modal-header h2 { font-size: 1.1rem; }
+.modal-close {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: var(--white);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+
+.login-form { text-align: center; padding: 20px; }
+.login-form input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 10px 0;
+  outline: none;
+  font-family: inherit;
+}
+.login-form input:focus { border-color: var(--brand); }
+.btn-primary {
+  background: var(--brand);
+  color: var(--white);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.btn-primary:hover { background: var(--brand-dark); }
+.btn-secondary {
+  background: var(--border);
+  color: var(--text);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-right: 8px;
+  font-family: inherit;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+  overflow-x: auto;
+}
+.admin-tab {
+  padding: 10px 14px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-light);
+  font-weight: 600;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+.admin-tab.active {
+  color: var(--brand);
+  border-bottom-color: var(--brand);
+}
+
+.admin-toolbar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.admin-toolbar input, .admin-toolbar select {
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.admin-list {
+  max-height: 50vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.admin-item {
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.admin-item:last-child { border-bottom: none; }
+.admin-item-info { flex: 1; min-width: 0; }
+.admin-item-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.admin-item-meta { font-size: 0.8rem; color: var(--text-light); }
+
+.admin-btn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-family: inherit;
+}
+.admin-btn-edit { background: #E3F2FD; color: #1976D2; }
+.admin-btn-del { background: #FFEBEE; color: #C62828; }
+.admin-btn-edit:hover { background: #BBDEFB; }
+.admin-btn-del:hover { background: #FFCDD2; }
+
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.95rem;
+  outline: none;
+  font-family: inherit;
+}
+.form-group textarea { min-height: 220px; resize: vertical; line-height: 1.6; font-family: "Microsoft JhengHei", monospace; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--brand);
+}
+.form-check { display: flex; gap: 16px; flex-wrap: wrap; }
+.form-check label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.form-check input { width: auto; }
+
+/* 編輯工具列 */
+.editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  background: #F5F5F5;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  margin-bottom: -1px;
+}
+.tool-btn {
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+.tool-btn:hover { background: var(--brand); color: var(--white); border-color: var(--brand); }
+.tool-btn.color-red { color: #C8102E; font-weight: 700; }
+.tool-btn.color-orange { color: #E67E22; font-weight: 600; }
+.tool-btn.color-green { color: #2D9F60; font-weight: 600; }
+.tool-btn.color-blue { color: #2E78B8; font-weight: 600; }
+.tool-btn.color-purple { color: #8E44AD; font-weight: 600; }
+.tool-sep { width: 1px; background: #CCC; margin: 0 4px; }
+
+.editor-textarea {
+  border-radius: 0 0 8px 8px !important;
+  margin-top: 0 !important;
+}
+
+/* 圖示選擇器 */
+.icon-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
+  gap: 6px;
+  max-height: 260px;
+  overflow-y: auto;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: #FAFAFA;
+}
+.icon-option {
+  font-size: 1.5rem;
+  padding: 8px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 6px;
+  background: var(--white);
+  border: 2px solid transparent;
+  transition: all 0.15s;
+}
+.icon-option:hover { border-color: var(--brand-light); }
+.icon-option.selected {
+  border-color: var(--brand);
+  background: var(--brand-bg);
+}
+
+.syntax-hint {
+  background: #FFF9E6;
+  border: 1px solid #FFE082;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  color: #5D4037;
+  line-height: 1.8;
+}
+.syntax-hint code {
+  background: var(--white);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: monospace;
+  color: var(--brand);
+}
+
+.export-section {
+  background: var(--brand-bg);
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 16px;
+  border: 1px solid var(--brand-light);
+}
+.export-section h3 { color: var(--brand); margin-bottom: 8px; font-size: 1rem; }
+.export-section p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 10px; }
+
+/* ========= Toast ========= */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: var(--text);
+  color: var(--white);
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  z-index: 2000;
+  opacity: 0;
+  transition: all 0.3s;
+  max-width: 90%;
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+body.fs-large { --fs: 18px; }
+body.fs-xlarge { --fs: 20px; }
+
+.scroll-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: var(--brand);
+  color: var(--white);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(200,16,46,0.3);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  z-index: 50;
+  font-family: inherit;
+}
+.scroll-top.show { opacity: 1; pointer-events: auto; }
 </style>
 </head>
 <body>
 
-<!-- 管理模式狀態列 -->
-<div class="admin-bar">
-    <span>🛠️ <strong>管理模式</strong>　共 <span id="admin-count">0</span> 筆 QA</span>
-    <div class="ab-actions">
-        <button onclick="addNewQA()">➕ 新增 QA</button>
-        <button onclick="exportData()">📥 匯出 data.json</button>
-        <button onclick="exitAdmin()">🔒 退出</button>
+<div class="header">
+  <div class="header-inner">
+    <div class="logo-box">
+      <!-- 亞尼克 LOGO (Yannick) -->
+      <svg class="logo-svg" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+        <!-- 紅色菱形圖示 -->
+        <g transform="translate(4, 8)">
+          <path d="M22 0 L44 22 L22 44 L0 22 Z" fill="#C8102E"/>
+          <path d="M22 6 L38 22 L22 38 L6 22 Z" fill="#FFF"/>
+          <path d="M14 18 L22 10 L30 18 L28 22 L22 16 L16 22 Z" fill="#C8102E"/>
+          <path d="M14 26 L30 26 L22 34 Z" fill="#C8102E"/>
+        </g>
+        <!-- YANNICK 文字 -->
+        <text x="58" y="26" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="#C8102E" letter-spacing="2">YANNICK</text>
+        <text x="58" y="48" font-family="Microsoft JhengHei, sans-serif" font-size="15" font-weight="700" fill="#333" letter-spacing="6">亞尼克</text>
+      </svg>
     </div>
+    <div class="header-center">
+      <h1 id="headerTitle">亞尼克YTM客服助手</h1>
+      <div class="header-contact" id="headerContact"></div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon" onclick="checkUpdate()" title="檢查更新">🔄</button>
+      <button class="btn-icon" onclick="toggleFontSize()" title="字級">🔤</button>
+      <button class="btn-icon" onclick="openAdmin()" title="管理">⚙️</button>
+    </div>
+  </div>
 </div>
 
-<!-- 標題列 -->
-<div class="header">
-    <div class="header-top">
-        <div class="brand">
-            <div class="brand-logo">Y</div>
-            <div class="brand-text">
-                <h1 id="site-title">亞尼克 YTM 客服 QA 知識庫</h1>
-                <div class="subtitle" id="site-subtitle">客服專線：02-7733-5557</div>
-            </div>
-        </div>
-        <button class="header-btn" onclick="showAdminLogin()">🔐 管理</button>
-    </div>
-    <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input type="text" class="search-input" id="search" placeholder="搜尋 QA、標籤、據點、站名..." oninput="doSearch()">
-        <button class="search-clear" id="search-clear" onclick="clearSearch()">✕</button>
-    </div>
+<div class="marquee-wrap">
+  <div class="marquee" id="marqueeText">📢 客服專線 02-7733-5557</div>
 </div>
 
 <div class="container">
-    <!-- 分類 -->
-    <div class="section-title">
-        📋 分類瀏覽
-        <span class="count" id="total-count"></span>
-    </div>
-    <div class="category-grid" id="categories"></div>
-
-    <!-- 據點表格（僅在據點分類下顯示） -->
-    <div id="station-panel" style="display:none;">
-        <div class="section-title" id="station-title">📍 YTM 據點資訊</div>
-        <div class="help-panel">
-            💡 共 <strong id="station-total">50</strong> 個據點。可搜尋站名、捷運線、地址、出口位置。
-        </div>
-        <div class="station-controls" id="line-filters"></div>
-        <div class="station-table-wrap">
-            <table class="station-table">
-                <thead>
-                    <tr>
-                        <th>站名</th>
-                        <th class="hide-mobile">捷運線</th>
-                        <th class="hide-mobile">分級</th>
-                        <th>位置 / 出口</th>
-                        <th class="hide-mobile">地址</th>
-                    </tr>
-                </thead>
-                <tbody id="station-rows"></tbody>
-            </table>
-        </div>
-    </div>
-
-    <!-- QA 列表 -->
-    <div id="qa-panel">
-        <div class="section-title" id="qa-title">
-            📚 全部 QA
-            <span class="count" id="qa-count"></span>
-        </div>
-        <div class="qa-list" id="qa-list"></div>
-    </div>
+  <div class="update-banner" id="updateBanner">
+    <span>🆕 偵測到 data.json 有新版本！</span>
+    <button onclick="applyUpdate()">立即更新</button>
+  </div>
+  
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）...">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="categories" id="categoryContainer"></div>
+  <div id="resultContainer"></div>
 </div>
 
-<!-- 登入 Modal -->
-<div class="modal-bg" id="login-modal">
-    <div class="modal">
-        <h3>🔐 管理員登入</h3>
-        <label>請輸入管理密碼</label>
-        <input type="password" id="pw-input" placeholder="密碼" onkeyup="if(event.key==='Enter')doLogin()">
-        <div class="field-hint">💡 提示：預設密碼為 1234</div>
-        <div class="btns">
-            <button class="btn" onclick="closeModal('login-modal')">取消</button>
-            <button class="btn btn-primary" onclick="doLogin()">登入</button>
-        </div>
+<button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
+
+<div class="modal" id="adminModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="adminTitle">⚙️ 管理後台</h2>
+      <button class="modal-close" onclick="closeAdmin()">✕</button>
     </div>
+    <div class="modal-body" id="adminBody"></div>
+  </div>
 </div>
 
-<!-- QA 編輯 Modal -->
-<div class="modal-bg" id="edit-modal">
-    <div class="modal wide">
-        <h3 id="edit-title">✏️ 編輯 QA</h3>
-        <label>分類</label>
-        <select id="edit-category"></select>
-
-        <label>標題</label>
-        <input type="text" id="edit-title-input" placeholder="QA 標題">
-
-        <label>內容</label>
-        <div class="field-hint">
-            色彩標記：<code>[[red:文字]]</code> <code>[[orange:文字]]</code> <code>[[green:文字]]</code> <code>[[blue:文字]]</code> <code>[[purple:文字]]</code>
-        </div>
-        <textarea id="edit-content" placeholder="內容（支援色彩標記、換行）"></textarea>
-
-        <label>標籤（用逗號分隔）</label>
-        <input type="text" id="edit-tags" placeholder="例：隨享卡, 退款">
-
-        <div class="checkbox-row">
-            <label><input type="checkbox" id="edit-urgent"> 🚨 緊急案件</label>
-            <label><input type="checkbox" id="edit-internal"> 🔒 內部資訊（勿與客戶說明）</label>
-        </div>
-
-        <div class="btns">
-            <button class="btn btn-danger" id="delete-btn" onclick="deleteQA()" style="margin-right:auto;">🗑️ 刪除</button>
-            <button class="btn" onclick="closeModal('edit-modal')">取消</button>
-            <button class="btn btn-primary" onclick="saveQA()">儲存</button>
-        </div>
-    </div>
-</div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-/* ============================================================
-   亞尼克 YTM 客服 QA 知識庫
-   ============================================================ */
-const PASSWORD = '1234';
+// ============ 全域狀態 ============
 let DATA = null;
-let currentCat = 'all';
-let currentLineFilter = 'all';
-let editingId = null;
+let currentCategory = 'all';
 let isAdmin = false;
+let editingQA = null;
+let editingStation = null;
+let editingCategory = null;
 
-/* ---------- 讀取資料 ---------- */
-async function loadData() {
-    try {
-        const res = await fetch('data.json?t=' + Date.now());
-        if (!res.ok) throw new Error('載入失敗');
-        DATA = await res.json();
-    } catch (e) {
-        console.error(e);
-        // 如果讀不到，用本地存的（離線編輯用）
-        const local = localStorage.getItem('ytm-qa-data');
-        if (local) {
-            DATA = JSON.parse(local);
-            toast('⚠️ 使用本地端資料');
-        } else {
-            document.getElementById('qa-list').innerHTML = '<div class="empty"><div class="empty-icon">⚠️</div><p>無法載入 data.json</p><p style="font-size:13px;margin-top:8px;">請確認 data.json 與 index.html 在同一目錄</p></div>';
-            return;
-        }
+const ADMIN_PASSWORD = '1234';
+
+// 提供給分類挑選的圖示
+const ICON_LIBRARY = [
+  '🏢','🎂','💳','🎁','🏪','🌐','💰','📍',
+  '📢','🛍️','🎯','⭐','🔥','💎','🎊','🎉',
+  '📝','📋','📊','📈','📌','📞','📱','💬',
+  '🚨','⚠️','🔒','🔑','✅','❌','❓','❗',
+  '🚀','✨','💡','🎓','📚','📖','🔧','⚙️',
+  '🍰','🍮','🧁','🍪','🍫','🍵','🥐','🥖',
+  '🚚','🏃','🎈','🎀','💝','🛒','🏆','🌟'
+];
+
+window.addEventListener('DOMContentLoaded', init);
+
+async function init() {
+  try {
+    const local = localStorage.getItem('ytm_qa_data');
+    if (local) {
+      try { DATA = JSON.parse(local); }
+      catch(e) { DATA = await loadDataJson(); }
+    } else {
+      DATA = await loadDataJson();
     }
     renderAll();
+    silentCheckUpdate();
+  } catch (e) {
+    console.error(e);
+    document.getElementById('resultContainer').innerHTML = 
+      '<div class="empty-state"><div class="big">⚠️</div><p>無法載入資料，請確認 data.json 檔案存在</p><p style="font-size:0.85rem;margin-top:8px;">' + e.message + '</p></div>';
+  }
+  document.getElementById('searchInput').addEventListener('input', onSearch);
+  window.addEventListener('scroll', () => {
+    const btn = document.getElementById('scrollTop');
+    if (window.scrollY > 300) btn.classList.add('show');
+    else btn.classList.remove('show');
+  });
 }
 
-function renderAll() {
-    if (!DATA) return;
-    document.getElementById('site-title').textContent = DATA.meta.title;
-    document.getElementById('site-subtitle').textContent = DATA.meta.subtitle;
-    renderCategories();
-    renderQA();
-    renderStationFilters();
-    renderStations();
-    document.getElementById('admin-count').textContent = DATA.qa.length;
+async function loadDataJson() {
+  const res = await fetch('data.json?t=' + Date.now());
+  if (!res.ok) throw new Error('data.json 載入失敗 (' + res.status + ')');
+  return await res.json();
 }
 
-/* ---------- 渲染分類 ---------- */
-function renderCategories() {
-    const container = document.getElementById('categories');
-    const total = DATA.qa.length + DATA.stations.length;
-    let html = `
-        <div class="cat-card all ${currentCat === 'all' ? 'active' : ''}" onclick="selectCat('all')">
-            <div class="cat-icon">📚</div>
-            <div class="cat-name">全部</div>
-            <div class="cat-count">${total} 筆</div>
-        </div>
-    `;
-    DATA.categories.forEach(cat => {
-        const count = cat.id === 'station' ? DATA.stations.length : DATA.qa.filter(q => q.category === cat.id).length;
-        html += `
-            <div class="cat-card ${currentCat === cat.id ? 'active' : ''}" onclick="selectCat('${cat.id}')">
-                <div class="cat-icon">${cat.icon}</div>
-                <div class="cat-name">${cat.name}</div>
-                <div class="cat-count">${count} 筆</div>
-            </div>
-        `;
-    });
-    container.innerHTML = html;
-    document.getElementById('total-count').textContent = `共 ${total} 筆`;
-}
-
-function selectCat(id) {
-    currentCat = id;
-    document.getElementById('search').value = '';
-    document.getElementById('search-clear').classList.remove('show');
-    renderCategories();
-    renderQA();
-    renderStations();
-    window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-/* ---------- 色彩語法解析 ---------- */
-function parseText(text) {
-    if (!text) return '';
-    // HTML escape
-    let html = text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    // 色彩語法
-    html = html.replace(/\[\[red:(.+?)\]\]/g,    '<span class="c-red">$1</span>');
-    html = html.replace(/\[\[orange:(.+?)\]\]/g, '<span class="c-orange">$1</span>');
-    html = html.replace(/\[\[green:(.+?)\]\]/g,  '<span class="c-green">$1</span>');
-    html = html.replace(/\[\[blue:(.+?)\]\]/g,   '<span class="c-blue">$1</span>');
-    html = html.replace(/\[\[purple:(.+?)\]\]/g, '<span class="c-purple">$1</span>');
-    return html;
-}
-
-/* ---------- 渲染 QA ---------- */
-function renderQA() {
-    const container = document.getElementById('qa-list');
-    const qaPanel = document.getElementById('qa-panel');
-    const stationPanel = document.getElementById('station-panel');
-    const qaTitle = document.getElementById('qa-title');
-
-    // 如果是據點分類，隱藏 QA 面板
-    if (currentCat === 'station') {
-        qaPanel.style.display = 'none';
-        stationPanel.style.display = 'block';
-        return;
+// ========= 檢查更新 =========
+async function silentCheckUpdate() {
+  try {
+    const serverData = await loadDataJson();
+    const localVer = DATA.meta.lastUpdate || '';
+    const serverVer = serverData.meta.lastUpdate || '';
+    if (serverVer && serverVer > localVer && localStorage.getItem('ytm_qa_data')) {
+      // 有新版本且本地有暫存
+      window._pendingUpdate = serverData;
+      document.getElementById('updateBanner').classList.add('show');
     }
-
-    qaPanel.style.display = 'block';
-    stationPanel.style.display = 'none';
-
-    const kw = document.getElementById('search').value.trim().toLowerCase();
-    let items = DATA.qa;
-
-    if (currentCat !== 'all') {
-        items = items.filter(q => q.category === currentCat);
-    }
-
-    if (kw) {
-        items = items.filter(q => {
-            const blob = (q.title + ' ' + q.content + ' ' + (q.tags || []).join(' ')).toLowerCase();
-            return blob.includes(kw);
-        });
-    }
-
-    // 標題
-    const cat = DATA.categories.find(c => c.id === currentCat);
-    if (currentCat === 'all') {
-        qaTitle.innerHTML = '📚 全部 QA <span class="count" id="qa-count"></span>';
-    } else if (cat) {
-        qaTitle.innerHTML = `${cat.icon} ${cat.name} <span class="count" id="qa-count"></span>`;
-    }
-    document.getElementById('qa-count').textContent = `${items.length} 筆`;
-
-    if (items.length === 0) {
-        container.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><p>沒有符合的 QA</p></div>';
-        return;
-    }
-
-    let html = '';
-    items.forEach(q => {
-        const classes = ['qa-card'];
-        if (q.urgent) classes.push('urgent');
-        if (q.internal) classes.push('internal');
-
-        const badges = [];
-        if (q.urgent)   badges.push('<span class="badge urgent">🚨 緊急</span>');
-        if (q.internal) badges.push('<span class="badge internal">🔒 內部</span>');
-
-        const tagsHtml = (q.tags && q.tags.length > 0)
-            ? `<div class="qa-tags">${q.tags.map(t => `<span class="qa-tag">#${t}</span>`).join('')}</div>`
-            : '';
-
-        html += `
-            <div class="${classes.join(' ')}" data-id="${q.id}">
-                <div class="qa-title">
-                    ${q.title}
-                    ${badges.join(' ')}
-                </div>
-                <div class="qa-content">${parseText(q.content)}</div>
-                ${tagsHtml}
-                <div class="qa-actions">
-                    <button class="btn" onclick="event.stopPropagation(); editQA(${q.id})">✏️ 編輯</button>
-                </div>
-            </div>
-        `;
-    });
-    container.innerHTML = html;
+  } catch(e) { /* ignore */ }
 }
 
-/* ---------- 渲染據點 ---------- */
-function renderStationFilters() {
-    const lines = [...new Set(DATA.stations.map(s => s.line))];
-    const container = document.getElementById('line-filters');
-    let html = `<button class="filter-btn ${currentLineFilter === 'all' ? 'active' : ''}" onclick="setLineFilter('all')">全部路線</button>`;
-    lines.forEach(line => {
-        html += `<button class="filter-btn ${currentLineFilter === line ? 'active' : ''}" onclick="setLineFilter('${line}')">${line}</button>`;
-    });
-    container.innerHTML = html;
-}
-
-function setLineFilter(line) {
-    currentLineFilter = line;
-    renderStationFilters();
-    renderStations();
-}
-
-function renderStations() {
-    const kw = document.getElementById('search').value.trim().toLowerCase();
-    let stations = DATA.stations;
-    if (currentLineFilter !== 'all') {
-        stations = stations.filter(s => s.line === currentLineFilter);
+async function checkUpdate() {
+  showToast('檢查中...');
+  try {
+    const serverData = await loadDataJson();
+    const localVer = DATA.meta.lastUpdate || '';
+    const serverVer = serverData.meta.lastUpdate || '';
+    if (!localStorage.getItem('ytm_qa_data')) {
+      // 沒有本地暫存，直接載入
+      DATA = serverData;
+      renderAll();
+      showToast('已是最新版本');
+      return;
     }
-    if (kw) {
-        stations = stations.filter(s => {
-            const blob = (s.name + ' ' + s.line + ' ' + (s.address||'') + ' ' + (s.exit||'') + ' ' + (s.code||'') + ' ' + (s.group||'')).toLowerCase();
-            return blob.includes(kw);
-        });
-    }
-
-    document.getElementById('station-total').textContent = stations.length;
-    document.getElementById('station-title').innerHTML = `📍 YTM 據點資訊 <span class="count">${stations.length} 個</span>`;
-
-    const tbody = document.getElementById('station-rows');
-    if (stations.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;padding:30px;color:#999;">沒有符合的據點</td></tr>';
-        return;
-    }
-    let html = '';
-    stations.forEach(s => {
-        const lineClass = 'line-' + s.line;
-        const codeStr = s.code ? `<span style="color:#999;font-size:12px;">（${s.code}）</span>` : '';
-        html += `
-            <tr>
-                <td><strong>YTM ${s.name}</strong>${codeStr}</td>
-                <td class="hide-mobile"><span class="station-line ${lineClass}">${s.line}</span></td>
-                <td class="hide-mobile"><span class="grade-${s.grade}">${s.grade}</span></td>
-                <td>${s.exit || '-'}</td>
-                <td class="hide-mobile">${s.address || '-'}</td>
-            </tr>
-        `;
-    });
-    tbody.innerHTML = html;
-}
-
-/* ---------- 搜尋 ---------- */
-function doSearch() {
-    const kw = document.getElementById('search').value;
-    document.getElementById('search-clear').classList.toggle('show', kw.length > 0);
-    renderQA();
-    renderStations();
-}
-
-function clearSearch() {
-    document.getElementById('search').value = '';
-    document.getElementById('search-clear').classList.remove('show');
-    renderQA();
-    renderStations();
-}
-
-/* ---------- 管理員登入 ---------- */
-function showAdminLogin() {
-    if (isAdmin) {
-        if (confirm('是否退出管理模式？')) exitAdmin();
-        return;
-    }
-    document.getElementById('login-modal').classList.add('show');
-    document.getElementById('pw-input').value = '';
-    setTimeout(() => document.getElementById('pw-input').focus(), 100);
-}
-
-function doLogin() {
-    const pw = document.getElementById('pw-input').value;
-    if (pw === PASSWORD) {
-        isAdmin = true;
-        document.body.classList.add('admin-mode');
-        closeModal('login-modal');
-        toast('✅ 已進入管理模式');
+    if (serverVer && serverVer > localVer) {
+      window._pendingUpdate = serverData;
+      document.getElementById('updateBanner').classList.add('show');
+      showToast('發現新版本！');
     } else {
-        toast('❌ 密碼錯誤');
+      showToast('已是最新版本');
     }
+  } catch(e) {
+    showToast('檢查失敗：' + e.message);
+  }
 }
 
-function exitAdmin() {
-    isAdmin = false;
-    document.body.classList.remove('admin-mode');
-    toast('🔒 已退出管理模式');
+function applyUpdate() {
+  if (!window._pendingUpdate) return;
+  if (!confirm('套用新版本將覆蓋本機暫存的修改，確定？')) return;
+  DATA = window._pendingUpdate;
+  window._pendingUpdate = null;
+  localStorage.removeItem('ytm_qa_data');
+  document.getElementById('updateBanner').classList.remove('show');
+  renderAll();
+  showToast('已套用新版本');
 }
 
-/* ---------- QA 編輯 ---------- */
+// ============ 主渲染 ============
+function renderAll() {
+  document.getElementById('headerTitle').textContent = DATA.meta.title || '亞尼克YTM客服助手';
+  
+  const contact = document.getElementById('headerContact');
+  let html = '';
+  html += `<div>📞 <strong>客服</strong>${DATA.meta.subtitle || '02-7733-5557'}</div>`;
+  if (DATA.meta.email) html += `<div>📧 <strong>信箱</strong>${DATA.meta.email}</div>`;
+  if (DATA.meta.lineId) html += `<div>💬 <strong>官方LINE</strong>${DATA.meta.lineId}${DATA.meta.ytmLineId?'｜YTM:'+DATA.meta.ytmLineId:''}</div>`;
+  contact.innerHTML = html;
+  
+  document.getElementById('marqueeText').textContent = DATA.marquee || '';
+  renderCategories();
+  renderQA();
+}
+
+function renderCategories() {
+  const box = document.getElementById('categoryContainer');
+  let html = `<div class="category-card ${currentCategory==='all'?'active':''}" onclick="selectCategory('all')">
+    <span class="icon">📚</span><div class="name">全部</div><div class="count">${DATA.qa.length}</div>
+  </div>`;
+  DATA.categories.forEach(c => {
+    const count = c.id === 'station' 
+      ? (DATA.stations ? DATA.stations.length : 0)
+      : DATA.qa.filter(q => q.category === c.id).length;
+    html += `<div class="category-card ${currentCategory===c.id?'active':''}" onclick="selectCategory('${c.id}')">
+      <span class="icon">${c.icon}</span>
+      <div class="name">${escapeHtml(c.name)}</div>
+      <div class="count">${count}</div>
+    </div>`;
+  });
+  box.innerHTML = html;
+}
+
+function selectCategory(id) {
+  currentCategory = id;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('show');
+  renderCategories();
+  renderQA();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function renderQA() {
+  const kw = document.getElementById('searchInput').value.trim().toLowerCase();
+  const container = document.getElementById('resultContainer');
+  
+  if (currentCategory === 'station') {
+    renderStations();
+    return;
+  }
+  
+  let list = DATA.qa;
+  if (currentCategory !== 'all') list = list.filter(q => q.category === currentCategory);
+  if (kw) {
+    list = list.filter(q => 
+      q.title.toLowerCase().includes(kw) || 
+      q.content.toLowerCase().includes(kw) ||
+      (q.tags || []).some(t => t.toLowerCase().includes(kw))
+    );
+  }
+  
+  let stationResult = [];
+  if (kw && DATA.stations) {
+    stationResult = DATA.stations.filter(s => 
+      s.name.toLowerCase().includes(kw) || 
+      (s.address || '').toLowerCase().includes(kw) ||
+      (s.line || '').toLowerCase().includes(kw) ||
+      (s.exit || '').toLowerCase().includes(kw) ||
+      (s.code || '').toLowerCase().includes(kw)
+    );
+  }
+  
+  if (list.length === 0 && stationResult.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="big">🔍</div><p>找不到相關資料</p><p style="font-size:0.85rem;margin-top:8px;">試試其他關鍵字，或點選分類瀏覽</p></div>';
+    return;
+  }
+  
+  let html = '';
+  if (list.length > 0) {
+    const title = kw ? `搜尋結果：「${escapeHtml(kw)}」` : 
+                  currentCategory === 'all' ? '全部 QA' : 
+                  DATA.categories.find(c=>c.id===currentCategory)?.name || '';
+    html += `<div class="section-title">${title}<span class="count-badge">${list.length} 則</span></div>`;
+    html += '<div class="qa-list">';
+    list.forEach(q => html += renderQACard(q, kw));
+    html += '</div>';
+  }
+  
+  if (stationResult.length > 0) {
+    html += `<div class="section-title">📍 相關據點<span class="count-badge">${stationResult.length} 站</span></div>`;
+    html += renderStationTable(stationResult);
+  }
+  
+  container.innerHTML = html;
+}
+
+function renderQACard(q, kw) {
+  const cat = DATA.categories.find(c => c.id === q.category);
+  let badges = '';
+  if (q.urgent) badges += '<span class="badge badge-urgent">🚨 緊急</span>';
+  if (q.internal) badges += '<span class="badge badge-internal">🔒 內部</span>';
+  
+  const content = formatContent(q.content);
+  const titleHl = kw ? highlight(q.title, kw) : escapeHtml(q.title);
+  
+  let tagsHtml = '';
+  if (q.tags && q.tags.length) {
+    tagsHtml = '<div class="qa-tags">' + q.tags.map(t => `<span class="tag">#${escapeHtml(t)}</span>`).join('') + '</div>';
+  }
+  
+  return `<div class="qa-card" data-id="${q.id}">
+    <div class="qa-header" onclick="toggleQA(${q.id})">
+      <div class="qa-title">${cat?cat.icon:''} ${titleHl}${badges}</div>
+      <span class="qa-arrow">▼</span>
+    </div>
+    <div class="qa-content">
+      <div class="qa-body">${content}</div>
+      ${tagsHtml}
+    </div>
+  </div>`;
+}
+
+function toggleQA(id) {
+  const card = document.querySelector(`.qa-card[data-id="${id}"]`);
+  if (card) card.classList.toggle('open');
+}
+
+// ============ 據點 ============
+function renderStations() {
+  const container = document.getElementById('resultContainer');
+  const lines = [...new Set(DATA.stations.map(s => s.line))].filter(Boolean);
+  const groups = [...new Set(DATA.stations.map(s => s.group))].filter(Boolean);
+  
+  let html = `<div class="section-title">📍 YTM 據點資訊 <span class="count-badge">共 ${DATA.stations.length} 站</span></div>`;
+  html += '<input type="text" class="station-search" id="stationSearch" placeholder="🔍 搜尋站名、地址、捷運線..." oninput="filterStations()">';
+  
+  html += '<div class="station-filters" id="lineFilters">';
+  html += `<div class="station-filter active" data-filter="line" data-value="all" onclick="setStationFilter(this)">全部路線</div>`;
+  lines.forEach(l => {
+    html += `<div class="station-filter" data-filter="line" data-value="${escapeHtml(l)}" onclick="setStationFilter(this)">${escapeHtml(l)}</div>`;
+  });
+  html += '</div>';
+  
+  html += '<div class="station-filters" id="groupFilters">';
+  html += `<div class="station-filter active" data-filter="group" data-value="all" onclick="setStationFilter(this)">全部批次</div>`;
+  groups.forEach(g => {
+    html += `<div class="station-filter" data-filter="group" data-value="${escapeHtml(g)}" onclick="setStationFilter(this)">${escapeHtml(g)}</div>`;
+  });
+  html += '</div>';
+  
+  html += '<div id="stationTableWrap">' + renderStationTable(DATA.stations) + '</div>';
+  container.innerHTML = html;
+}
+
+function renderStationTable(stations) {
+  if (!stations || stations.length === 0) {
+    return '<div class="empty-state"><p>沒有符合條件的據點</p></div>';
+  }
+  let html = '<div class="table-wrap"><table class="station-table"><thead><tr>';
+  html += '<th>編號</th><th>站名</th><th>路線</th><th>分級</th><th>地址</th><th>位置</th><th>批次</th>';
+  html += '</tr></thead><tbody>';
+  stations.forEach(s => {
+    const lineKey = (s.line || '').replace(/\s/g, '');
+    html += `<tr>
+      <td>${escapeHtml(s.code || s.id)}</td>
+      <td><strong>${escapeHtml(s.name)}</strong></td>
+      <td><span class="line-tag line-${lineKey}">${escapeHtml(s.line || '')}</span></td>
+      <td class="grade-${s.grade || ''}">${escapeHtml(s.grade || '')}</td>
+      <td>${escapeHtml(s.address || '—')}</td>
+      <td>${escapeHtml(s.exit || '—')}</td>
+      <td><small>${escapeHtml(s.group || '')}</small></td>
+    </tr>`;
+  });
+  html += '</tbody></table></div>';
+  return html;
+}
+
+function setStationFilter(el) {
+  el.parentElement.querySelectorAll('.station-filter').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+  filterStations();
+}
+
+function filterStations() {
+  const kw = (document.getElementById('stationSearch').value || '').toLowerCase();
+  const activeLineEl = document.querySelector('#lineFilters .station-filter.active');
+  const activeGroupEl = document.querySelector('#groupFilters .station-filter.active');
+  const line = activeLineEl ? activeLineEl.dataset.value : 'all';
+  const group = activeGroupEl ? activeGroupEl.dataset.value : 'all';
+  
+  let result = DATA.stations;
+  if (line !== 'all') result = result.filter(s => s.line === line);
+  if (group !== 'all') result = result.filter(s => s.group === group);
+  if (kw) {
+    result = result.filter(s => 
+      s.name.toLowerCase().includes(kw) || 
+      (s.address || '').toLowerCase().includes(kw) ||
+      (s.exit || '').toLowerCase().includes(kw) ||
+      (s.code || '').toLowerCase().includes(kw)
+    );
+  }
+  document.getElementById('stationTableWrap').innerHTML = renderStationTable(result);
+}
+
+// ============ 搜尋 ============
+function onSearch() {
+  const val = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('show', val.length > 0);
+  renderQA();
+}
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('show');
+  renderQA();
+}
+
+// ============ 格式化 ============
+function escapeHtml(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function formatContent(content) {
+  if (!content) return '';
+  let s = escapeHtml(content);
+  s = s.replace(/\[\[red:(.*?)\]\]/g, '<span class="ct-red">$1</span>');
+  s = s.replace(/\[\[orange:(.*?)\]\]/g, '<span class="ct-orange">$1</span>');
+  s = s.replace(/\[\[green:(.*?)\]\]/g, '<span class="ct-green">$1</span>');
+  s = s.replace(/\[\[blue:(.*?)\]\]/g, '<span class="ct-blue">$1</span>');
+  s = s.replace(/\[\[purple:(.*?)\]\]/g, '<span class="ct-purple">$1</span>');
+  s = s.replace(/\[\[link:(.*?)\|(.*?)\]\]/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s = s.replace(/\[\[img:(.*?)\]\]/g, '<img src="$1" alt="圖片">');
+  // 影片：[[video:URL]] 支援 YouTube / Vimeo / 直接 mp4
+  s = s.replace(/\[\[video:(.*?)\]\]/g, (m, url) => {
+    const u = url.trim();
+    // YouTube
+    const yt = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
+    if (yt) return `<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${yt[1]}" allowfullscreen></iframe></div>`;
+    // Vimeo
+    const vm = u.match(/vimeo\.com\/(\d+)/);
+    if (vm) return `<div class="video-wrap"><iframe src="https://player.vimeo.com/video/${vm[1]}" allowfullscreen></iframe></div>`;
+    // 直接影片檔
+    if (/\.(mp4|webm|ogg)(\?|$)/i.test(u)) return `<div class="video-wrap"><video controls src="${u}"></video></div>`;
+    // 其他情況：顯示為連結
+    return `<a href="${u}" target="_blank" rel="noopener">🎥 ${u}</a>`;
+  });
+  // 自動連結
+  s = s.replace(/(^|[^"'>=\/])(https?:\/\/[^\s<]+)/g, (m, pre, url) => {
+    // 避免跟已處理的連結衝突
+    if (pre === '/' || pre === '"' || pre === "'") return m;
+    return `${pre}<a href="${url}" target="_blank" rel="noopener">${url}</a>`;
+  });
+  return s;
+}
+
+function highlight(text, kw) {
+  if (!kw) return escapeHtml(text);
+  const safe = escapeHtml(text);
+  const safeKw = escapeHtml(kw);
+  const re = new RegExp('(' + safeKw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return safe.replace(re, '<mark style="background:#FFE58F;padding:0 2px;border-radius:2px;">$1</mark>');
+}
+
+// ============ 字體 ============
+function toggleFontSize() {
+  const body = document.body;
+  if (body.classList.contains('fs-large')) {
+    body.classList.remove('fs-large');
+    body.classList.add('fs-xlarge');
+    showToast('字體：特大');
+  } else if (body.classList.contains('fs-xlarge')) {
+    body.classList.remove('fs-xlarge');
+    showToast('字體：一般');
+  } else {
+    body.classList.add('fs-large');
+    showToast('字體：大');
+  }
+}
+
+function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ============ 管理後台 ============
+function openAdmin() {
+  document.getElementById('adminModal').classList.add('show');
+  if (!isAdmin) showLoginForm();
+  else showAdminPanel();
+}
+function closeAdmin() { document.getElementById('adminModal').classList.remove('show'); }
+
+function showLoginForm() {
+  document.getElementById('adminTitle').textContent = '🔒 管理後台登入';
+  document.getElementById('adminBody').innerHTML = `
+    <div class="login-form">
+      <div style="font-size:3rem;margin-bottom:10px;">🔐</div>
+      <p style="color:var(--text-light);margin-bottom:16px;">請輸入管理密碼</p>
+      <input type="password" id="adminPwd" placeholder="密碼" onkeydown="if(event.key==='Enter')login()">
+      <div style="margin-top:10px;">
+        <button class="btn-primary" onclick="login()">登入</button>
+      </div>
+    </div>
+  `;
+  setTimeout(() => document.getElementById('adminPwd').focus(), 100);
+}
+
+function login() {
+  const pwd = document.getElementById('adminPwd').value;
+  if (pwd === ADMIN_PASSWORD) {
+    isAdmin = true;
+    showAdminPanel();
+    showToast('登入成功');
+  } else {
+    showToast('密碼錯誤');
+    document.getElementById('adminPwd').value = '';
+    document.getElementById('adminPwd').focus();
+  }
+}
+
+function showAdminPanel() {
+  document.getElementById('adminTitle').textContent = '⚙️ 管理後台';
+  document.getElementById('adminBody').innerHTML = `
+    <div class="admin-tabs">
+      <button class="admin-tab active" onclick="showAdminTab('qa', this)">📝 QA 管理</button>
+      <button class="admin-tab" onclick="showAdminTab('category', this)">📂 分類管理</button>
+      <button class="admin-tab" onclick="showAdminTab('station', this)">📍 據點管理</button>
+      <button class="admin-tab" onclick="showAdminTab('meta', this)">⚙️ 基本設定</button>
+      <button class="admin-tab" onclick="showAdminTab('export', this)">💾 匯入/匯出</button>
+    </div>
+    <div id="adminTabContent"></div>
+  `;
+  showAdminTab('qa');
+}
+
+function showAdminTab(tab, el) {
+  if (el) {
+    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+  const box = document.getElementById('adminTabContent');
+  if (tab === 'qa') box.innerHTML = renderAdminQA();
+  else if (tab === 'category') box.innerHTML = renderAdminCategory();
+  else if (tab === 'station') box.innerHTML = renderAdminStation();
+  else if (tab === 'meta') box.innerHTML = renderAdminMeta();
+  else if (tab === 'export') box.innerHTML = renderAdminExport();
+}
+
+// ---- QA 管理 ----
+function renderAdminQA() {
+  setTimeout(renderAdminQAList, 0);
+  return `
+    <div class="admin-toolbar">
+      <button class="btn-primary" onclick="editQA(null)">➕ 新增 QA</button>
+      <input type="text" id="adminQASearch" placeholder="搜尋..." style="flex:1;" oninput="renderAdminQAList()">
+      <select id="adminQAFilter" onchange="renderAdminQAList()">
+        <option value="all">全部分類</option>
+        ${DATA.categories.map(c => `<option value="${c.id}">${c.icon} ${escapeHtml(c.name)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="admin-list" id="adminQAList"></div>
+  `;
+}
+
+function renderAdminQAList() {
+  const kw = (document.getElementById('adminQASearch')?.value || '').toLowerCase();
+  const filter = document.getElementById('adminQAFilter')?.value || 'all';
+  let list = DATA.qa;
+  if (filter !== 'all') list = list.filter(q => q.category === filter);
+  if (kw) list = list.filter(q => q.title.toLowerCase().includes(kw) || q.content.toLowerCase().includes(kw));
+  
+  const html = list.map(q => {
+    const cat = DATA.categories.find(c => c.id === q.category);
+    let flags = '';
+    if (q.urgent) flags += ' 🚨';
+    if (q.internal) flags += ' 🔒';
+    return `<div class="admin-item">
+      <div class="admin-item-info">
+        <div class="admin-item-title">${cat?cat.icon:''} ${escapeHtml(q.title)}${flags}</div>
+        <div class="admin-item-meta">${cat?escapeHtml(cat.name):''} ｜ ${q.tags && q.tags.length ? escapeHtml(q.tags.join(', ')) : '無標籤'}</div>
+      </div>
+      <button class="admin-btn admin-btn-edit" onclick="editQA(${q.id})">編輯</button>
+      <button class="admin-btn admin-btn-del" onclick="deleteQA(${q.id})">刪除</button>
+    </div>`;
+  }).join('');
+  document.getElementById('adminQAList').innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-light);">沒有資料</div>';
+}
+
 function editQA(id) {
-    if (!isAdmin) return;
-    editingId = id;
-    const q = DATA.qa.find(x => x.id === id);
-    if (!q) return;
-    document.getElementById('edit-title').textContent = '✏️ 編輯 QA';
-    document.getElementById('delete-btn').style.display = 'inline-block';
-    fillEditForm(q);
-    document.getElementById('edit-modal').classList.add('show');
+  const q = id ? DATA.qa.find(x => x.id === id) : {
+    id: null, category: DATA.categories.filter(c=>c.id!=='station')[0]?.id || 'company',
+    title: '', content: '', tags: [], urgent: false, internal: false
+  };
+  if (!q) return;
+  editingQA = q;
+  document.getElementById('adminTabContent').innerHTML = `
+    <button class="btn-secondary" onclick="showAdminTab('qa',document.querySelector('.admin-tab.active'))">← 返回列表</button>
+    <h3 style="margin:16px 0;">${id ? '✏️ 編輯 QA' : '➕ 新增 QA'}</h3>
+    
+    <div class="syntax-hint">
+      <strong>📘 使用說明</strong><br>
+      • 選取文字後，點擊下方工具列的顏色按鈕即可套用色彩<br>
+      • 插入圖片、影片、連結可用下方按鈕<br>
+      • 支援影片格式：YouTube、Vimeo、直接 mp4/webm 網址
+    </div>
+    
+    <div class="form-group">
+      <label>分類</label>
+      <select id="qaCat">
+        ${DATA.categories.filter(c=>c.id!=='station').map(c => 
+          `<option value="${c.id}" ${c.id===q.category?'selected':''}>${c.icon} ${escapeHtml(c.name)}</option>`
+        ).join('')}
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label>標題</label>
+      <input type="text" id="qaTitle" value="${escapeHtml(q.title)}">
+    </div>
+    
+    <div class="form-group">
+      <label>內容</label>
+      <div class="editor-toolbar">
+        <button type="button" class="tool-btn color-red" onclick="wrapSelection('red')" title="紅字">🔴 紅</button>
+        <button type="button" class="tool-btn color-orange" onclick="wrapSelection('orange')" title="橘字">🟠 橘</button>
+        <button type="button" class="tool-btn color-green" onclick="wrapSelection('green')" title="綠字">🟢 綠</button>
+        <button type="button" class="tool-btn color-blue" onclick="wrapSelection('blue')" title="藍字">🔵 藍</button>
+        <button type="button" class="tool-btn color-purple" onclick="wrapSelection('purple')" title="紫字">🟣 紫</button>
+        <div class="tool-sep"></div>
+        <button type="button" class="tool-btn" onclick="document.getElementById('qaImgInput').click()" title="插入圖片">📷 圖片</button>
+        <button type="button" class="tool-btn" onclick="insertVideo()" title="插入影片">🎥 影片</button>
+        <button type="button" class="tool-btn" onclick="insertLink()" title="插入連結">🔗 連結</button>
+        <input type="file" id="qaImgInput" accept="image/*" style="display:none" onchange="insertImage(this)">
+      </div>
+      <textarea id="qaContent" class="editor-textarea">${escapeHtml(q.content)}</textarea>
+      <div style="margin-top:6px;font-size:0.8rem;color:var(--text-light);">💡 選取文字後點顏色按鈕即可套用色彩</div>
+    </div>
+    
+    <div class="form-group">
+      <label>標籤（用逗號分隔）</label>
+      <input type="text" id="qaTags" value="${escapeHtml((q.tags||[]).join(', '))}">
+    </div>
+    
+    <div class="form-group">
+      <label>標示</label>
+      <div class="form-check">
+        <label><input type="checkbox" id="qaUrgent" ${q.urgent?'checked':''}> 🚨 緊急</label>
+        <label><input type="checkbox" id="qaInternal" ${q.internal?'checked':''}> 🔒 內部（僅供同仁參考）</label>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <button class="btn-secondary" onclick="showAdminTab('qa',document.querySelector('.admin-tab.active'))">取消</button>
+      <button class="btn-primary" onclick="saveQA()">💾 儲存</button>
+    </div>
+  `;
 }
 
-function addNewQA() {
-    editingId = null;
-    document.getElementById('edit-title').textContent = '➕ 新增 QA';
-    document.getElementById('delete-btn').style.display = 'none';
-    // 塞分類
-    const sel = document.getElementById('edit-category');
-    sel.innerHTML = DATA.categories.filter(c => c.id !== 'station').map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-    sel.value = currentCat !== 'all' && currentCat !== 'station' ? currentCat : DATA.categories[0].id;
-    document.getElementById('edit-title-input').value = '';
-    document.getElementById('edit-content').value = '';
-    document.getElementById('edit-tags').value = '';
-    document.getElementById('edit-urgent').checked = false;
-    document.getElementById('edit-internal').checked = false;
-    document.getElementById('edit-modal').classList.add('show');
+// 選取文字套用色彩
+function wrapSelection(color) {
+  const ta = document.getElementById('qaContent');
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  if (start === end) {
+    showToast('請先選取要套用的文字');
+    return;
+  }
+  const selected = ta.value.slice(start, end);
+  const before = ta.value.slice(0, start);
+  const after = ta.value.slice(end);
+  ta.value = before + `[[${color}:${selected}]]` + after;
+  ta.focus();
+  const newPos = before.length + `[[${color}:${selected}]]`.length;
+  ta.setSelectionRange(newPos, newPos);
 }
 
-function fillEditForm(q) {
-    const sel = document.getElementById('edit-category');
-    sel.innerHTML = DATA.categories.filter(c => c.id !== 'station').map(c => `<option value="${c.id}">${c.icon} ${c.name}</option>`).join('');
-    sel.value = q.category;
-    document.getElementById('edit-title-input').value = q.title;
-    document.getElementById('edit-content').value = q.content;
-    document.getElementById('edit-tags').value = (q.tags || []).join(', ');
-    document.getElementById('edit-urgent').checked = !!q.urgent;
-    document.getElementById('edit-internal').checked = !!q.internal;
+function insertImage(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 800*1024) {
+    if (!confirm('圖片超過 800KB，會讓 data.json 變大，建議先壓縮。仍要繼續？')) {
+      input.value = '';
+      return;
+    }
+  }
+  const reader = new FileReader();
+  reader.onload = e => {
+    const ta = document.getElementById('qaContent');
+    const syntax = `[[img:${e.target.result}]]`;
+    const pos = ta.selectionStart || ta.value.length;
+    ta.value = ta.value.slice(0, pos) + '\n' + syntax + '\n' + ta.value.slice(pos);
+    showToast('圖片已插入');
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+}
+
+function insertVideo() {
+  const url = prompt('請貼上影片網址（支援 YouTube、Vimeo、mp4 等）：');
+  if (!url) return;
+  const ta = document.getElementById('qaContent');
+  const syntax = `[[video:${url.trim()}]]`;
+  const pos = ta.selectionStart || ta.value.length;
+  ta.value = ta.value.slice(0, pos) + '\n' + syntax + '\n' + ta.value.slice(pos);
+  showToast('影片已插入');
+}
+
+function insertLink() {
+  const text = prompt('請輸入連結顯示文字：');
+  if (!text) return;
+  const url = prompt('請貼上網址：');
+  if (!url) return;
+  const ta = document.getElementById('qaContent');
+  const syntax = `[[link:${text}|${url}]]`;
+  const pos = ta.selectionStart || ta.value.length;
+  ta.value = ta.value.slice(0, pos) + syntax + ta.value.slice(pos);
+  showToast('連結已插入');
 }
 
 function saveQA() {
-    const title = document.getElementById('edit-title-input').value.trim();
-    const content = document.getElementById('edit-content').value.trim();
-    if (!title || !content) {
-        toast('⚠️ 標題與內容不可空白');
-        return;
-    }
-    const payload = {
-        category: document.getElementById('edit-category').value,
-        title,
-        content,
-        tags: document.getElementById('edit-tags').value.split(',').map(t => t.trim()).filter(t => t),
-    };
-    if (document.getElementById('edit-urgent').checked) payload.urgent = true;
-    if (document.getElementById('edit-internal').checked) payload.internal = true;
-
-    if (editingId === null) {
-        const newId = DATA.qa.length > 0 ? Math.max(...DATA.qa.map(q => q.id)) + 1 : 1;
-        payload.id = newId;
-        DATA.qa.push(payload);
-        toast('✅ 已新增');
-    } else {
-        const idx = DATA.qa.findIndex(q => q.id === editingId);
-        if (idx !== -1) {
-            payload.id = editingId;
-            DATA.qa[idx] = payload;
-            toast('✅ 已更新');
-        }
-    }
-    saveLocal();
-    closeModal('edit-modal');
-    renderAll();
+  const title = document.getElementById('qaTitle').value.trim();
+  const content = document.getElementById('qaContent').value.trim();
+  if (!title || !content) { showToast('標題與內容不可空白'); return; }
+  
+  const cat = document.getElementById('qaCat').value;
+  const tags = document.getElementById('qaTags').value.split(',').map(s=>s.trim()).filter(Boolean);
+  const urgent = document.getElementById('qaUrgent').checked;
+  const internal = document.getElementById('qaInternal').checked;
+  
+  if (editingQA.id) {
+    const q = DATA.qa.find(x => x.id === editingQA.id);
+    q.category = cat; q.title = title; q.content = content; q.tags = tags;
+    if (urgent) q.urgent = true; else delete q.urgent;
+    if (internal) q.internal = true; else delete q.internal;
+  } else {
+    const newId = Math.max(0, ...DATA.qa.map(x => x.id)) + 1;
+    const newQ = { id: newId, category: cat, title, content, tags };
+    if (urgent) newQ.urgent = true;
+    if (internal) newQ.internal = true;
+    DATA.qa.push(newQ);
+  }
+  
+  saveLocal();
+  showToast('已儲存（記得到「匯入/匯出」下載 data.json）');
+  showAdminTab('qa', document.querySelector('.admin-tab.active'));
+  renderAll();
 }
 
-function deleteQA() {
-    if (editingId === null) return;
-    if (!confirm('確定要刪除這則 QA 嗎？')) return;
-    DATA.qa = DATA.qa.filter(q => q.id !== editingId);
-    saveLocal();
-    closeModal('edit-modal');
-    renderAll();
-    toast('🗑️ 已刪除');
+function deleteQA(id) {
+  const q = DATA.qa.find(x => x.id === id);
+  if (!q) return;
+  if (!confirm(`確定要刪除「${q.title}」？`)) return;
+  DATA.qa = DATA.qa.filter(x => x.id !== id);
+  saveLocal();
+  showToast('已刪除');
+  renderAdminQAList();
+  renderAll();
 }
 
-/* ---------- 本地儲存 & 匯出 ---------- */
-function saveLocal() {
-    try {
-        localStorage.setItem('ytm-qa-data', JSON.stringify(DATA));
-    } catch (e) {
-        console.warn('localStorage 已滿', e);
+// ---- 分類管理 ----
+function renderAdminCategory() {
+  setTimeout(renderAdminCategoryList, 0);
+  return `
+    <div class="admin-toolbar">
+      <button class="btn-primary" onclick="editCategory(null)">➕ 新增分類</button>
+    </div>
+    <div class="admin-list" id="adminCategoryList"></div>
+    <div style="margin-top:16px;padding:12px;background:var(--brand-bg);border-radius:8px;font-size:0.85rem;color:var(--text-light);">
+      💡 分類「YTM 據點資訊」為系統分類，不建議刪除<br>
+      💡 刪除分類前，請先把該分類的 QA 移到其他分類
+    </div>
+  `;
+}
+
+function renderAdminCategoryList() {
+  const html = DATA.categories.map((c, idx) => {
+    const count = c.id === 'station' 
+      ? (DATA.stations?.length || 0)
+      : DATA.qa.filter(q => q.category === c.id).length;
+    return `<div class="admin-item">
+      <div class="admin-item-info">
+        <div class="admin-item-title">${c.icon} ${escapeHtml(c.name)}</div>
+        <div class="admin-item-meta">ID: ${escapeHtml(c.id)} ｜ 共 ${count} 則</div>
+      </div>
+      <button class="admin-btn admin-btn-edit" onclick="moveCategoryUp(${idx})" ${idx===0?'disabled style=\"opacity:0.3;\"':''}>⬆</button>
+      <button class="admin-btn admin-btn-edit" onclick="moveCategoryDown(${idx})" ${idx===DATA.categories.length-1?'disabled style=\"opacity:0.3;\"':''}>⬇</button>
+      <button class="admin-btn admin-btn-edit" onclick="editCategory('${c.id}')">編輯</button>
+      ${c.id!=='station' ? `<button class="admin-btn admin-btn-del" onclick="deleteCategory('${c.id}')">刪除</button>` : ''}
+    </div>`;
+  }).join('');
+  document.getElementById('adminCategoryList').innerHTML = html;
+}
+
+function moveCategoryUp(idx) {
+  if (idx === 0) return;
+  [DATA.categories[idx-1], DATA.categories[idx]] = [DATA.categories[idx], DATA.categories[idx-1]];
+  saveLocal();
+  renderAdminCategoryList();
+  renderCategories();
+}
+function moveCategoryDown(idx) {
+  if (idx === DATA.categories.length - 1) return;
+  [DATA.categories[idx+1], DATA.categories[idx]] = [DATA.categories[idx], DATA.categories[idx+1]];
+  saveLocal();
+  renderAdminCategoryList();
+  renderCategories();
+}
+
+function editCategory(id) {
+  const c = id ? DATA.categories.find(x => x.id === id) : { id: '', name: '', icon: '📢' };
+  if (!c) return;
+  editingCategory = { ...c, _isNew: !id };
+  
+  const iconGrid = ICON_LIBRARY.map(i => 
+    `<div class="icon-option ${i===c.icon?'selected':''}" data-icon="${i}" onclick="selectIcon(this)">${i}</div>`
+  ).join('');
+  
+  document.getElementById('adminTabContent').innerHTML = `
+    <button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">← 返回列表</button>
+    <h3 style="margin:16px 0;">${id ? '✏️ 編輯分類' : '➕ 新增分類'}</h3>
+    
+    <div class="form-group">
+      <label>分類名稱</label>
+      <input type="text" id="catName" value="${escapeHtml(c.name)}" placeholder="例：行銷活動">
+    </div>
+    
+    <div class="form-group">
+      <label>分類 ID（英文/數字，新增後不建議修改）</label>
+      <input type="text" id="catId" value="${escapeHtml(c.id)}" ${id && id !== '' ? 'readonly style="background:#F5F5F5;"' : ''} placeholder="例：marketing">
+    </div>
+    
+    <div class="form-group">
+      <label>圖示（點選一個）</label>
+      <div class="icon-picker">${iconGrid}</div>
+      <div style="margin-top:8px;font-size:0.85rem;">
+        目前選擇：<span id="iconPreview" style="font-size:1.8rem;vertical-align:middle;">${c.icon}</span>
+        <span style="margin-left:10px;color:var(--text-light);">或自行輸入 Emoji：</span>
+        <input type="text" id="iconCustom" style="display:inline-block;width:60px;padding:4px;margin-left:4px;" placeholder="😀" oninput="document.getElementById('iconPreview').textContent=this.value||'${c.icon}'">
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">取消</button>
+      <button class="btn-primary" onclick="saveCategory()">💾 儲存</button>
+    </div>
+  `;
+}
+
+function selectIcon(el) {
+  document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  document.getElementById('iconPreview').textContent = el.dataset.icon;
+  document.getElementById('iconCustom').value = '';
+}
+
+function saveCategory() {
+  const name = document.getElementById('catName').value.trim();
+  const idVal = document.getElementById('catId').value.trim();
+  const custom = document.getElementById('iconCustom').value.trim();
+  const selectedIcon = document.querySelector('.icon-option.selected')?.dataset.icon;
+  const icon = custom || selectedIcon || editingCategory.icon;
+  
+  if (!name) { showToast('名稱不可空白'); return; }
+  if (!idVal) { showToast('ID 不可空白'); return; }
+  if (!/^[a-zA-Z0-9_]+$/.test(idVal)) { showToast('ID 只能用英文/數字/底線'); return; }
+  
+  if (editingCategory._isNew) {
+    if (DATA.categories.find(x => x.id === idVal)) {
+      showToast('ID 已存在，請換一個');
+      return;
     }
+    DATA.categories.push({ id: idVal, name, icon });
+  } else {
+    const c = DATA.categories.find(x => x.id === editingCategory.id);
+    c.name = name;
+    c.icon = icon;
+  }
+  saveLocal();
+  showToast('已儲存');
+  showAdminTab('category', document.querySelector('.admin-tab.active'));
+  renderAll();
+}
+
+function deleteCategory(id) {
+  const c = DATA.categories.find(x => x.id === id);
+  if (!c) return;
+  const count = DATA.qa.filter(q => q.category === id).length;
+  if (count > 0) {
+    alert(`此分類還有 ${count} 則 QA，請先把這些 QA 移到其他分類後再刪除`);
+    return;
+  }
+  if (!confirm(`確定要刪除分類「${c.name}」？`)) return;
+  DATA.categories = DATA.categories.filter(x => x.id !== id);
+  saveLocal();
+  showToast('已刪除');
+  renderAdminCategoryList();
+  renderAll();
+}
+
+// ---- 據點管理 ----
+function renderAdminStation() {
+  setTimeout(renderAdminStationList, 0);
+  return `
+    <div class="admin-toolbar">
+      <button class="btn-primary" onclick="editStation(null)">➕ 新增據點</button>
+      <input type="text" id="adminStSearch" placeholder="搜尋站名..." style="flex:1;" oninput="renderAdminStationList()">
+    </div>
+    <div class="admin-list" id="adminStationList"></div>
+  `;
+}
+
+function renderAdminStationList() {
+  const kw = (document.getElementById('adminStSearch')?.value || '').toLowerCase();
+  let list = DATA.stations || [];
+  if (kw) list = list.filter(s => s.name.toLowerCase().includes(kw) || (s.line||'').toLowerCase().includes(kw));
+  const html = list.map(s => `<div class="admin-item">
+    <div class="admin-item-info">
+      <div class="admin-item-title">${escapeHtml(s.code||s.id)} ｜ ${escapeHtml(s.name)}</div>
+      <div class="admin-item-meta">${escapeHtml(s.line||'')} · ${escapeHtml(s.grade||'')} · ${escapeHtml(s.group||'')}</div>
+    </div>
+    <button class="admin-btn admin-btn-edit" onclick="editStation(${s.id})">編輯</button>
+    <button class="admin-btn admin-btn-del" onclick="deleteStation(${s.id})">刪除</button>
+  </div>`).join('');
+  document.getElementById('adminStationList').innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-light);">沒有資料</div>';
+}
+
+function editStation(id) {
+  const s = id ? DATA.stations.find(x => x.id === id) : {
+    id: null, code: '', name: '', line: '', grade: '', address: '', exit: '', group: ''
+  };
+  if (!s) return;
+  editingStation = s;
+  
+  // 收集目前所有路線和批次作為選項建議
+  const existingLines = [...new Set(DATA.stations.map(x => x.line))].filter(Boolean);
+  const existingGroups = [...new Set(DATA.stations.map(x => x.group))].filter(Boolean);
+  
+  document.getElementById('adminTabContent').innerHTML = `
+    <button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">← 返回列表</button>
+    <h3 style="margin:16px 0;">${id ? '✏️ 編輯據點' : '➕ 新增據點'}</h3>
+    
+    <div class="form-group"><label>編號（A1、KH1、S1... 可選）</label><input type="text" id="stCode" value="${escapeHtml(s.code||'')}"></div>
+    <div class="form-group"><label>站名 *</label><input type="text" id="stName" value="${escapeHtml(s.name||'')}"></div>
+    <div class="form-group"><label>捷運線/路線</label>
+      <input type="text" id="stLine" list="lineList" value="${escapeHtml(s.line||'')}" placeholder="例：板南線、高雄捷運紅線">
+      <datalist id="lineList">
+        ${existingLines.map(l => `<option value="${escapeHtml(l)}">`).join('')}
+      </datalist>
+    </div>
+    <div class="form-group"><label>分級</label>
+      <select id="stGrade">
+        <option value="B" ${s.grade==='B'?'selected':''}>B</option>
+        <option value="C" ${s.grade==='C'?'selected':''}>C</option>
+        <option value="門市" ${s.grade==='門市'?'selected':''}>門市</option>
+        <option value="" ${!s.grade?'selected':''}>未分級</option>
+      </select>
+    </div>
+    <div class="form-group"><label>地址</label><input type="text" id="stAddress" value="${escapeHtml(s.address||'')}"></div>
+    <div class="form-group"><label>位置/出口</label><input type="text" id="stExit" value="${escapeHtml(s.exit||'')}"></div>
+    <div class="form-group"><label>批次</label>
+      <input type="text" id="stGroup" list="groupList" value="${escapeHtml(s.group||'')}" placeholder="例：2024第一批、2026新增、2025高雄紅線">
+      <datalist id="groupList">
+        ${existingGroups.map(g => `<option value="${escapeHtml(g)}">`).join('')}
+      </datalist>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">取消</button>
+      <button class="btn-primary" onclick="saveStation()">💾 儲存</button>
+    </div>
+  `;
+}
+
+function saveStation() {
+  const name = document.getElementById('stName').value.trim();
+  if (!name) { showToast('站名不可空白'); return; }
+  
+  const data = {
+    code: document.getElementById('stCode').value.trim(),
+    name: name,
+    line: document.getElementById('stLine').value.trim(),
+    grade: document.getElementById('stGrade').value,
+    address: document.getElementById('stAddress').value.trim(),
+    exit: document.getElementById('stExit').value.trim(),
+    group: document.getElementById('stGroup').value.trim()
+  };
+  
+  if (editingStation.id) {
+    Object.assign(DATA.stations.find(x => x.id === editingStation.id), data);
+  } else {
+    const newId = Math.max(0, ...DATA.stations.map(x => x.id)) + 1;
+    DATA.stations.push({ id: newId, ...data });
+  }
+  
+  saveLocal();
+  showToast('已儲存');
+  showAdminTab('station', document.querySelector('.admin-tab.active'));
+  renderAll();
+}
+
+function deleteStation(id) {
+  const s = DATA.stations.find(x => x.id === id);
+  if (!s) return;
+  if (!confirm(`確定要刪除「${s.name}」？`)) return;
+  DATA.stations = DATA.stations.filter(x => x.id !== id);
+  saveLocal();
+  showToast('已刪除');
+  renderAdminStationList();
+  renderAll();
+}
+
+// ---- 基本設定 ----
+function renderAdminMeta() {
+  return `
+    <h3 style="margin-bottom:16px;">⚙️ 基本設定</h3>
+    <div class="form-group">
+      <label>網站標題（顯示在表頭）</label>
+      <input type="text" id="metaTitle" value="${escapeHtml(DATA.meta.title||'')}">
+    </div>
+    <div class="form-group">
+      <label>客服電話</label>
+      <input type="text" id="metaSubtitle" value="${escapeHtml(DATA.meta.subtitle||'')}">
+    </div>
+    <div class="form-group">
+      <label>客服信箱</label>
+      <input type="text" id="metaEmail" value="${escapeHtml(DATA.meta.email||'')}">
+    </div>
+    <div class="form-group">
+      <label>官方 LINE ID</label>
+      <input type="text" id="metaLineId" value="${escapeHtml(DATA.meta.lineId||'')}">
+    </div>
+    <div class="form-group">
+      <label>YTM LINE ID</label>
+      <input type="text" id="metaYtmLineId" value="${escapeHtml(DATA.meta.ytmLineId||'')}">
+    </div>
+    <div class="form-group">
+      <label>跑馬燈訊息</label>
+      <textarea id="metaMarquee" rows="3">${escapeHtml(DATA.marquee||'')}</textarea>
+    </div>
+    <div class="form-group">
+      <label>版本</label>
+      <input type="text" id="metaVersion" value="${escapeHtml(DATA.meta.version||'')}">
+    </div>
+    <div style="margin-top:20px;">
+      <button class="btn-primary" onclick="saveMeta()">💾 儲存設定</button>
+    </div>
+  `;
+}
+
+function saveMeta() {
+  DATA.meta.title = document.getElementById('metaTitle').value.trim();
+  DATA.meta.subtitle = document.getElementById('metaSubtitle').value.trim();
+  DATA.meta.email = document.getElementById('metaEmail').value.trim();
+  DATA.meta.lineId = document.getElementById('metaLineId').value.trim();
+  DATA.meta.ytmLineId = document.getElementById('metaYtmLineId').value.trim();
+  DATA.meta.version = document.getElementById('metaVersion').value.trim();
+  DATA.meta.lastUpdate = new Date().toISOString().split('T')[0];
+  DATA.marquee = document.getElementById('metaMarquee').value.trim();
+  saveLocal();
+  showToast('設定已儲存');
+  renderAll();
+}
+
+// ---- 匯入/匯出 ----
+function renderAdminExport() {
+  return `
+    <div class="export-section">
+      <h3>💾 匯出 data.json</h3>
+      <p>匯出目前的資料為 <code>data.json</code> 檔案，上傳到 GitHub 後，所有使用者都會看到最新資料。</p>
+      <button class="btn-primary" onclick="exportData()">⬇️ 下載 data.json</button>
+    </div>
+    
+    <div class="export-section" style="background:#E3F2FD;border-color:#90CAF9;">
+      <h3 style="color:#1565C0;">📤 匯入 data.json</h3>
+      <p>從 <code>data.json</code> 檔案匯入資料（會覆蓋目前所有資料）</p>
+      <button class="btn-primary" style="background:#1565C0;" onclick="document.getElementById('importFile').click()">⬆️ 選擇檔案</button>
+      <input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importData(this)">
+    </div>
+    
+    <div class="export-section" style="background:#FFF3E0;border-color:#FFB74D;">
+      <h3 style="color:#E65100;">🔄 從伺服器重新載入</h3>
+      <p>捨棄本機暫存的修改，重新從 <code>data.json</code> 載入。</p>
+      <button class="btn-primary" style="background:#E65100;" onclick="reloadFromServer()">重新載入</button>
+    </div>
+    
+    <div class="export-section" style="background:#FFEBEE;border-color:#EF9A9A;">
+      <h3 style="color:#C62828;">🗑️ 清除本機暫存</h3>
+      <p>清除瀏覽器暫存的資料並登出管理。</p>
+      <button class="btn-primary" style="background:#C62828;" onclick="clearLocal()">清除暫存</button>
+    </div>
+    
+    <div style="margin-top:20px;padding:16px;background:var(--brand-bg);border-radius:8px;font-size:0.9rem;color:var(--text-light);">
+      <strong style="color:var(--brand);">📖 部署工作流程</strong><br>
+      1. 在管理後台編輯 QA / 據點 / 分類 / 設定<br>
+      2. 編輯完成後，到此分頁按「⬇️ 下載 data.json」<br>
+      3. 把下載的 <code>data.json</code> 上傳到 GitHub 覆蓋原檔案<br>
+      4. 其他使用者重新整理後會看到更新通知，點一下就能套用<br><br>
+      <strong style="color:var(--brand);">📊 目前資料統計</strong><br>
+      QA 總數：${DATA.qa.length} 則 ｜ 據點總數：${DATA.stations.length} 站 ｜ 分類數：${DATA.categories.length} 類<br>
+      最後更新：${DATA.meta.lastUpdate || '（尚未設定）'}
+    </div>
+  `;
 }
 
 function exportData() {
-    // 更新 lastUpdate
-    const today = new Date();
-    DATA.meta.lastUpdate = today.getFullYear() + '-' +
-        String(today.getMonth()+1).padStart(2,'0') + '-' +
-        String(today.getDate()).padStart(2,'0');
-    const json = JSON.stringify(DATA, null, 2);
-    const blob = new Blob([json], {type: 'application/json;charset=utf-8'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'data.json';
-    a.click();
-    URL.revokeObjectURL(url);
-    toast('📥 已下載 data.json，請上傳至 GitHub');
+  DATA.meta.lastUpdate = new Date().toISOString().split('T')[0];
+  const json = JSON.stringify(DATA, null, 2);
+  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'data.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('data.json 已下載');
 }
 
-/* ---------- Util ---------- */
-function closeModal(id) { document.getElementById(id).classList.remove('show'); }
-function toast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    clearTimeout(window._toastT);
-    window._toastT = setTimeout(() => t.classList.remove('show'), 2500);
+function importData(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!confirm('匯入會覆蓋目前所有資料，確定？')) { input.value=''; return; }
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (!parsed.qa || !parsed.categories) {
+        showToast('檔案格式不正確');
+        return;
+      }
+      DATA = parsed;
+      saveLocal();
+      showToast('匯入成功');
+      renderAll();
+      showAdminTab('export', document.querySelector('.admin-tab.active'));
+    } catch (err) {
+      showToast('檔案解析失敗：' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  input.value = '';
 }
 
-// Modal 點背景關閉
-document.querySelectorAll('.modal-bg').forEach(m => {
-    m.addEventListener('click', e => {
-        if (e.target === m) m.classList.remove('show');
-    });
+async function reloadFromServer() {
+  if (!confirm('會捨棄本機暫存的修改，確定？')) return;
+  localStorage.removeItem('ytm_qa_data');
+  try {
+    DATA = await loadDataJson();
+    showToast('已從伺服器重新載入');
+    renderAll();
+    showAdminTab('export', document.querySelector('.admin-tab.active'));
+  } catch(e) {
+    showToast('重新載入失敗');
+  }
+}
+
+function clearLocal() {
+  if (!confirm('清除本機暫存並登出管理？')) return;
+  localStorage.removeItem('ytm_qa_data');
+  isAdmin = false;
+  closeAdmin();
+  showToast('已清除');
+  location.reload();
+}
+
+function saveLocal() {
+  DATA.meta.lastUpdate = new Date().toISOString().split('T')[0];
+  try { localStorage.setItem('ytm_qa_data', JSON.stringify(DATA)); }
+  catch(e) { console.warn('localStorage 儲存失敗', e); }
+}
+
+document.getElementById('adminModal').addEventListener('click', e => {
+  if (e.target.id === 'adminModal') closeAdmin();
 });
-
-// 初始化
-loadData();
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAdmin();
+});
 </script>
+
 </body>
 </html>
