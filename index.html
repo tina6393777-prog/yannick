@@ -6,1927 +6,677 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>亞尼克YTM客服助手</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-:root {
-  --brand: #C8102E;
-  --brand-dark: #A00D24;
-  --brand-light: #E8847A;
-  --brand-bg: #FFF5F5;
-  --success: #2D9F60;
-  --text: #2C2C2C;
-  --text-light: #6B6B6B;
-  --border: #E8E0E0;
-  --bg: #FAF7F5;
-  --white: #FFFFFF;
-  --shadow: 0 2px 8px rgba(200,16,46,0.08);
-  --shadow-hover: 0 6px 20px rgba(200,16,46,0.15);
-  --radius: 12px;
-  --fs: 16px;
-}
-html { font-size: var(--fs); }
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei", "PingFang TC", "Segoe UI", sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  min-height: 100vh;
-  padding-bottom: 40px;
-}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--brand:#C8102E;--brand-dark:#A00D24;--brand-light:#E8847A;--brand-bg:#FFF5F5;--success:#2D9F60;--text:#2C2C2C;--text-light:#6B6B6B;--border:#E8E0E0;--bg:#FAF7F5;--white:#FFF;--shadow:0 2px 8px rgba(200,16,46,.08);--shadow-hover:0 6px 20px rgba(200,16,46,.15);--radius:12px;--fs:16px}
+html{font-size:var(--fs)}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft JhengHei","PingFang TC","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;padding-bottom:40px}
 
-/* ========= Header with LOGO ========= */
-.header {
-  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-dark) 100%);
-  color: var(--white);
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(200,16,46,0.2);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-.logo-box {
-  background: var(--white);
-  border-radius: 10px;
-  padding: 8px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  flex-shrink: 0;
-}
-.logo-svg { height: 38px; width: auto; display: block; }
+/* Header */
+.header{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;padding:16px;box-shadow:0 4px 12px rgba(200,16,46,.2);position:sticky;top:0;z-index:100}
+.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo-box{background:#fff;border-radius:10px;padding:8px 12px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.1);flex-shrink:0}
+.logo-svg{height:38px;width:auto;display:block}
+.header-center{flex:1;min-width:180px}
+.header h1{font-size:1.25rem;margin-bottom:4px;letter-spacing:1px;font-weight:700}
+.header-contact{font-size:.8rem;opacity:.95;line-height:1.7}
+.header-contact strong{color:#FFE082;margin-right:4px}
+.header-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-icon{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 12px;border-radius:20px;font-size:.8rem;cursor:pointer;transition:.2s;white-space:nowrap;font-family:inherit}
+.btn-icon:hover{background:rgba(255,255,255,.28)}
+@media(max-width:640px){.header-inner{gap:10px}.header h1{font-size:1.05rem}.header-contact{font-size:.72rem}.logo-svg{height:30px}.btn-icon{padding:5px 10px;font-size:.75rem}}
 
-.header-center {
-  flex: 1;
-  min-width: 180px;
-}
-.header h1 {
-  font-size: 1.25rem;
-  margin-bottom: 4px;
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-.header-contact {
-  font-size: 0.8rem;
-  opacity: 0.95;
-  line-height: 1.6;
-}
-.header-contact div { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
-.header-contact strong { color: #FFE082; margin-right: 4px; }
+/* Marquee */
+.marquee-wrap{background:#FFF8E1;border-bottom:1px solid #F5D98E;overflow:hidden;padding:8px 0}
+.marquee{display:inline-block;white-space:nowrap;animation:marquee 40s linear infinite;font-size:.85rem;color:#8B4513}
+@keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 
-.header-actions {
-  display: flex;
-  gap: 6px;
-  flex-shrink: 0;
-}
-.btn-icon {
-  background: rgba(255,255,255,0.15);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: var(--white);
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  font-family: inherit;
-}
-.btn-icon:hover { background: rgba(255,255,255,0.28); }
+.container{max-width:1200px;margin:0 auto;padding:16px}
 
-@media (max-width: 640px) {
-  .header-inner { gap: 10px; }
-  .header h1 { font-size: 1.05rem; }
-  .header-contact { font-size: 0.72rem; }
-  .logo-svg { height: 32px; }
-  .btn-icon { padding: 5px 10px; font-size: 0.75rem; }
-}
+/* Update Banner */
+.update-banner{background:#E8F5E9;border:1px solid #81C784;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.9rem;color:#1B5E20}
+.update-banner.show{display:flex}
+.update-banner button{background:#2E7D32;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85rem;font-family:inherit}
 
-/* ========= Marquee ========= */
-.marquee-wrap {
-  background: #FFF8E1;
-  border-bottom: 1px solid #F5D98E;
-  overflow: hidden;
-  padding: 8px 0;
-}
-.marquee {
-  display: inline-block;
-  white-space: nowrap;
-  animation: marquee 40s linear infinite;
-  font-size: 0.85rem;
-  color: #8B4513;
-}
-@keyframes marquee {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
-}
+/* Search */
+.search-box{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.search-box input{flex:1;border:none;outline:none;font-size:1rem;color:var(--text);background:transparent;padding:4px 0;font-family:inherit}
+.search-icon{color:var(--brand);font-size:1.2rem}
+.search-clear{background:var(--border);border:none;border-radius:50%;width:24px;height:24px;font-size:.8rem;cursor:pointer;color:var(--text-light);display:none}
+.search-clear.show{display:block}
 
-.container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+/* Categories */
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+@media(max-width:768px){.categories{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:480px){.categories{grid-template-columns:repeat(2,1fr)}}
+.category-card{background:var(--white);border:2px solid var(--border);border-radius:var(--radius);padding:16px 8px;text-align:center;cursor:pointer;transition:.2s;position:relative}
+.category-card:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:var(--shadow-hover)}
+.category-card.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.category-card .icon{font-size:2rem;display:block;margin-bottom:6px}
+.category-card .name{font-size:.9rem;font-weight:600}
+.category-card .count{position:absolute;top:6px;right:8px;background:var(--brand);color:#fff;font-size:.7rem;padding:2px 8px;border-radius:12px;font-weight:600}
+.category-card.active .count{background:#fff;color:var(--brand)}
 
-/* ========= Update Banner ========= */
-.update-banner {
-  background: #E8F5E9;
-  border: 1px solid #81C784;
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 14px;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-  font-size: 0.9rem;
-  color: #1B5E20;
-}
-.update-banner.show { display: flex; }
-.update-banner button {
-  background: #2E7D32;
-  color: #fff;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-family: inherit;
-}
+/* Section Title */
+.section-title{font-size:1.1rem;font-weight:700;color:var(--brand);margin:16px 0 12px;padding-left:12px;border-left:4px solid var(--brand);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.section-title .count-badge{font-size:.8rem;color:var(--text-light);font-weight:500}
 
-/* ========= Search ========= */
-.search-box {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 16px;
-}
-.search-box input {
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 1rem;
-  color: var(--text);
-  background: transparent;
-  padding: 4px 0;
-  font-family: inherit;
-}
-.search-icon { color: var(--brand); font-size: 1.2rem; }
-.search-clear {
-  background: var(--border);
-  border: none;
-  border-radius: 50%;
-  width: 24px; height: 24px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  color: var(--text-light);
-  display: none;
-}
-.search-clear.show { display: block; }
+/* QA Cards */
+.qa-list{display:flex;flex-direction:column;gap:12px}
+.qa-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border);transition:.2s;position:relative}
+.qa-card:hover{box-shadow:var(--shadow-hover)}
+.qa-header{padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;user-select:none}
+.qa-header:hover{background:var(--brand-bg)}
+.qa-title{flex:1;font-weight:600;color:var(--text);font-size:1rem;line-height:1.5}
+.qa-arrow{color:var(--brand);font-size:1rem;transition:transform .2s;flex-shrink:0;margin-top:2px}
+.qa-card.open .qa-arrow{transform:rotate(180deg)}
+.qa-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;background:var(--brand-bg)}
+.qa-card.open .qa-content{max-height:10000px}
+.qa-body{padding:16px;font-size:.95rem;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:var(--text);border-top:1px solid var(--border)}
+.qa-body img{max-width:100%;height:auto;border-radius:8px;margin:8px 0;display:block}
+.qa-body a{color:var(--brand);text-decoration:underline;word-break:break-all}
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;margin:10px 0;border-radius:8px;overflow:hidden;background:#000}
+.video-wrap iframe,.video-wrap video{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
+.qa-tags{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:.75rem;padding:3px 10px;background:var(--border);color:var(--text-light);border-radius:12px}
+.badge{font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin-left:6px;vertical-align:middle}
+.badge-urgent{background:#FFE5E5;color:#C8102E;border:1px solid #C8102E}
+.badge-internal{background:#FFF3CD;color:#856404;border:1px solid #FFC107}
 
-/* ========= Categories ========= */
-.categories {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-bottom: 20px;
-}
-@media (max-width: 768px) { .categories { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 480px) { .categories { grid-template-columns: repeat(2, 1fr); } }
+/* Edit Pencil (admin only) */
+.qa-edit-btn{position:absolute;top:10px;right:10px;background:var(--brand);color:#fff;border:none;width:32px;height:32px;border-radius:50%;font-size:.9rem;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.15);opacity:.7;transition:.2s;z-index:5;display:none}
+.qa-edit-btn:hover{opacity:1;transform:scale(1.1)}
+body.admin-mode .qa-edit-btn{display:block}
 
-.category-card {
-  background: var(--white);
-  border: 2px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px 8px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-.category-card:hover {
-  border-color: var(--brand);
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-hover);
-}
-.category-card.active {
-  background: var(--brand);
-  color: var(--white);
-  border-color: var(--brand);
-}
-.category-card .icon { font-size: 2rem; display: block; margin-bottom: 6px; }
-.category-card .name { font-size: 0.9rem; font-weight: 600; }
-.category-card .count {
-  position: absolute;
-  top: 6px; right: 8px;
-  background: var(--brand);
-  color: var(--white);
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 12px;
-  font-weight: 600;
-}
-.category-card.active .count { background: var(--white); color: var(--brand); }
+/* Inline Edit Panel */
+.qa-edit-panel{background:#fff;border-top:2px solid var(--brand);padding:16px;display:none}
+.qa-edit-panel.show{display:block}
+.edit-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;background:#F5F5F5;border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;margin-bottom:-1px}
+.tool-btn{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:4px;cursor:pointer;font-size:.85rem;font-family:inherit;transition:.15s}
+.tool-btn:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
+.tool-btn.c-red{color:#C8102E;font-weight:700}
+.tool-btn.c-orange{color:#E67E22;font-weight:600}
+.tool-btn.c-green{color:#2D9F60;font-weight:600}
+.tool-btn.c-blue{color:#2E78B8;font-weight:600}
+.tool-btn.c-purple{color:#8E44AD;font-weight:600}
+.tool-sep{width:1px;background:#CCC;margin:0 4px}
+.edit-textarea{width:100%;min-height:200px;padding:10px;border:1px solid var(--border);border-radius:0 0 8px 8px;font-size:.95rem;font-family:"Microsoft JhengHei",monospace;line-height:1.6;resize:vertical;outline:none}
+.edit-textarea:focus{border-color:var(--brand)}
+.edit-field{margin-bottom:12px}
+.edit-field label{display:block;font-weight:600;margin-bottom:4px;font-size:.85rem;color:var(--text)}
+.edit-field input,.edit-field select{width:100%;padding:8px;border:1px solid var(--border);border-radius:6px;font-size:.9rem;outline:none;font-family:inherit}
+.edit-field input:focus,.edit-field select:focus{border-color:var(--brand)}
+.edit-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.edit-actions button{padding:8px 16px;border:none;border-radius:6px;font-size:.9rem;cursor:pointer;font-family:inherit;font-weight:600}
+.edit-save{background:var(--brand);color:#fff}
+.edit-save:hover{background:var(--brand-dark)}
+.edit-cancel{background:var(--border);color:var(--text)}
+.edit-delete{background:#FFEBEE;color:#C62828}
+.edit-check{display:flex;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.edit-check label{display:flex;align-items:center;gap:4px;font-size:.85rem;cursor:pointer}
+.edit-check input{width:auto}
 
-/* ========= Section Title ========= */
-.section-title {
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--brand);
-  margin: 16px 0 12px;
-  padding-left: 12px;
-  border-left: 4px solid var(--brand);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-.section-title .count-badge {
-  font-size: 0.8rem;
-  color: var(--text-light);
-  font-weight: 500;
-}
+/* Color text */
+.ct-red{color:#C8102E;font-weight:700}
+.ct-orange{color:#E67E22;font-weight:600}
+.ct-green{color:#2D9F60;font-weight:600}
+.ct-blue{color:#2E78B8;font-weight:600}
+.ct-purple{color:#8E44AD;font-weight:600}
 
-/* ========= QA Cards ========= */
-.qa-list { display: flex; flex-direction: column; gap: 12px; }
-.qa-card {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  transition: all 0.2s;
-}
-.qa-card:hover { box-shadow: var(--shadow-hover); }
-.qa-header {
-  padding: 14px 16px;
-  cursor: pointer;
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  user-select: none;
-}
-.qa-header:hover { background: var(--brand-bg); }
-.qa-title {
-  flex: 1;
-  font-weight: 600;
-  color: var(--text);
-  font-size: 1rem;
-  line-height: 1.5;
-}
-.qa-arrow {
-  color: var(--brand);
-  font-size: 1rem;
-  transition: transform 0.2s;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.qa-card.open .qa-arrow { transform: rotate(180deg); }
-.qa-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-  background: var(--brand-bg);
-}
-.qa-card.open .qa-content { max-height: 10000px; }
-.qa-body {
-  padding: 16px;
-  font-size: 0.95rem;
-  white-space: pre-wrap;
-  word-break: break-word;
-  line-height: 1.8;
-  color: var(--text);
-  border-top: 1px solid var(--border);
-}
-.qa-body img { max-width: 100%; height: auto; border-radius: 8px; margin: 8px 0; display: block; }
-.qa-body a { color: var(--brand); text-decoration: underline; word-break: break-all; }
-.video-wrap {
-  position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
-  margin: 10px 0;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #000;
-}
-.video-wrap iframe, .video-wrap video {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  border: 0;
-}
+/* Stations */
+.station-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.station-filter{padding:6px 14px;background:var(--white);border:1px solid var(--border);border-radius:16px;font-size:.85rem;cursor:pointer;color:var(--text-light);transition:.2s;user-select:none}
+.station-filter:hover{border-color:var(--brand);color:var(--brand)}
+.station-filter.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.station-search{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;font-family:inherit}
+.station-search:focus{border-color:var(--brand)}
+.table-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto;-webkit-overflow-scrolling:touch}
+.station-table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:700px}
+.station-table th{background:var(--brand);color:#fff;padding:10px 12px;text-align:left;font-weight:600;position:sticky;top:0;white-space:nowrap}
+.station-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
+.station-table tr:hover{background:var(--brand-bg)}
+.line-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:600;white-space:nowrap;color:#fff}
+.line-板南線{background:#1E4A8C}.line-淡水信義線{background:#C8102E}.line-松山新店線{background:#2E8B3C}.line-中和新蘆線{background:#E8A300}.line-文湖線{background:#8B5A2B}.line-高雄捷運紅線{background:#E30613}.line-門市YTM{background:#555}
+.grade-B{color:#2E78B8;font-weight:600}.grade-C{color:#E67E22;font-weight:600}.grade-門市{color:#555;font-weight:600}
 
-.qa-tags {
-  padding: 0 16px 12px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-.tag {
-  font-size: 0.75rem;
-  padding: 3px 10px;
-  background: var(--border);
-  color: var(--text-light);
-  border-radius: 12px;
-}
+.empty-state{text-align:center;padding:40px 20px;color:var(--text-light)}
+.empty-state .big{font-size:3rem;margin-bottom:10px}
 
-.badge {
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-weight: 600;
-  display: inline-block;
-  margin-left: 6px;
-  vertical-align: middle;
-}
-.badge-urgent { background: #FFE5E5; color: #C8102E; border: 1px solid #C8102E; }
-.badge-internal { background: #FFF3CD; color: #856404; border: 1px solid #FFC107; }
+/* Modal */
+.modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
+.modal.show{display:flex}
+.modal-content{background:#fff;border-radius:var(--radius);max-width:900px;width:100%;max-height:calc(100vh - 40px);display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.3)}
+.modal-header{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;background:var(--brand);color:#fff;border-radius:var(--radius) var(--radius) 0 0}
+.modal-header h2{font-size:1.1rem}
+.modal-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer}
+.modal-body{padding:20px;overflow-y:auto;flex:1}
 
-.ct-red { color: #C8102E; font-weight: 700; }
-.ct-orange { color: #E67E22; font-weight: 600; }
-.ct-green { color: #2D9F60; font-weight: 600; }
-.ct-blue { color: #2E78B8; font-weight: 600; }
-.ct-purple { color: #8E44AD; font-weight: 600; }
+.login-form{text-align:center;padding:20px}
+.login-form input{width:100%;padding:12px;font-size:1rem;border:1px solid var(--border);border-radius:8px;margin:10px 0;outline:none;font-family:inherit}
+.login-form input:focus{border-color:var(--brand)}
+.btn-primary{background:var(--brand);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:.95rem;cursor:pointer;font-weight:600;transition:.2s;font-family:inherit}
+.btn-primary:hover{background:var(--brand-dark)}
+.btn-secondary{background:var(--border);color:var(--text);border:none;padding:10px 20px;border-radius:8px;font-size:.95rem;cursor:pointer;margin-right:8px;font-family:inherit}
 
-/* ========= Stations ========= */
-.station-filters {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.station-filter {
-  padding: 6px 14px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  color: var(--text-light);
-  transition: all 0.2s;
-  user-select: none;
-}
-.station-filter:hover { border-color: var(--brand); color: var(--brand); }
-.station-filter.active {
-  background: var(--brand);
-  color: var(--white);
-  border-color: var(--brand);
-}
-.station-search {
-  width: 100%;
-  padding: 10px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  margin-bottom: 12px;
-  outline: none;
-  font-family: inherit;
-}
-.station-search:focus { border-color: var(--brand); }
+.admin-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--border);overflow-x:auto}
+.admin-tab{padding:10px 14px;border:none;background:none;cursor:pointer;color:var(--text-light);font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:inherit;font-size:.9rem}
+.admin-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+.admin-toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
+.admin-toolbar input,.admin-toolbar select{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:.9rem}
+.admin-list{max-height:50vh;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
+.admin-item{padding:12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.admin-item:last-child{border-bottom:none}
+.admin-item-info{flex:1;min-width:0}
+.admin-item-title{font-weight:600;color:var(--text);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis}
+.admin-item-meta{font-size:.8rem;color:var(--text-light)}
+.admin-btn{padding:6px 12px;border:none;border-radius:6px;font-size:.85rem;cursor:pointer;font-weight:500;font-family:inherit}
+.admin-btn-edit{background:#E3F2FD;color:#1976D2}
+.admin-btn-del{background:#FFEBEE;color:#C62828}
+.admin-btn-edit:hover{background:#BBDEFB}
+.admin-btn-del:hover{background:#FFCDD2}
 
-.table-wrap {
-  background: var(--white);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.station-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-  min-width: 700px;
-}
-.station-table th {
-  background: var(--brand);
-  color: var(--white);
-  padding: 10px 12px;
-  text-align: left;
-  font-weight: 600;
-  position: sticky;
-  top: 0;
-  white-space: nowrap;
-}
-.station-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid var(--border);
-}
-.station-table tr:hover { background: var(--brand-bg); }
-.line-tag {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  white-space: nowrap;
-  color: #fff;
-}
-.line-板南線 { background: #1E4A8C; }
-.line-淡水信義線 { background: #C8102E; }
-.line-松山新店線 { background: #2E8B3C; }
-.line-中和新蘆線 { background: #E8A300; }
-.line-文湖線 { background: #8B5A2B; }
-.line-高雄捷運紅線 { background: #E30613; }
-.line-門市YTM { background: #555; }
-.grade-B { color: #2E78B8; font-weight: 600; }
-.grade-C { color: #E67E22; font-weight: 600; }
-.grade-門市 { color: #555; font-weight: 600; }
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-weight:600;margin-bottom:6px;color:var(--text);font-size:.9rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:.95rem;outline:none;font-family:inherit}
+.form-group textarea{min-height:150px;resize:vertical;line-height:1.6}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--brand)}
 
-/* ========= Empty ========= */
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--text-light);
-}
-.empty-state .big { font-size: 3rem; margin-bottom: 10px; }
+.icon-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;max-height:260px;overflow-y:auto;padding:10px;border:1px solid var(--border);border-radius:8px;background:#FAFAFA}
+.icon-option{font-size:1.5rem;padding:8px;text-align:center;cursor:pointer;border-radius:6px;background:#fff;border:2px solid transparent;transition:.15s}
+.icon-option:hover{border-color:var(--brand-light)}
+.icon-option.selected{border-color:var(--brand);background:var(--brand-bg)}
 
-/* ========= Modal ========= */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 20px;
-  overflow-y: auto;
-}
-.modal.show { display: flex; }
-.modal-content {
-  background: var(--white);
-  border-radius: var(--radius);
-  max-width: 900px;
-  width: 100%;
-  max-height: calc(100vh - 40px);
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-}
-.modal-header {
-  padding: 18px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: var(--brand);
-  color: var(--white);
-  border-radius: var(--radius) var(--radius) 0 0;
-}
-.modal-header h2 { font-size: 1.1rem; }
-.modal-close {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  color: var(--white);
-  width: 32px; height: 32px;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-.modal-body { padding: 20px; overflow-y: auto; flex: 1; }
+.export-section{background:var(--brand-bg);padding:16px;border-radius:8px;margin-top:16px;border:1px solid var(--brand-light)}
+.export-section h3{color:var(--brand);margin-bottom:8px;font-size:1rem}
+.export-section p{font-size:.85rem;color:var(--text-light);margin-bottom:10px}
 
-.login-form { text-align: center; padding: 20px; }
-.login-form input {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin: 10px 0;
-  outline: none;
-  font-family: inherit;
-}
-.login-form input:focus { border-color: var(--brand); }
-.btn-primary {
-  background: var(--brand);
-  color: var(--white);
-  border: none;
-  padding: 10px 24px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-.btn-primary:hover { background: var(--brand-dark); }
-.btn-secondary {
-  background: var(--border);
-  color: var(--text);
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  font-size: 0.95rem;
-  cursor: pointer;
-  margin-right: 8px;
-  font-family: inherit;
-}
+.toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:#fff;padding:12px 24px;border-radius:25px;font-size:.9rem;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:2000;opacity:0;transition:.3s;max-width:90%;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+body.fs-large{--fs:18px}body.fs-xlarge{--fs:20px}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:44px;height:44px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(200,16,46,.3);opacity:0;pointer-events:none;transition:.3s;z-index:50;font-family:inherit}
+.scroll-top.show{opacity:1;pointer-events:auto}
 
-.admin-tabs {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 16px;
-  border-bottom: 2px solid var(--border);
-  overflow-x: auto;
-}
-.admin-tab {
-  padding: 10px 14px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--text-light);
-  font-weight: 600;
-  white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  margin-bottom: -2px;
-  font-family: inherit;
-  font-size: 0.9rem;
-}
-.admin-tab.active {
-  color: var(--brand);
-  border-bottom-color: var(--brand);
-}
-
-.admin-toolbar {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-.admin-toolbar input, .admin-toolbar select {
-  padding: 8px 12px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-family: inherit;
-  font-size: 0.9rem;
-}
-
-.admin-list {
-  max-height: 50vh;
-  overflow-y: auto;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-}
-.admin-item {
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.admin-item:last-child { border-bottom: none; }
-.admin-item-info { flex: 1; min-width: 0; }
-.admin-item-title {
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 2px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.admin-item-meta { font-size: 0.8rem; color: var(--text-light); }
-
-.admin-btn {
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  font-weight: 500;
-  font-family: inherit;
-}
-.admin-btn-edit { background: #E3F2FD; color: #1976D2; }
-.admin-btn-del { background: #FFEBEE; color: #C62828; }
-.admin-btn-edit:hover { background: #BBDEFB; }
-.admin-btn-del:hover { background: #FFCDD2; }
-
-.form-group { margin-bottom: 16px; }
-.form-group label {
-  display: block;
-  font-weight: 600;
-  margin-bottom: 6px;
-  color: var(--text);
-  font-size: 0.9rem;
-}
-.form-group input, .form-group select, .form-group textarea {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 0.95rem;
-  outline: none;
-  font-family: inherit;
-}
-.form-group textarea { min-height: 220px; resize: vertical; line-height: 1.6; font-family: "Microsoft JhengHei", monospace; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-  border-color: var(--brand);
-}
-.form-check { display: flex; gap: 16px; flex-wrap: wrap; }
-.form-check label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
-  cursor: pointer;
-}
-.form-check input { width: auto; }
-
-/* 編輯工具列 */
-.editor-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  padding: 8px;
-  background: #F5F5F5;
-  border: 1px solid var(--border);
-  border-bottom: none;
-  border-radius: 8px 8px 0 0;
-  margin-bottom: -1px;
-}
-.tool-btn {
-  padding: 6px 10px;
-  border: 1px solid var(--border);
-  background: var(--white);
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 0.85rem;
-  font-family: inherit;
-  transition: all 0.15s;
-}
-.tool-btn:hover { background: var(--brand); color: var(--white); border-color: var(--brand); }
-.tool-btn.color-red { color: #C8102E; font-weight: 700; }
-.tool-btn.color-orange { color: #E67E22; font-weight: 600; }
-.tool-btn.color-green { color: #2D9F60; font-weight: 600; }
-.tool-btn.color-blue { color: #2E78B8; font-weight: 600; }
-.tool-btn.color-purple { color: #8E44AD; font-weight: 600; }
-.tool-sep { width: 1px; background: #CCC; margin: 0 4px; }
-
-.editor-textarea {
-  border-radius: 0 0 8px 8px !important;
-  margin-top: 0 !important;
-}
-
-/* 圖示選擇器 */
-.icon-picker {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(46px, 1fr));
-  gap: 6px;
-  max-height: 260px;
-  overflow-y: auto;
-  padding: 10px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: #FAFAFA;
-}
-.icon-option {
-  font-size: 1.5rem;
-  padding: 8px;
-  text-align: center;
-  cursor: pointer;
-  border-radius: 6px;
-  background: var(--white);
-  border: 2px solid transparent;
-  transition: all 0.15s;
-}
-.icon-option:hover { border-color: var(--brand-light); }
-.icon-option.selected {
-  border-color: var(--brand);
-  background: var(--brand-bg);
-}
-
-.syntax-hint {
-  background: #FFF9E6;
-  border: 1px solid #FFE082;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  margin-bottom: 10px;
-  color: #5D4037;
-  line-height: 1.8;
-}
-.syntax-hint code {
-  background: var(--white);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: monospace;
-  color: var(--brand);
-}
-
-.export-section {
-  background: var(--brand-bg);
-  padding: 16px;
-  border-radius: 8px;
-  margin-top: 16px;
-  border: 1px solid var(--brand-light);
-}
-.export-section h3 { color: var(--brand); margin-bottom: 8px; font-size: 1rem; }
-.export-section p { font-size: 0.85rem; color: var(--text-light); margin-bottom: 10px; }
-
-/* ========= Toast ========= */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: var(--text);
-  color: var(--white);
-  padding: 12px 24px;
-  border-radius: 25px;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  z-index: 2000;
-  opacity: 0;
-  transition: all 0.3s;
-  max-width: 90%;
-  text-align: center;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-body.fs-large { --fs: 18px; }
-body.fs-xlarge { --fs: 20px; }
-
-.scroll-top {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 44px;
-  height: 44px;
-  background: var(--brand);
-  color: var(--white);
-  border: none;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(200,16,46,0.3);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.3s;
-  z-index: 50;
-  font-family: inherit;
-}
-.scroll-top.show { opacity: 1; pointer-events: auto; }
+/* Category管理快速按鈕(admin) */
+.cat-manage-btn{display:none;margin-left:8px;background:var(--brand);color:#fff;border:none;padding:4px 10px;border-radius:14px;font-size:.75rem;cursor:pointer;vertical-align:middle;font-family:inherit}
+body.admin-mode .cat-manage-btn{display:inline-block}
 </style>
 </head>
 <body>
-
 <div class="header">
-  <div class="header-inner">
-    <div class="logo-box">
-      <!-- 亞尼克 LOGO (Yannick) -->
-      <svg class="logo-svg" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
-        <!-- 紅色菱形圖示 -->
-        <g transform="translate(4, 8)">
-          <path d="M22 0 L44 22 L22 44 L0 22 Z" fill="#C8102E"/>
-          <path d="M22 6 L38 22 L22 38 L6 22 Z" fill="#FFF"/>
-          <path d="M14 18 L22 10 L30 18 L28 22 L22 16 L16 22 Z" fill="#C8102E"/>
-          <path d="M14 26 L30 26 L22 34 Z" fill="#C8102E"/>
-        </g>
-        <!-- YANNICK 文字 -->
-        <text x="58" y="26" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="#C8102E" letter-spacing="2">YANNICK</text>
-        <text x="58" y="48" font-family="Microsoft JhengHei, sans-serif" font-size="15" font-weight="700" fill="#333" letter-spacing="6">亞尼克</text>
-      </svg>
-    </div>
-    <div class="header-center">
-      <h1 id="headerTitle">亞尼克YTM客服助手</h1>
-      <div class="header-contact" id="headerContact"></div>
-    </div>
-    <div class="header-actions">
-      <button class="btn-icon" onclick="checkUpdate()" title="檢查更新">🔄</button>
-      <button class="btn-icon" onclick="toggleFontSize()" title="字級">🔤</button>
-      <button class="btn-icon" onclick="openAdmin()" title="管理">⚙️</button>
-    </div>
-  </div>
+<div class="header-inner">
+<div class="logo-box">
+<svg class="logo-svg" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+<g transform="translate(4,8)"><path d="M22 0L44 22L22 44L0 22Z" fill="#C8102E"/><path d="M22 6L38 22L22 38L6 22Z" fill="#FFF"/><path d="M14 18L22 10L30 18L28 22L22 16L16 22Z" fill="#C8102E"/><path d="M14 26L30 26L22 34Z" fill="#C8102E"/></g>
+<text x="58" y="26" font-family="Arial Black,sans-serif" font-size="18" font-weight="900" fill="#C8102E" letter-spacing="2">YANNICK</text>
+<text x="58" y="48" font-family="Microsoft JhengHei,sans-serif" font-size="15" font-weight="700" fill="#333" letter-spacing="6">亞尼克</text>
+</svg>
+</div>
+<div class="header-center">
+<h1 id="headerTitle">亞尼克YTM客服助手</h1>
+<div class="header-contact" id="headerContact"></div>
+</div>
+<div class="header-actions">
+<button class="btn-icon" onclick="checkUpdate()" title="檢查更新">🔄</button>
+<button class="btn-icon" onclick="toggleFontSize()" title="字級">🔤</button>
+<button class="btn-icon" onclick="openAdmin()" title="管理">⚙️</button>
+</div>
+</div>
 </div>
 
-<div class="marquee-wrap">
-  <div class="marquee" id="marqueeText">📢 客服專線 02-7733-5557</div>
-</div>
+<div class="marquee-wrap"><div class="marquee" id="marqueeText"></div></div>
 
 <div class="container">
-  <div class="update-banner" id="updateBanner">
-    <span>🆕 偵測到 data.json 有新版本！</span>
-    <button onclick="applyUpdate()">立即更新</button>
-  </div>
-  
-  <div class="search-box">
-    <span class="search-icon">🔍</span>
-    <input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）...">
-    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
-  </div>
-  <div class="categories" id="categoryContainer"></div>
-  <div id="resultContainer"></div>
+<div class="update-banner" id="updateBanner"><span>🆕 偵測到新版本！</span><button onclick="applyUpdate()">立即更新</button></div>
+<div class="search-box"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）..."><button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button></div>
+<div class="categories" id="categoryContainer"></div>
+<div id="resultContainer"></div>
 </div>
 
 <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
 
 <div class="modal" id="adminModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h2 id="adminTitle">⚙️ 管理後台</h2>
-      <button class="modal-close" onclick="closeAdmin()">✕</button>
-    </div>
-    <div class="modal-body" id="adminBody"></div>
-  </div>
+<div class="modal-content">
+<div class="modal-header"><h2 id="adminTitle">⚙️ 管理後台</h2><button class="modal-close" onclick="closeAdmin()">✕</button></div>
+<div class="modal-body" id="adminBody"></div>
+</div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ============ 全域狀態 ============
-let DATA = null;
-let currentCategory = 'all';
-let isAdmin = false;
-let editingQA = null;
-let editingStation = null;
-let editingCategory = null;
+let DATA=null,currentCategory='all',isAdmin=false;
+const ADMIN_PASSWORD='1234';
+const ICONS=['🏢','🎂','💳','🎁','🏪','🌐','💰','📍','📢','🛍️','🎯','⭐','🔥','💎','🎊','🎉','📝','📋','📊','📈','📌','📞','📱','💬','🚨','⚠️','🔒','🔑','✅','❌','❓','❗','🚀','✨','💡','🎓','📚','📖','🔧','⚙️','🍰','🍮','🧁','🍪','🍫','🍵','🥐','🥖','🚚','🏃','🎈','🎀','💝','🛒','🏆','🌟'];
 
-const ADMIN_PASSWORD = '1234';
+window.addEventListener('DOMContentLoaded',init);
 
-// 提供給分類挑選的圖示
-const ICON_LIBRARY = [
-  '🏢','🎂','💳','🎁','🏪','🌐','💰','📍',
-  '📢','🛍️','🎯','⭐','🔥','💎','🎊','🎉',
-  '📝','📋','📊','📈','📌','📞','📱','💬',
-  '🚨','⚠️','🔒','🔑','✅','❌','❓','❗',
-  '🚀','✨','💡','🎓','📚','📖','🔧','⚙️',
-  '🍰','🍮','🧁','🍪','🍫','🍵','🥐','🥖',
-  '🚚','🏃','🎈','🎀','💝','🛒','🏆','🌟'
-];
-
-window.addEventListener('DOMContentLoaded', init);
-
-async function init() {
-  try {
-    const local = localStorage.getItem('ytm_qa_data');
-    if (local) {
-      try { DATA = JSON.parse(local); }
-      catch(e) { DATA = await loadDataJson(); }
-    } else {
-      DATA = await loadDataJson();
-    }
-    renderAll();
-    silentCheckUpdate();
-  } catch (e) {
-    console.error(e);
-    document.getElementById('resultContainer').innerHTML = 
-      '<div class="empty-state"><div class="big">⚠️</div><p>無法載入資料，請確認 data.json 檔案存在</p><p style="font-size:0.85rem;margin-top:8px;">' + e.message + '</p></div>';
+async function init(){
+  try{
+    const local=localStorage.getItem('ytm_qa_data');
+    if(local){try{DATA=JSON.parse(local)}catch(e){DATA=await loadJson()}}
+    else DATA=await loadJson();
+    renderAll();silentCheck();
+  }catch(e){
+    document.getElementById('resultContainer').innerHTML='<div class="empty-state"><div class="big">⚠️</div><p>無法載入資料，請確認 data.json</p><p style="font-size:.85rem;margin-top:8px">'+e.message+'</p></div>';
   }
-  document.getElementById('searchInput').addEventListener('input', onSearch);
-  window.addEventListener('scroll', () => {
-    const btn = document.getElementById('scrollTop');
-    if (window.scrollY > 300) btn.classList.add('show');
-    else btn.classList.remove('show');
+  document.getElementById('searchInput').addEventListener('input',onSearch);
+  window.addEventListener('scroll',()=>{document.getElementById('scrollTop').classList.toggle('show',scrollY>300)});
+}
+
+async function loadJson(){const r=await fetch('data.json?t='+Date.now());if(!r.ok)throw new Error('載入失敗');return r.json()}
+
+// Update check
+async function silentCheck(){try{const s=await loadJson();if(s.meta.lastUpdate&&s.meta.lastUpdate>(DATA.meta.lastUpdate||'')&&localStorage.getItem('ytm_qa_data')){window._pu=s;document.getElementById('updateBanner').classList.add('show')}}catch(e){}}
+async function checkUpdate(){showToast('檢查中...');try{const s=await loadJson();if(!localStorage.getItem('ytm_qa_data')){DATA=s;renderAll();showToast('已是最新');return}if(s.meta.lastUpdate&&s.meta.lastUpdate>(DATA.meta.lastUpdate||'')){window._pu=s;document.getElementById('updateBanner').classList.add('show');showToast('發現新版本！')}else showToast('已是最新')}catch(e){showToast('檢查失敗')}}
+function applyUpdate(){if(!window._pu)return;if(!confirm('套用新版本將覆蓋暫存，確定？'))return;DATA=window._pu;window._pu=null;localStorage.removeItem('ytm_qa_data');document.getElementById('updateBanner').classList.remove('show');renderAll();showToast('已更新')}
+
+// Render
+function renderAll(){
+  document.getElementById('headerTitle').textContent=DATA.meta.title||'亞尼克YTM客服助手';
+  let c='';
+  c+=`<div>📞 <strong>客服</strong>${DATA.meta.subtitle||''}</div>`;
+  if(DATA.meta.email)c+=`<div>📧 <strong>信箱</strong>${DATA.meta.email}</div>`;
+  if(DATA.meta.lineId)c+=`<div>💬 <strong>LINE</strong>${DATA.meta.lineId}${DATA.meta.ytmLineId?'｜YTM:'+DATA.meta.ytmLineId:''}</div>`;
+  document.getElementById('headerContact').innerHTML=c;
+  document.getElementById('marqueeText').textContent=DATA.marquee||'';
+  renderCategories();renderQA();
+}
+
+function renderCategories(){
+  const box=document.getElementById('categoryContainer');
+  let h=`<div class="category-card ${currentCategory==='all'?'active':''}" onclick="selectCategory('all')"><span class="icon">📚</span><div class="name">全部</div><div class="count">${DATA.qa.length}</div></div>`;
+  DATA.categories.forEach(c=>{
+    const n=c.id==='station'?(DATA.stations?.length||0):DATA.qa.filter(q=>q.category===c.id).length;
+    h+=`<div class="category-card ${currentCategory===c.id?'active':''}" onclick="selectCategory('${c.id}')"><span class="icon">${c.icon}</span><div class="name">${esc(c.name)}</div><div class="count">${n}</div></div>`;
   });
+  box.innerHTML=h;
 }
 
-async function loadDataJson() {
-  const res = await fetch('data.json?t=' + Date.now());
-  if (!res.ok) throw new Error('data.json 載入失敗 (' + res.status + ')');
-  return await res.json();
-}
+function selectCategory(id){currentCategory=id;document.getElementById('searchInput').value='';document.getElementById('searchClear').classList.remove('show');renderCategories();renderQA();scrollTo({top:0,behavior:'smooth'})}
 
-// ========= 檢查更新 =========
-async function silentCheckUpdate() {
-  try {
-    const serverData = await loadDataJson();
-    const localVer = DATA.meta.lastUpdate || '';
-    const serverVer = serverData.meta.lastUpdate || '';
-    if (serverVer && serverVer > localVer && localStorage.getItem('ytm_qa_data')) {
-      // 有新版本且本地有暫存
-      window._pendingUpdate = serverData;
-      document.getElementById('updateBanner').classList.add('show');
-    }
-  } catch(e) { /* ignore */ }
-}
-
-async function checkUpdate() {
-  showToast('檢查中...');
-  try {
-    const serverData = await loadDataJson();
-    const localVer = DATA.meta.lastUpdate || '';
-    const serverVer = serverData.meta.lastUpdate || '';
-    if (!localStorage.getItem('ytm_qa_data')) {
-      // 沒有本地暫存，直接載入
-      DATA = serverData;
-      renderAll();
-      showToast('已是最新版本');
-      return;
-    }
-    if (serverVer && serverVer > localVer) {
-      window._pendingUpdate = serverData;
-      document.getElementById('updateBanner').classList.add('show');
-      showToast('發現新版本！');
-    } else {
-      showToast('已是最新版本');
-    }
-  } catch(e) {
-    showToast('檢查失敗：' + e.message);
+function renderQA(){
+  const kw=document.getElementById('searchInput').value.trim().toLowerCase();
+  const ct=document.getElementById('resultContainer');
+  if(currentCategory==='station'){renderStations();return}
+  let list=DATA.qa;
+  if(currentCategory!=='all')list=list.filter(q=>q.category===currentCategory);
+  if(kw)list=list.filter(q=>q.title.toLowerCase().includes(kw)||q.content.toLowerCase().includes(kw)||(q.tags||[]).some(t=>t.toLowerCase().includes(kw)));
+  let sr=[];
+  if(kw&&DATA.stations)sr=DATA.stations.filter(s=>s.name.toLowerCase().includes(kw)||(s.address||'').toLowerCase().includes(kw)||(s.line||'').toLowerCase().includes(kw)||(s.exit||'').toLowerCase().includes(kw)||(s.code||'').toLowerCase().includes(kw));
+  if(!list.length&&!sr.length){ct.innerHTML='<div class="empty-state"><div class="big">🔍</div><p>找不到相關資料</p></div>';return}
+  let h='';
+  if(list.length){
+    const title=kw?`搜尋結果：「${esc(kw)}」`:currentCategory==='all'?'全部 QA':DATA.categories.find(c=>c.id===currentCategory)?.name||'';
+    h+=`<div class="section-title">${title}<span class="count-badge">${list.length} 則</span><button class="cat-manage-btn" onclick="openAdmin();setTimeout(()=>showAdminTab('category'),100)">📂 管理分類</button></div>`;
+    h+='<div class="qa-list">';
+    list.forEach(q=>h+=renderCard(q,kw));
+    h+='</div>';
   }
+  if(sr.length){h+=`<div class="section-title">📍 相關據點<span class="count-badge">${sr.length} 站</span></div>`+renderStationTable(sr)}
+  ct.innerHTML=h;
 }
 
-function applyUpdate() {
-  if (!window._pendingUpdate) return;
-  if (!confirm('套用新版本將覆蓋本機暫存的修改，確定？')) return;
-  DATA = window._pendingUpdate;
-  window._pendingUpdate = null;
-  localStorage.removeItem('ytm_qa_data');
-  document.getElementById('updateBanner').classList.remove('show');
-  renderAll();
-  showToast('已套用新版本');
-}
-
-// ============ 主渲染 ============
-function renderAll() {
-  document.getElementById('headerTitle').textContent = DATA.meta.title || '亞尼克YTM客服助手';
-  
-  const contact = document.getElementById('headerContact');
-  let html = '';
-  html += `<div>📞 <strong>客服</strong>${DATA.meta.subtitle || '02-7733-5557'}</div>`;
-  if (DATA.meta.email) html += `<div>📧 <strong>信箱</strong>${DATA.meta.email}</div>`;
-  if (DATA.meta.lineId) html += `<div>💬 <strong>官方LINE</strong>${DATA.meta.lineId}${DATA.meta.ytmLineId?'｜YTM:'+DATA.meta.ytmLineId:''}</div>`;
-  contact.innerHTML = html;
-  
-  document.getElementById('marqueeText').textContent = DATA.marquee || '';
-  renderCategories();
-  renderQA();
-}
-
-function renderCategories() {
-  const box = document.getElementById('categoryContainer');
-  let html = `<div class="category-card ${currentCategory==='all'?'active':''}" onclick="selectCategory('all')">
-    <span class="icon">📚</span><div class="name">全部</div><div class="count">${DATA.qa.length}</div>
-  </div>`;
-  DATA.categories.forEach(c => {
-    const count = c.id === 'station' 
-      ? (DATA.stations ? DATA.stations.length : 0)
-      : DATA.qa.filter(q => q.category === c.id).length;
-    html += `<div class="category-card ${currentCategory===c.id?'active':''}" onclick="selectCategory('${c.id}')">
-      <span class="icon">${c.icon}</span>
-      <div class="name">${escapeHtml(c.name)}</div>
-      <div class="count">${count}</div>
-    </div>`;
-  });
-  box.innerHTML = html;
-}
-
-function selectCategory(id) {
-  currentCategory = id;
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClear').classList.remove('show');
-  renderCategories();
-  renderQA();
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function renderQA() {
-  const kw = document.getElementById('searchInput').value.trim().toLowerCase();
-  const container = document.getElementById('resultContainer');
-  
-  if (currentCategory === 'station') {
-    renderStations();
-    return;
-  }
-  
-  let list = DATA.qa;
-  if (currentCategory !== 'all') list = list.filter(q => q.category === currentCategory);
-  if (kw) {
-    list = list.filter(q => 
-      q.title.toLowerCase().includes(kw) || 
-      q.content.toLowerCase().includes(kw) ||
-      (q.tags || []).some(t => t.toLowerCase().includes(kw))
-    );
-  }
-  
-  let stationResult = [];
-  if (kw && DATA.stations) {
-    stationResult = DATA.stations.filter(s => 
-      s.name.toLowerCase().includes(kw) || 
-      (s.address || '').toLowerCase().includes(kw) ||
-      (s.line || '').toLowerCase().includes(kw) ||
-      (s.exit || '').toLowerCase().includes(kw) ||
-      (s.code || '').toLowerCase().includes(kw)
-    );
-  }
-  
-  if (list.length === 0 && stationResult.length === 0) {
-    container.innerHTML = '<div class="empty-state"><div class="big">🔍</div><p>找不到相關資料</p><p style="font-size:0.85rem;margin-top:8px;">試試其他關鍵字，或點選分類瀏覽</p></div>';
-    return;
-  }
-  
-  let html = '';
-  if (list.length > 0) {
-    const title = kw ? `搜尋結果：「${escapeHtml(kw)}」` : 
-                  currentCategory === 'all' ? '全部 QA' : 
-                  DATA.categories.find(c=>c.id===currentCategory)?.name || '';
-    html += `<div class="section-title">${title}<span class="count-badge">${list.length} 則</span></div>`;
-    html += '<div class="qa-list">';
-    list.forEach(q => html += renderQACard(q, kw));
-    html += '</div>';
-  }
-  
-  if (stationResult.length > 0) {
-    html += `<div class="section-title">📍 相關據點<span class="count-badge">${stationResult.length} 站</span></div>`;
-    html += renderStationTable(stationResult);
-  }
-  
-  container.innerHTML = html;
-}
-
-function renderQACard(q, kw) {
-  const cat = DATA.categories.find(c => c.id === q.category);
-  let badges = '';
-  if (q.urgent) badges += '<span class="badge badge-urgent">🚨 緊急</span>';
-  if (q.internal) badges += '<span class="badge badge-internal">🔒 內部</span>';
-  
-  const content = formatContent(q.content);
-  const titleHl = kw ? highlight(q.title, kw) : escapeHtml(q.title);
-  
-  let tagsHtml = '';
-  if (q.tags && q.tags.length) {
-    tagsHtml = '<div class="qa-tags">' + q.tags.map(t => `<span class="tag">#${escapeHtml(t)}</span>`).join('') + '</div>';
-  }
-  
+function renderCard(q,kw){
+  const cat=DATA.categories.find(c=>c.id===q.category);
+  let badges='';
+  if(q.urgent)badges+='<span class="badge badge-urgent">🚨 緊急</span>';
+  if(q.internal)badges+='<span class="badge badge-internal">🔒 內部</span>';
+  const content=fmt(q.content);
+  const titleHl=kw?hl(q.title,kw):esc(q.title);
+  let tags='';
+  if(q.tags&&q.tags.length)tags='<div class="qa-tags">'+q.tags.map(t=>`<span class="tag">#${esc(t)}</span>`).join('')+'</div>';
   return `<div class="qa-card" data-id="${q.id}">
+    <button class="qa-edit-btn" onclick="event.stopPropagation();inlineEdit(${q.id})" title="編輯">✏️</button>
     <div class="qa-header" onclick="toggleQA(${q.id})">
       <div class="qa-title">${cat?cat.icon:''} ${titleHl}${badges}</div>
       <span class="qa-arrow">▼</span>
     </div>
     <div class="qa-content">
       <div class="qa-body">${content}</div>
-      ${tagsHtml}
+      ${tags}
+      <div class="qa-edit-panel" id="editPanel${q.id}"></div>
     </div>
   </div>`;
 }
 
-function toggleQA(id) {
-  const card = document.querySelector(`.qa-card[data-id="${id}"]`);
-  if (card) card.classList.toggle('open');
+function toggleQA(id){document.querySelector(`.qa-card[data-id="${id}"]`)?.classList.toggle('open')}
+
+// ========= 前台直接編輯 =========
+function inlineEdit(id){
+  const q=DATA.qa.find(x=>x.id===id);if(!q)return;
+  const card=document.querySelector(`.qa-card[data-id="${id}"]`);
+  if(!card.classList.contains('open'))card.classList.add('open');
+  const panel=document.getElementById('editPanel'+id);
+  if(panel.classList.contains('show')){panel.classList.remove('show');panel.innerHTML='';return}
+  const catOptions=DATA.categories.filter(c=>c.id!=='station').map(c=>`<option value="${c.id}" ${c.id===q.category?'selected':''}>${c.icon} ${esc(c.name)}</option>`).join('');
+  panel.innerHTML=`
+    <div class="edit-field"><label>分類</label><select id="ie_cat_${id}">${catOptions}</select></div>
+    <div class="edit-field"><label>標題</label><input type="text" id="ie_title_${id}" value="${esc(q.title)}"></div>
+    <div class="edit-field">
+      <label>內容 <small style="color:var(--text-light);font-weight:400">（選取文字後點顏色按鈕套用）</small></label>
+      <div class="edit-toolbar">
+        <button type="button" class="tool-btn c-red" onclick="wrapSel('ie_content_${id}','red')">🔴 紅</button>
+        <button type="button" class="tool-btn c-orange" onclick="wrapSel('ie_content_${id}','orange')">🟠 橘</button>
+        <button type="button" class="tool-btn c-green" onclick="wrapSel('ie_content_${id}','green')">🟢 綠</button>
+        <button type="button" class="tool-btn c-blue" onclick="wrapSel('ie_content_${id}','blue')">🔵 藍</button>
+        <button type="button" class="tool-btn c-purple" onclick="wrapSel('ie_content_${id}','purple')">🟣 紫</button>
+        <div class="tool-sep"></div>
+        <button type="button" class="tool-btn" onclick="doInsertImg('ie_content_${id}')">📷 圖片</button>
+        <button type="button" class="tool-btn" onclick="doInsertVideo('ie_content_${id}')">🎥 影片</button>
+        <button type="button" class="tool-btn" onclick="doInsertLink('ie_content_${id}')">🔗 連結</button>
+        <input type="file" id="ie_imgfile_${id}" accept="image/*" style="display:none" onchange="doImgFile(this,'ie_content_${id}')">
+      </div>
+      <textarea class="edit-textarea" id="ie_content_${id}">${esc(q.content)}</textarea>
+    </div>
+    <div class="edit-field"><label>標籤（逗號分隔）</label><input type="text" id="ie_tags_${id}" value="${esc((q.tags||[]).join(', '))}"></div>
+    <div class="edit-check">
+      <label><input type="checkbox" id="ie_urgent_${id}" ${q.urgent?'checked':''}> 🚨 緊急</label>
+      <label><input type="checkbox" id="ie_internal_${id}" ${q.internal?'checked':''}> 🔒 內部</label>
+    </div>
+    <div class="edit-actions">
+      <button class="edit-save" onclick="inlineSave(${id})">💾 儲存</button>
+      <button class="edit-cancel" onclick="inlineCancel(${id})">取消</button>
+      <button class="edit-delete" onclick="inlineDelete(${id})">🗑️ 刪除</button>
+    </div>
+  `;
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-// ============ 據點 ============
-function renderStations() {
-  const container = document.getElementById('resultContainer');
-  const lines = [...new Set(DATA.stations.map(s => s.line))].filter(Boolean);
-  const groups = [...new Set(DATA.stations.map(s => s.group))].filter(Boolean);
-  
-  let html = `<div class="section-title">📍 YTM 據點資訊 <span class="count-badge">共 ${DATA.stations.length} 站</span></div>`;
-  html += '<input type="text" class="station-search" id="stationSearch" placeholder="🔍 搜尋站名、地址、捷運線..." oninput="filterStations()">';
-  
-  html += '<div class="station-filters" id="lineFilters">';
-  html += `<div class="station-filter active" data-filter="line" data-value="all" onclick="setStationFilter(this)">全部路線</div>`;
-  lines.forEach(l => {
-    html += `<div class="station-filter" data-filter="line" data-value="${escapeHtml(l)}" onclick="setStationFilter(this)">${escapeHtml(l)}</div>`;
-  });
-  html += '</div>';
-  
-  html += '<div class="station-filters" id="groupFilters">';
-  html += `<div class="station-filter active" data-filter="group" data-value="all" onclick="setStationFilter(this)">全部批次</div>`;
-  groups.forEach(g => {
-    html += `<div class="station-filter" data-filter="group" data-value="${escapeHtml(g)}" onclick="setStationFilter(this)">${escapeHtml(g)}</div>`;
-  });
-  html += '</div>';
-  
-  html += '<div id="stationTableWrap">' + renderStationTable(DATA.stations) + '</div>';
-  container.innerHTML = html;
+function inlineSave(id){
+  const q=DATA.qa.find(x=>x.id===id);if(!q)return;
+  const title=document.getElementById('ie_title_'+id).value.trim();
+  const content=document.getElementById('ie_content_'+id).value.trim();
+  if(!title||!content){showToast('標題與內容不可空白');return}
+  q.category=document.getElementById('ie_cat_'+id).value;
+  q.title=title;q.content=content;
+  q.tags=document.getElementById('ie_tags_'+id).value.split(',').map(s=>s.trim()).filter(Boolean);
+  const urg=document.getElementById('ie_urgent_'+id).checked;
+  const int_=document.getElementById('ie_internal_'+id).checked;
+  if(urg)q.urgent=true;else delete q.urgent;
+  if(int_)q.internal=true;else delete q.internal;
+  saveLocal();renderAll();showToast('已儲存（記得匯出 data.json）');
+}
+function inlineCancel(id){const p=document.getElementById('editPanel'+id);if(p){p.classList.remove('show');p.innerHTML=''}}
+function inlineDelete(id){const q=DATA.qa.find(x=>x.id===id);if(!q)return;if(!confirm(`確定要刪除「${q.title}」？`))return;DATA.qa=DATA.qa.filter(x=>x.id!==id);saveLocal();renderAll();showToast('已刪除')}
+
+// Editor helpers
+function wrapSel(taId,color){
+  const ta=document.getElementById(taId);if(!ta)return;
+  const s=ta.selectionStart,e=ta.selectionEnd;
+  if(s===e){showToast('請先選取要套用的文字');return}
+  const sel=ta.value.slice(s,e);
+  ta.value=ta.value.slice(0,s)+`[[${color}:${sel}]]`+ta.value.slice(e);
+  ta.focus();
+  const np=s+`[[${color}:${sel}]]`.length;
+  ta.setSelectionRange(np,np);
+}
+function doInsertImg(taId){document.getElementById(taId.replace('ie_content_','ie_imgfile_')).click()}
+function doImgFile(input,taId){
+  const f=input.files[0];if(!f)return;
+  if(f.size>800*1024&&!confirm('圖片超過800KB，data.json會變大，仍繼續？')){input.value='';return}
+  const r=new FileReader();
+  r.onload=e=>{const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;ta.value=ta.value.slice(0,pos)+'\n[[img:'+e.target.result+']]\n'+ta.value.slice(pos);showToast('圖片已插入')};
+  r.readAsDataURL(f);input.value='';
+}
+function doInsertVideo(taId){
+  const url=prompt('請貼上影片網址（YouTube / Vimeo / mp4）：');if(!url)return;
+  const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;
+  ta.value=ta.value.slice(0,pos)+'\n[[video:'+url.trim()+']]\n'+ta.value.slice(pos);showToast('影片已插入');
+}
+function doInsertLink(taId){
+  const text=prompt('連結顯示文字：');if(!text)return;
+  const url=prompt('網址：');if(!url)return;
+  const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;
+  ta.value=ta.value.slice(0,pos)+`[[link:${text}|${url}]]`+ta.value.slice(pos);showToast('連結已插入');
 }
 
-function renderStationTable(stations) {
-  if (!stations || stations.length === 0) {
-    return '<div class="empty-state"><p>沒有符合條件的據點</p></div>';
-  }
-  let html = '<div class="table-wrap"><table class="station-table"><thead><tr>';
-  html += '<th>編號</th><th>站名</th><th>路線</th><th>分級</th><th>地址</th><th>位置</th><th>批次</th>';
-  html += '</tr></thead><tbody>';
-  stations.forEach(s => {
-    const lineKey = (s.line || '').replace(/\s/g, '');
-    html += `<tr>
-      <td>${escapeHtml(s.code || s.id)}</td>
-      <td><strong>${escapeHtml(s.name)}</strong></td>
-      <td><span class="line-tag line-${lineKey}">${escapeHtml(s.line || '')}</span></td>
-      <td class="grade-${s.grade || ''}">${escapeHtml(s.grade || '')}</td>
-      <td>${escapeHtml(s.address || '—')}</td>
-      <td>${escapeHtml(s.exit || '—')}</td>
-      <td><small>${escapeHtml(s.group || '')}</small></td>
-    </tr>`;
-  });
-  html += '</tbody></table></div>';
-  return html;
+// Stations
+function renderStations(){
+  const ct=document.getElementById('resultContainer');
+  const lines=[...new Set(DATA.stations.map(s=>s.line))].filter(Boolean);
+  const groups=[...new Set(DATA.stations.map(s=>s.group))].filter(Boolean);
+  let h=`<div class="section-title">📍 YTM 據點 <span class="count-badge">共 ${DATA.stations.length} 站</span></div>`;
+  h+='<input type="text" class="station-search" id="stationSearch" placeholder="🔍 搜尋站名、地址、捷運線..." oninput="filterStations()">';
+  h+='<div class="station-filters" id="lineFilters"><div class="station-filter active" data-value="all" onclick="setSF(this,\'lineFilters\')">全部路線</div>';
+  lines.forEach(l=>h+=`<div class="station-filter" data-value="${esc(l)}" onclick="setSF(this,'lineFilters')">${esc(l)}</div>`);
+  h+='</div><div class="station-filters" id="groupFilters"><div class="station-filter active" data-value="all" onclick="setSF(this,\'groupFilters\')">全部批次</div>';
+  groups.forEach(g=>h+=`<div class="station-filter" data-value="${esc(g)}" onclick="setSF(this,'groupFilters')">${esc(g)}</div>`);
+  h+='</div><div id="stationTableWrap">'+renderStationTable(DATA.stations)+'</div>';
+  ct.innerHTML=h;
+}
+function renderStationTable(st){
+  if(!st||!st.length)return'<div class="empty-state"><p>沒有符合條件的據點</p></div>';
+  let h='<div class="table-wrap"><table class="station-table"><thead><tr><th>編號</th><th>站名</th><th>路線</th><th>分級</th><th>地址</th><th>位置</th><th>批次</th></tr></thead><tbody>';
+  st.forEach(s=>{const lk='line-'+(s.line||'').replace(/\s/g,'');h+=`<tr><td>${esc(s.code||s.id)}</td><td><strong>${esc(s.name)}</strong></td><td><span class="line-tag ${lk}">${esc(s.line||'')}</span></td><td class="grade-${s.grade||''}">${esc(s.grade||'')}</td><td>${esc(s.address||'—')}</td><td>${esc(s.exit||'—')}</td><td><small>${esc(s.group||'')}</small></td></tr>`});
+  return h+'</tbody></table></div>';
+}
+function setSF(el,pid){document.querySelectorAll('#'+pid+' .station-filter').forEach(f=>f.classList.remove('active'));el.classList.add('active');filterStations()}
+function filterStations(){
+  const kw=(document.getElementById('stationSearch').value||'').toLowerCase();
+  const line=document.querySelector('#lineFilters .active')?.dataset.value||'all';
+  const group=document.querySelector('#groupFilters .active')?.dataset.value||'all';
+  let r=DATA.stations;
+  if(line!=='all')r=r.filter(s=>s.line===line);
+  if(group!=='all')r=r.filter(s=>s.group===group);
+  if(kw)r=r.filter(s=>s.name.toLowerCase().includes(kw)||(s.address||'').toLowerCase().includes(kw)||(s.exit||'').toLowerCase().includes(kw)||(s.code||'').toLowerCase().includes(kw));
+  document.getElementById('stationTableWrap').innerHTML=renderStationTable(r);
 }
 
-function setStationFilter(el) {
-  el.parentElement.querySelectorAll('.station-filter').forEach(f => f.classList.remove('active'));
-  el.classList.add('active');
-  filterStations();
-}
+// Search
+function onSearch(){const v=document.getElementById('searchInput').value;document.getElementById('searchClear').classList.toggle('show',v.length>0);renderQA()}
+function clearSearch(){document.getElementById('searchInput').value='';document.getElementById('searchClear').classList.remove('show');renderQA()}
 
-function filterStations() {
-  const kw = (document.getElementById('stationSearch').value || '').toLowerCase();
-  const activeLineEl = document.querySelector('#lineFilters .station-filter.active');
-  const activeGroupEl = document.querySelector('#groupFilters .station-filter.active');
-  const line = activeLineEl ? activeLineEl.dataset.value : 'all';
-  const group = activeGroupEl ? activeGroupEl.dataset.value : 'all';
-  
-  let result = DATA.stations;
-  if (line !== 'all') result = result.filter(s => s.line === line);
-  if (group !== 'all') result = result.filter(s => s.group === group);
-  if (kw) {
-    result = result.filter(s => 
-      s.name.toLowerCase().includes(kw) || 
-      (s.address || '').toLowerCase().includes(kw) ||
-      (s.exit || '').toLowerCase().includes(kw) ||
-      (s.code || '').toLowerCase().includes(kw)
-    );
-  }
-  document.getElementById('stationTableWrap').innerHTML = renderStationTable(result);
-}
-
-// ============ 搜尋 ============
-function onSearch() {
-  const val = document.getElementById('searchInput').value;
-  document.getElementById('searchClear').classList.toggle('show', val.length > 0);
-  renderQA();
-}
-function clearSearch() {
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClear').classList.remove('show');
-  renderQA();
-}
-
-// ============ 格式化 ============
-function escapeHtml(s) {
-  if (s === null || s === undefined) return '';
-  return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-}
-
-function formatContent(content) {
-  if (!content) return '';
-  let s = escapeHtml(content);
-  s = s.replace(/\[\[red:(.*?)\]\]/g, '<span class="ct-red">$1</span>');
-  s = s.replace(/\[\[orange:(.*?)\]\]/g, '<span class="ct-orange">$1</span>');
-  s = s.replace(/\[\[green:(.*?)\]\]/g, '<span class="ct-green">$1</span>');
-  s = s.replace(/\[\[blue:(.*?)\]\]/g, '<span class="ct-blue">$1</span>');
-  s = s.replace(/\[\[purple:(.*?)\]\]/g, '<span class="ct-purple">$1</span>');
-  s = s.replace(/\[\[link:(.*?)\|(.*?)\]\]/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-  s = s.replace(/\[\[img:(.*?)\]\]/g, '<img src="$1" alt="圖片">');
-  // 影片：[[video:URL]] 支援 YouTube / Vimeo / 直接 mp4
-  s = s.replace(/\[\[video:(.*?)\]\]/g, (m, url) => {
-    const u = url.trim();
-    // YouTube
-    const yt = u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);
-    if (yt) return `<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${yt[1]}" allowfullscreen></iframe></div>`;
-    // Vimeo
-    const vm = u.match(/vimeo\.com\/(\d+)/);
-    if (vm) return `<div class="video-wrap"><iframe src="https://player.vimeo.com/video/${vm[1]}" allowfullscreen></iframe></div>`;
-    // 直接影片檔
-    if (/\.(mp4|webm|ogg)(\?|$)/i.test(u)) return `<div class="video-wrap"><video controls src="${u}"></video></div>`;
-    // 其他情況：顯示為連結
-    return `<a href="${u}" target="_blank" rel="noopener">🎥 ${u}</a>`;
-  });
-  // 自動連結
-  s = s.replace(/(^|[^"'>=\/])(https?:\/\/[^\s<]+)/g, (m, pre, url) => {
-    // 避免跟已處理的連結衝突
-    if (pre === '/' || pre === '"' || pre === "'") return m;
-    return `${pre}<a href="${url}" target="_blank" rel="noopener">${url}</a>`;
-  });
+// Format
+function esc(s){return s==null?'':String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function fmt(c){
+  if(!c)return'';let s=esc(c);
+  s=s.replace(/\[\[red:(.*?)\]\]/g,'<span class="ct-red">$1</span>');
+  s=s.replace(/\[\[orange:(.*?)\]\]/g,'<span class="ct-orange">$1</span>');
+  s=s.replace(/\[\[green:(.*?)\]\]/g,'<span class="ct-green">$1</span>');
+  s=s.replace(/\[\[blue:(.*?)\]\]/g,'<span class="ct-blue">$1</span>');
+  s=s.replace(/\[\[purple:(.*?)\]\]/g,'<span class="ct-purple">$1</span>');
+  s=s.replace(/\[\[link:(.*?)\|(.*?)\]\]/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+  s=s.replace(/\[\[img:(.*?)\]\]/g,'<img src="$1" alt="圖片">');
+  s=s.replace(/\[\[video:(.*?)\]\]/g,(m,u)=>{u=u.trim();const yt=u.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([a-zA-Z0-9_-]+)/);if(yt)return`<div class="video-wrap"><iframe src="https://www.youtube.com/embed/${yt[1]}" allowfullscreen></iframe></div>`;const vm=u.match(/vimeo\.com\/(\d+)/);if(vm)return`<div class="video-wrap"><iframe src="https://player.vimeo.com/video/${vm[1]}" allowfullscreen></iframe></div>`;if(/\.(mp4|webm|ogg)(\?|$)/i.test(u))return`<div class="video-wrap"><video controls src="${u}"></video></div>`;return`<a href="${u}" target="_blank">🎥 ${u}</a>`});
+  s=s.replace(/(^|[^"'>=\/])(https?:\/\/[^\s<]+)/g,'$1<a href="$2" target="_blank" rel="noopener">$2</a>');
   return s;
 }
+function hl(t,kw){if(!kw)return esc(t);const s=esc(t),k=esc(kw);return s.replace(new RegExp('('+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark style="background:#FFE58F;padding:0 2px;border-radius:2px">$1</mark>')}
 
-function highlight(text, kw) {
-  if (!kw) return escapeHtml(text);
-  const safe = escapeHtml(text);
-  const safeKw = escapeHtml(kw);
-  const re = new RegExp('(' + safeKw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-  return safe.replace(re, '<mark style="background:#FFE58F;padding:0 2px;border-radius:2px;">$1</mark>');
+function toggleFontSize(){const b=document.body;if(b.classList.contains('fs-large')){b.classList.remove('fs-large');b.classList.add('fs-xlarge');showToast('字體：特大')}else if(b.classList.contains('fs-xlarge')){b.classList.remove('fs-xlarge');showToast('字體：一般')}else{b.classList.add('fs-large');showToast('字體：大')}}
+function scrollToTop(){scrollTo({top:0,behavior:'smooth'})}
+function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+
+// ========= Admin =========
+function openAdmin(){document.getElementById('adminModal').classList.add('show');if(!isAdmin)showLogin();else showPanel()}
+function closeAdmin(){document.getElementById('adminModal').classList.remove('show')}
+
+function showLogin(){
+  document.getElementById('adminTitle').textContent='🔒 管理後台';
+  document.getElementById('adminBody').innerHTML=`<div class="login-form"><div style="font-size:3rem;margin-bottom:10px">🔐</div><p style="color:var(--text-light);margin-bottom:16px">請輸入管理密碼</p><input type="password" id="adminPwd" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()"><div style="margin-top:10px"><button class="btn-primary" onclick="doLogin()">登入</button></div></div>`;
+  setTimeout(()=>document.getElementById('adminPwd')?.focus(),100);
+}
+function doLogin(){
+  const p=document.getElementById('adminPwd').value;
+  if(p===ADMIN_PASSWORD){isAdmin=true;document.body.classList.add('admin-mode');showPanel();renderAll();showToast('登入成功，QA 卡片右上角出現 ✏️ 編輯按鈕')}
+  else{showToast('密碼錯誤');document.getElementById('adminPwd').value='';document.getElementById('adminPwd').focus()}
 }
 
-// ============ 字體 ============
-function toggleFontSize() {
-  const body = document.body;
-  if (body.classList.contains('fs-large')) {
-    body.classList.remove('fs-large');
-    body.classList.add('fs-xlarge');
-    showToast('字體：特大');
-  } else if (body.classList.contains('fs-xlarge')) {
-    body.classList.remove('fs-xlarge');
-    showToast('字體：一般');
-  } else {
-    body.classList.add('fs-large');
-    showToast('字體：大');
-  }
-}
-
-function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-// ============ 管理後台 ============
-function openAdmin() {
-  document.getElementById('adminModal').classList.add('show');
-  if (!isAdmin) showLoginForm();
-  else showAdminPanel();
-}
-function closeAdmin() { document.getElementById('adminModal').classList.remove('show'); }
-
-function showLoginForm() {
-  document.getElementById('adminTitle').textContent = '🔒 管理後台登入';
-  document.getElementById('adminBody').innerHTML = `
-    <div class="login-form">
-      <div style="font-size:3rem;margin-bottom:10px;">🔐</div>
-      <p style="color:var(--text-light);margin-bottom:16px;">請輸入管理密碼</p>
-      <input type="password" id="adminPwd" placeholder="密碼" onkeydown="if(event.key==='Enter')login()">
-      <div style="margin-top:10px;">
-        <button class="btn-primary" onclick="login()">登入</button>
-      </div>
-    </div>
-  `;
-  setTimeout(() => document.getElementById('adminPwd').focus(), 100);
-}
-
-function login() {
-  const pwd = document.getElementById('adminPwd').value;
-  if (pwd === ADMIN_PASSWORD) {
-    isAdmin = true;
-    showAdminPanel();
-    showToast('登入成功');
-  } else {
-    showToast('密碼錯誤');
-    document.getElementById('adminPwd').value = '';
-    document.getElementById('adminPwd').focus();
-  }
-}
-
-function showAdminPanel() {
-  document.getElementById('adminTitle').textContent = '⚙️ 管理後台';
-  document.getElementById('adminBody').innerHTML = `
+function showPanel(){
+  document.getElementById('adminTitle').textContent='⚙️ 管理後台';
+  document.getElementById('adminBody').innerHTML=`
     <div class="admin-tabs">
-      <button class="admin-tab active" onclick="showAdminTab('qa', this)">📝 QA 管理</button>
-      <button class="admin-tab" onclick="showAdminTab('category', this)">📂 分類管理</button>
-      <button class="admin-tab" onclick="showAdminTab('station', this)">📍 據點管理</button>
-      <button class="admin-tab" onclick="showAdminTab('meta', this)">⚙️ 基本設定</button>
-      <button class="admin-tab" onclick="showAdminTab('export', this)">💾 匯入/匯出</button>
+      <button class="admin-tab active" onclick="showAdminTab('category',this)">📂 分類管理</button>
+      <button class="admin-tab" onclick="showAdminTab('newqa',this)">➕ 新增 QA</button>
+      <button class="admin-tab" onclick="showAdminTab('station',this)">📍 據點管理</button>
+      <button class="admin-tab" onclick="showAdminTab('meta',this)">⚙️ 基本設定</button>
+      <button class="admin-tab" onclick="showAdminTab('export',this)">💾 匯入/匯出</button>
     </div>
-    <div id="adminTabContent"></div>
-  `;
-  showAdminTab('qa');
+    <div id="adminTabContent"></div>`;
+  showAdminTab('category');
 }
 
-function showAdminTab(tab, el) {
-  if (el) {
-    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-    el.classList.add('active');
-  }
-  const box = document.getElementById('adminTabContent');
-  if (tab === 'qa') box.innerHTML = renderAdminQA();
-  else if (tab === 'category') box.innerHTML = renderAdminCategory();
-  else if (tab === 'station') box.innerHTML = renderAdminStation();
-  else if (tab === 'meta') box.innerHTML = renderAdminMeta();
-  else if (tab === 'export') box.innerHTML = renderAdminExport();
-}
-
-// ---- QA 管理 ----
-function renderAdminQA() {
-  setTimeout(renderAdminQAList, 0);
-  return `
-    <div class="admin-toolbar">
-      <button class="btn-primary" onclick="editQA(null)">➕ 新增 QA</button>
-      <input type="text" id="adminQASearch" placeholder="搜尋..." style="flex:1;" oninput="renderAdminQAList()">
-      <select id="adminQAFilter" onchange="renderAdminQAList()">
-        <option value="all">全部分類</option>
-        ${DATA.categories.map(c => `<option value="${c.id}">${c.icon} ${escapeHtml(c.name)}</option>`).join('')}
-      </select>
-    </div>
-    <div class="admin-list" id="adminQAList"></div>
-  `;
-}
-
-function renderAdminQAList() {
-  const kw = (document.getElementById('adminQASearch')?.value || '').toLowerCase();
-  const filter = document.getElementById('adminQAFilter')?.value || 'all';
-  let list = DATA.qa;
-  if (filter !== 'all') list = list.filter(q => q.category === filter);
-  if (kw) list = list.filter(q => q.title.toLowerCase().includes(kw) || q.content.toLowerCase().includes(kw));
-  
-  const html = list.map(q => {
-    const cat = DATA.categories.find(c => c.id === q.category);
-    let flags = '';
-    if (q.urgent) flags += ' 🚨';
-    if (q.internal) flags += ' 🔒';
-    return `<div class="admin-item">
-      <div class="admin-item-info">
-        <div class="admin-item-title">${cat?cat.icon:''} ${escapeHtml(q.title)}${flags}</div>
-        <div class="admin-item-meta">${cat?escapeHtml(cat.name):''} ｜ ${q.tags && q.tags.length ? escapeHtml(q.tags.join(', ')) : '無標籤'}</div>
-      </div>
-      <button class="admin-btn admin-btn-edit" onclick="editQA(${q.id})">編輯</button>
-      <button class="admin-btn admin-btn-del" onclick="deleteQA(${q.id})">刪除</button>
-    </div>`;
-  }).join('');
-  document.getElementById('adminQAList').innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-light);">沒有資料</div>';
-}
-
-function editQA(id) {
-  const q = id ? DATA.qa.find(x => x.id === id) : {
-    id: null, category: DATA.categories.filter(c=>c.id!=='station')[0]?.id || 'company',
-    title: '', content: '', tags: [], urgent: false, internal: false
-  };
-  if (!q) return;
-  editingQA = q;
-  document.getElementById('adminTabContent').innerHTML = `
-    <button class="btn-secondary" onclick="showAdminTab('qa',document.querySelector('.admin-tab.active'))">← 返回列表</button>
-    <h3 style="margin:16px 0;">${id ? '✏️ 編輯 QA' : '➕ 新增 QA'}</h3>
-    
-    <div class="syntax-hint">
-      <strong>📘 使用說明</strong><br>
-      • 選取文字後，點擊下方工具列的顏色按鈕即可套用色彩<br>
-      • 插入圖片、影片、連結可用下方按鈕<br>
-      • 支援影片格式：YouTube、Vimeo、直接 mp4/webm 網址
-    </div>
-    
-    <div class="form-group">
-      <label>分類</label>
-      <select id="qaCat">
-        ${DATA.categories.filter(c=>c.id!=='station').map(c => 
-          `<option value="${c.id}" ${c.id===q.category?'selected':''}>${c.icon} ${escapeHtml(c.name)}</option>`
-        ).join('')}
-      </select>
-    </div>
-    
-    <div class="form-group">
-      <label>標題</label>
-      <input type="text" id="qaTitle" value="${escapeHtml(q.title)}">
-    </div>
-    
-    <div class="form-group">
-      <label>內容</label>
-      <div class="editor-toolbar">
-        <button type="button" class="tool-btn color-red" onclick="wrapSelection('red')" title="紅字">🔴 紅</button>
-        <button type="button" class="tool-btn color-orange" onclick="wrapSelection('orange')" title="橘字">🟠 橘</button>
-        <button type="button" class="tool-btn color-green" onclick="wrapSelection('green')" title="綠字">🟢 綠</button>
-        <button type="button" class="tool-btn color-blue" onclick="wrapSelection('blue')" title="藍字">🔵 藍</button>
-        <button type="button" class="tool-btn color-purple" onclick="wrapSelection('purple')" title="紫字">🟣 紫</button>
-        <div class="tool-sep"></div>
-        <button type="button" class="tool-btn" onclick="document.getElementById('qaImgInput').click()" title="插入圖片">📷 圖片</button>
-        <button type="button" class="tool-btn" onclick="insertVideo()" title="插入影片">🎥 影片</button>
-        <button type="button" class="tool-btn" onclick="insertLink()" title="插入連結">🔗 連結</button>
-        <input type="file" id="qaImgInput" accept="image/*" style="display:none" onchange="insertImage(this)">
-      </div>
-      <textarea id="qaContent" class="editor-textarea">${escapeHtml(q.content)}</textarea>
-      <div style="margin-top:6px;font-size:0.8rem;color:var(--text-light);">💡 選取文字後點顏色按鈕即可套用色彩</div>
-    </div>
-    
-    <div class="form-group">
-      <label>標籤（用逗號分隔）</label>
-      <input type="text" id="qaTags" value="${escapeHtml((q.tags||[]).join(', '))}">
-    </div>
-    
-    <div class="form-group">
-      <label>標示</label>
-      <div class="form-check">
-        <label><input type="checkbox" id="qaUrgent" ${q.urgent?'checked':''}> 🚨 緊急</label>
-        <label><input type="checkbox" id="qaInternal" ${q.internal?'checked':''}> 🔒 內部（僅供同仁參考）</label>
-      </div>
-    </div>
-    
-    <div style="margin-top:20px;">
-      <button class="btn-secondary" onclick="showAdminTab('qa',document.querySelector('.admin-tab.active'))">取消</button>
-      <button class="btn-primary" onclick="saveQA()">💾 儲存</button>
-    </div>
-  `;
-}
-
-// 選取文字套用色彩
-function wrapSelection(color) {
-  const ta = document.getElementById('qaContent');
-  const start = ta.selectionStart;
-  const end = ta.selectionEnd;
-  if (start === end) {
-    showToast('請先選取要套用的文字');
-    return;
-  }
-  const selected = ta.value.slice(start, end);
-  const before = ta.value.slice(0, start);
-  const after = ta.value.slice(end);
-  ta.value = before + `[[${color}:${selected}]]` + after;
-  ta.focus();
-  const newPos = before.length + `[[${color}:${selected}]]`.length;
-  ta.setSelectionRange(newPos, newPos);
-}
-
-function insertImage(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 800*1024) {
-    if (!confirm('圖片超過 800KB，會讓 data.json 變大，建議先壓縮。仍要繼續？')) {
-      input.value = '';
-      return;
-    }
-  }
-  const reader = new FileReader();
-  reader.onload = e => {
-    const ta = document.getElementById('qaContent');
-    const syntax = `[[img:${e.target.result}]]`;
-    const pos = ta.selectionStart || ta.value.length;
-    ta.value = ta.value.slice(0, pos) + '\n' + syntax + '\n' + ta.value.slice(pos);
-    showToast('圖片已插入');
-  };
-  reader.readAsDataURL(file);
-  input.value = '';
-}
-
-function insertVideo() {
-  const url = prompt('請貼上影片網址（支援 YouTube、Vimeo、mp4 等）：');
-  if (!url) return;
-  const ta = document.getElementById('qaContent');
-  const syntax = `[[video:${url.trim()}]]`;
-  const pos = ta.selectionStart || ta.value.length;
-  ta.value = ta.value.slice(0, pos) + '\n' + syntax + '\n' + ta.value.slice(pos);
-  showToast('影片已插入');
-}
-
-function insertLink() {
-  const text = prompt('請輸入連結顯示文字：');
-  if (!text) return;
-  const url = prompt('請貼上網址：');
-  if (!url) return;
-  const ta = document.getElementById('qaContent');
-  const syntax = `[[link:${text}|${url}]]`;
-  const pos = ta.selectionStart || ta.value.length;
-  ta.value = ta.value.slice(0, pos) + syntax + ta.value.slice(pos);
-  showToast('連結已插入');
-}
-
-function saveQA() {
-  const title = document.getElementById('qaTitle').value.trim();
-  const content = document.getElementById('qaContent').value.trim();
-  if (!title || !content) { showToast('標題與內容不可空白'); return; }
-  
-  const cat = document.getElementById('qaCat').value;
-  const tags = document.getElementById('qaTags').value.split(',').map(s=>s.trim()).filter(Boolean);
-  const urgent = document.getElementById('qaUrgent').checked;
-  const internal = document.getElementById('qaInternal').checked;
-  
-  if (editingQA.id) {
-    const q = DATA.qa.find(x => x.id === editingQA.id);
-    q.category = cat; q.title = title; q.content = content; q.tags = tags;
-    if (urgent) q.urgent = true; else delete q.urgent;
-    if (internal) q.internal = true; else delete q.internal;
-  } else {
-    const newId = Math.max(0, ...DATA.qa.map(x => x.id)) + 1;
-    const newQ = { id: newId, category: cat, title, content, tags };
-    if (urgent) newQ.urgent = true;
-    if (internal) newQ.internal = true;
-    DATA.qa.push(newQ);
-  }
-  
-  saveLocal();
-  showToast('已儲存（記得到「匯入/匯出」下載 data.json）');
-  showAdminTab('qa', document.querySelector('.admin-tab.active'));
-  renderAll();
-}
-
-function deleteQA(id) {
-  const q = DATA.qa.find(x => x.id === id);
-  if (!q) return;
-  if (!confirm(`確定要刪除「${q.title}」？`)) return;
-  DATA.qa = DATA.qa.filter(x => x.id !== id);
-  saveLocal();
-  showToast('已刪除');
-  renderAdminQAList();
-  renderAll();
+function showAdminTab(tab,el){
+  if(el)document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active')),el.classList.add('active');
+  const box=document.getElementById('adminTabContent');
+  if(tab==='category')box.innerHTML=renderCatAdmin();
+  else if(tab==='newqa')box.innerHTML=renderNewQA();
+  else if(tab==='station')box.innerHTML=renderStAdmin();
+  else if(tab==='meta')box.innerHTML=renderMetaAdmin();
+  else if(tab==='export')box.innerHTML=renderExportAdmin();
 }
 
 // ---- 分類管理 ----
-function renderAdminCategory() {
-  setTimeout(renderAdminCategoryList, 0);
-  return `
-    <div class="admin-toolbar">
-      <button class="btn-primary" onclick="editCategory(null)">➕ 新增分類</button>
-    </div>
-    <div class="admin-list" id="adminCategoryList"></div>
-    <div style="margin-top:16px;padding:12px;background:var(--brand-bg);border-radius:8px;font-size:0.85rem;color:var(--text-light);">
-      💡 分類「YTM 據點資訊」為系統分類，不建議刪除<br>
-      💡 刪除分類前，請先把該分類的 QA 移到其他分類
-    </div>
-  `;
+function renderCatAdmin(){
+  setTimeout(renderCatList,0);
+  return`<div class="admin-toolbar"><button class="btn-primary" onclick="editCat(null)">➕ 新增分類</button></div><div class="admin-list" id="catList"></div><div style="margin-top:12px;padding:10px;background:var(--brand-bg);border-radius:8px;font-size:.85rem;color:var(--text-light)">💡 拖動「⬆⬇」調整分類順序 ｜ 「YTM 據點」為系統分類不建議刪除</div>`;
 }
-
-function renderAdminCategoryList() {
-  const html = DATA.categories.map((c, idx) => {
-    const count = c.id === 'station' 
-      ? (DATA.stations?.length || 0)
-      : DATA.qa.filter(q => q.category === c.id).length;
-    return `<div class="admin-item">
-      <div class="admin-item-info">
-        <div class="admin-item-title">${c.icon} ${escapeHtml(c.name)}</div>
-        <div class="admin-item-meta">ID: ${escapeHtml(c.id)} ｜ 共 ${count} 則</div>
-      </div>
-      <button class="admin-btn admin-btn-edit" onclick="moveCategoryUp(${idx})" ${idx===0?'disabled style=\"opacity:0.3;\"':''}>⬆</button>
-      <button class="admin-btn admin-btn-edit" onclick="moveCategoryDown(${idx})" ${idx===DATA.categories.length-1?'disabled style=\"opacity:0.3;\"':''}>⬇</button>
-      <button class="admin-btn admin-btn-edit" onclick="editCategory('${c.id}')">編輯</button>
-      ${c.id!=='station' ? `<button class="admin-btn admin-btn-del" onclick="deleteCategory('${c.id}')">刪除</button>` : ''}
-    </div>`;
+function renderCatList(){
+  document.getElementById('catList').innerHTML=DATA.categories.map((c,i)=>{
+    const n=c.id==='station'?(DATA.stations?.length||0):DATA.qa.filter(q=>q.category===c.id).length;
+    return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${c.icon} ${esc(c.name)}</div><div class="admin-item-meta">ID: ${esc(c.id)} ｜ ${n} 則</div></div><button class="admin-btn admin-btn-edit" onclick="moveCat(${i},-1)" ${i===0?'disabled style="opacity:.3"':''}>⬆</button><button class="admin-btn admin-btn-edit" onclick="moveCat(${i},1)" ${i===DATA.categories.length-1?'disabled style="opacity:.3"':''}>⬇</button><button class="admin-btn admin-btn-edit" onclick="editCat('${c.id}')">編輯</button>${c.id!=='station'?`<button class="admin-btn admin-btn-del" onclick="delCat('${c.id}')">刪除</button>`:''}</div>`;
   }).join('');
-  document.getElementById('adminCategoryList').innerHTML = html;
 }
+function moveCat(i,d){const j=i+d;if(j<0||j>=DATA.categories.length)return;[DATA.categories[i],DATA.categories[j]]=[DATA.categories[j],DATA.categories[i]];saveLocal();renderCatList();renderCategories()}
 
-function moveCategoryUp(idx) {
-  if (idx === 0) return;
-  [DATA.categories[idx-1], DATA.categories[idx]] = [DATA.categories[idx], DATA.categories[idx-1]];
-  saveLocal();
-  renderAdminCategoryList();
-  renderCategories();
+function editCat(id){
+  const c=id?DATA.categories.find(x=>x.id===id):{id:'',name:'',icon:'📢'};
+  const isNew=!id;
+  const grid=ICONS.map(i=>`<div class="icon-option ${i===c.icon?'selected':''}" data-icon="${i}" onclick="pickIcon(this)">${i}</div>`).join('');
+  document.getElementById('adminTabContent').innerHTML=`
+    <button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">← 返回</button>
+    <h3 style="margin:16px 0">${isNew?'➕ 新增分類':'✏️ 編輯分類'}</h3>
+    <div class="form-group"><label>分類名稱</label><input type="text" id="catName" value="${esc(c.name)}" placeholder="例：行銷活動"></div>
+    <div class="form-group"><label>分類 ID（英文/數字）</label><input type="text" id="catId" value="${esc(c.id)}" ${!isNew?'readonly style="background:#F5F5F5"':''} placeholder="例：marketing"></div>
+    <div class="form-group"><label>圖示（點選一個）</label><div class="icon-picker">${grid}</div>
+    <div style="margin-top:8px;font-size:.85rem">目前：<span id="iconPv" style="font-size:1.8rem;vertical-align:middle">${c.icon}</span> <span style="margin-left:10px;color:var(--text-light)">或自行輸入：</span><input type="text" id="iconCustom" style="display:inline-block;width:60px;padding:4px;margin-left:4px" oninput="document.getElementById('iconPv').textContent=this.value||'${c.icon}'"></div></div>
+    <div style="margin-top:20px"><button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">取消</button><button class="btn-primary" onclick="saveCat(${isNew})">💾 儲存</button></div>`;
 }
-function moveCategoryDown(idx) {
-  if (idx === DATA.categories.length - 1) return;
-  [DATA.categories[idx+1], DATA.categories[idx]] = [DATA.categories[idx], DATA.categories[idx+1]];
-  saveLocal();
-  renderAdminCategoryList();
-  renderCategories();
+function pickIcon(el){document.querySelectorAll('.icon-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');document.getElementById('iconPv').textContent=el.dataset.icon;document.getElementById('iconCustom').value=''}
+function saveCat(isNew){
+  const name=document.getElementById('catName').value.trim(),idVal=document.getElementById('catId').value.trim();
+  const custom=document.getElementById('iconCustom').value.trim(),selected=document.querySelector('.icon-option.selected')?.dataset.icon;
+  const icon=custom||selected||'📢';
+  if(!name){showToast('名稱不可空白');return}
+  if(!idVal||!/^[a-zA-Z0-9_]+$/.test(idVal)){showToast('ID 只能用英文/數字/底線');return}
+  if(isNew){if(DATA.categories.find(x=>x.id===idVal)){showToast('ID 已存在');return}DATA.categories.push({id:idVal,name,icon})}
+  else{const c=DATA.categories.find(x=>x.id===idVal);c.name=name;c.icon=icon}
+  saveLocal();showToast('已儲存');showAdminTab('category',document.querySelector('.admin-tab.active'));renderAll();
 }
+function delCat(id){const c=DATA.categories.find(x=>x.id===id);if(!c)return;const n=DATA.qa.filter(q=>q.category===id).length;if(n>0){alert(`還有 ${n} 則 QA，請先移到其他分類`);return}if(!confirm(`刪除「${c.name}」？`))return;DATA.categories=DATA.categories.filter(x=>x.id!==id);saveLocal();showToast('已刪除');renderCatList();renderAll()}
 
-function editCategory(id) {
-  const c = id ? DATA.categories.find(x => x.id === id) : { id: '', name: '', icon: '📢' };
-  if (!c) return;
-  editingCategory = { ...c, _isNew: !id };
-  
-  const iconGrid = ICON_LIBRARY.map(i => 
-    `<div class="icon-option ${i===c.icon?'selected':''}" data-icon="${i}" onclick="selectIcon(this)">${i}</div>`
-  ).join('');
-  
-  document.getElementById('adminTabContent').innerHTML = `
-    <button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">← 返回列表</button>
-    <h3 style="margin:16px 0;">${id ? '✏️ 編輯分類' : '➕ 新增分類'}</h3>
-    
-    <div class="form-group">
-      <label>分類名稱</label>
-      <input type="text" id="catName" value="${escapeHtml(c.name)}" placeholder="例：行銷活動">
+// ---- 新增 QA (後台) ----
+function renderNewQA(){
+  const catOptions=DATA.categories.filter(c=>c.id!=='station').map(c=>`<option value="${c.id}">${c.icon} ${esc(c.name)}</option>`).join('');
+  return`
+    <h3 style="margin-bottom:16px">➕ 新增 QA</h3>
+    <div class="form-group"><label>分類</label><select id="nq_cat">${catOptions}</select></div>
+    <div class="form-group"><label>標題</label><input type="text" id="nq_title" placeholder="輸入標題"></div>
+    <div class="form-group"><label>內容</label>
+    <div class="edit-toolbar">
+      <button type="button" class="tool-btn c-red" onclick="wrapSel('nq_content','red')">🔴 紅</button>
+      <button type="button" class="tool-btn c-orange" onclick="wrapSel('nq_content','orange')">🟠 橘</button>
+      <button type="button" class="tool-btn c-green" onclick="wrapSel('nq_content','green')">🟢 綠</button>
+      <button type="button" class="tool-btn c-blue" onclick="wrapSel('nq_content','blue')">🔵 藍</button>
+      <button type="button" class="tool-btn c-purple" onclick="wrapSel('nq_content','purple')">🟣 紫</button>
+      <div class="tool-sep"></div>
+      <button type="button" class="tool-btn" onclick="document.getElementById('nq_imgfile').click()">📷 圖片</button>
+      <button type="button" class="tool-btn" onclick="doInsertVideo('nq_content')">🎥 影片</button>
+      <button type="button" class="tool-btn" onclick="doInsertLink('nq_content')">🔗 連結</button>
+      <input type="file" id="nq_imgfile" accept="image/*" style="display:none" onchange="doImgFile(this,'nq_content')">
     </div>
-    
-    <div class="form-group">
-      <label>分類 ID（英文/數字，新增後不建議修改）</label>
-      <input type="text" id="catId" value="${escapeHtml(c.id)}" ${id && id !== '' ? 'readonly style="background:#F5F5F5;"' : ''} placeholder="例：marketing">
-    </div>
-    
-    <div class="form-group">
-      <label>圖示（點選一個）</label>
-      <div class="icon-picker">${iconGrid}</div>
-      <div style="margin-top:8px;font-size:0.85rem;">
-        目前選擇：<span id="iconPreview" style="font-size:1.8rem;vertical-align:middle;">${c.icon}</span>
-        <span style="margin-left:10px;color:var(--text-light);">或自行輸入 Emoji：</span>
-        <input type="text" id="iconCustom" style="display:inline-block;width:60px;padding:4px;margin-left:4px;" placeholder="😀" oninput="document.getElementById('iconPreview').textContent=this.value||'${c.icon}'">
-      </div>
-    </div>
-    
-    <div style="margin-top:20px;">
-      <button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">取消</button>
-      <button class="btn-primary" onclick="saveCategory()">💾 儲存</button>
-    </div>
-  `;
+    <textarea class="edit-textarea" id="nq_content" placeholder="輸入內容... 選取文字後點顏色按鈕套用色彩"></textarea></div>
+    <div class="form-group"><label>標籤（逗號分隔）</label><input type="text" id="nq_tags" placeholder="關鍵字1, 關鍵字2"></div>
+    <div class="edit-check" style="margin-bottom:12px"><label><input type="checkbox" id="nq_urgent"> 🚨 緊急</label><label><input type="checkbox" id="nq_internal"> 🔒 內部</label></div>
+    <button class="btn-primary" onclick="saveNewQA()">💾 儲存新增</button>`;
 }
-
-function selectIcon(el) {
-  document.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-  document.getElementById('iconPreview').textContent = el.dataset.icon;
-  document.getElementById('iconCustom').value = '';
-}
-
-function saveCategory() {
-  const name = document.getElementById('catName').value.trim();
-  const idVal = document.getElementById('catId').value.trim();
-  const custom = document.getElementById('iconCustom').value.trim();
-  const selectedIcon = document.querySelector('.icon-option.selected')?.dataset.icon;
-  const icon = custom || selectedIcon || editingCategory.icon;
-  
-  if (!name) { showToast('名稱不可空白'); return; }
-  if (!idVal) { showToast('ID 不可空白'); return; }
-  if (!/^[a-zA-Z0-9_]+$/.test(idVal)) { showToast('ID 只能用英文/數字/底線'); return; }
-  
-  if (editingCategory._isNew) {
-    if (DATA.categories.find(x => x.id === idVal)) {
-      showToast('ID 已存在，請換一個');
-      return;
-    }
-    DATA.categories.push({ id: idVal, name, icon });
-  } else {
-    const c = DATA.categories.find(x => x.id === editingCategory.id);
-    c.name = name;
-    c.icon = icon;
-  }
-  saveLocal();
-  showToast('已儲存');
-  showAdminTab('category', document.querySelector('.admin-tab.active'));
-  renderAll();
-}
-
-function deleteCategory(id) {
-  const c = DATA.categories.find(x => x.id === id);
-  if (!c) return;
-  const count = DATA.qa.filter(q => q.category === id).length;
-  if (count > 0) {
-    alert(`此分類還有 ${count} 則 QA，請先把這些 QA 移到其他分類後再刪除`);
-    return;
-  }
-  if (!confirm(`確定要刪除分類「${c.name}」？`)) return;
-  DATA.categories = DATA.categories.filter(x => x.id !== id);
-  saveLocal();
-  showToast('已刪除');
-  renderAdminCategoryList();
-  renderAll();
+function saveNewQA(){
+  const title=document.getElementById('nq_title').value.trim(),content=document.getElementById('nq_content').value.trim();
+  if(!title||!content){showToast('標題與內容不可空白');return}
+  const newId=Math.max(0,...DATA.qa.map(x=>x.id))+1;
+  const q={id:newId,category:document.getElementById('nq_cat').value,title,content,tags:document.getElementById('nq_tags').value.split(',').map(s=>s.trim()).filter(Boolean)};
+  if(document.getElementById('nq_urgent').checked)q.urgent=true;
+  if(document.getElementById('nq_internal').checked)q.internal=true;
+  DATA.qa.push(q);saveLocal();renderAll();showToast('已新增！');
+  document.getElementById('nq_title').value='';document.getElementById('nq_content').value='';document.getElementById('nq_tags').value='';
 }
 
 // ---- 據點管理 ----
-function renderAdminStation() {
-  setTimeout(renderAdminStationList, 0);
-  return `
-    <div class="admin-toolbar">
-      <button class="btn-primary" onclick="editStation(null)">➕ 新增據點</button>
-      <input type="text" id="adminStSearch" placeholder="搜尋站名..." style="flex:1;" oninput="renderAdminStationList()">
-    </div>
-    <div class="admin-list" id="adminStationList"></div>
-  `;
+function renderStAdmin(){
+  setTimeout(renderStList,0);
+  return`<div class="admin-toolbar"><button class="btn-primary" onclick="editSt(null)">➕ 新增據點</button><input type="text" id="stSearch" placeholder="搜尋站名..." style="flex:1" oninput="renderStList()"></div><div class="admin-list" id="stList"></div>`;
 }
-
-function renderAdminStationList() {
-  const kw = (document.getElementById('adminStSearch')?.value || '').toLowerCase();
-  let list = DATA.stations || [];
-  if (kw) list = list.filter(s => s.name.toLowerCase().includes(kw) || (s.line||'').toLowerCase().includes(kw));
-  const html = list.map(s => `<div class="admin-item">
-    <div class="admin-item-info">
-      <div class="admin-item-title">${escapeHtml(s.code||s.id)} ｜ ${escapeHtml(s.name)}</div>
-      <div class="admin-item-meta">${escapeHtml(s.line||'')} · ${escapeHtml(s.grade||'')} · ${escapeHtml(s.group||'')}</div>
-    </div>
-    <button class="admin-btn admin-btn-edit" onclick="editStation(${s.id})">編輯</button>
-    <button class="admin-btn admin-btn-del" onclick="deleteStation(${s.id})">刪除</button>
-  </div>`).join('');
-  document.getElementById('adminStationList').innerHTML = html || '<div style="padding:20px;text-align:center;color:var(--text-light);">沒有資料</div>';
+function renderStList(){
+  const kw=(document.getElementById('stSearch')?.value||'').toLowerCase();
+  let list=DATA.stations||[];
+  if(kw)list=list.filter(s=>s.name.toLowerCase().includes(kw)||(s.line||'').toLowerCase().includes(kw));
+  document.getElementById('stList').innerHTML=list.map(s=>`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${esc(s.code||s.id)} ｜ ${esc(s.name)}</div><div class="admin-item-meta">${esc(s.line||'')} · ${esc(s.grade||'')} · ${esc(s.group||'')}</div></div><button class="admin-btn admin-btn-edit" onclick="editSt(${s.id})">編輯</button><button class="admin-btn admin-btn-del" onclick="delSt(${s.id})">刪除</button></div>`).join('')||'<div style="padding:20px;text-align:center;color:var(--text-light)">沒有資料</div>';
 }
-
-function editStation(id) {
-  const s = id ? DATA.stations.find(x => x.id === id) : {
-    id: null, code: '', name: '', line: '', grade: '', address: '', exit: '', group: ''
-  };
-  if (!s) return;
-  editingStation = s;
-  
-  // 收集目前所有路線和批次作為選項建議
-  const existingLines = [...new Set(DATA.stations.map(x => x.line))].filter(Boolean);
-  const existingGroups = [...new Set(DATA.stations.map(x => x.group))].filter(Boolean);
-  
-  document.getElementById('adminTabContent').innerHTML = `
-    <button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">← 返回列表</button>
-    <h3 style="margin:16px 0;">${id ? '✏️ 編輯據點' : '➕ 新增據點'}</h3>
-    
-    <div class="form-group"><label>編號（A1、KH1、S1... 可選）</label><input type="text" id="stCode" value="${escapeHtml(s.code||'')}"></div>
-    <div class="form-group"><label>站名 *</label><input type="text" id="stName" value="${escapeHtml(s.name||'')}"></div>
-    <div class="form-group"><label>捷運線/路線</label>
-      <input type="text" id="stLine" list="lineList" value="${escapeHtml(s.line||'')}" placeholder="例：板南線、高雄捷運紅線">
-      <datalist id="lineList">
-        ${existingLines.map(l => `<option value="${escapeHtml(l)}">`).join('')}
-      </datalist>
-    </div>
-    <div class="form-group"><label>分級</label>
-      <select id="stGrade">
-        <option value="B" ${s.grade==='B'?'selected':''}>B</option>
-        <option value="C" ${s.grade==='C'?'selected':''}>C</option>
-        <option value="門市" ${s.grade==='門市'?'selected':''}>門市</option>
-        <option value="" ${!s.grade?'selected':''}>未分級</option>
-      </select>
-    </div>
-    <div class="form-group"><label>地址</label><input type="text" id="stAddress" value="${escapeHtml(s.address||'')}"></div>
-    <div class="form-group"><label>位置/出口</label><input type="text" id="stExit" value="${escapeHtml(s.exit||'')}"></div>
-    <div class="form-group"><label>批次</label>
-      <input type="text" id="stGroup" list="groupList" value="${escapeHtml(s.group||'')}" placeholder="例：2024第一批、2026新增、2025高雄紅線">
-      <datalist id="groupList">
-        ${existingGroups.map(g => `<option value="${escapeHtml(g)}">`).join('')}
-      </datalist>
-    </div>
-    
-    <div style="margin-top:20px;">
-      <button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">取消</button>
-      <button class="btn-primary" onclick="saveStation()">💾 儲存</button>
-    </div>
-  `;
+function editSt(id){
+  const s=id?DATA.stations.find(x=>x.id===id):{id:null,code:'',name:'',line:'',grade:'',address:'',exit:'',group:''};
+  const lines=[...new Set(DATA.stations.map(x=>x.line))].filter(Boolean);
+  const groups=[...new Set(DATA.stations.map(x=>x.group))].filter(Boolean);
+  document.getElementById('adminTabContent').innerHTML=`
+    <button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">← 返回</button>
+    <h3 style="margin:16px 0">${id?'✏️ 編輯據點':'➕ 新增據點'}</h3>
+    <div class="form-group"><label>編號</label><input type="text" id="st_code" value="${esc(s.code||'')}"></div>
+    <div class="form-group"><label>站名 *</label><input type="text" id="st_name" value="${esc(s.name||'')}"></div>
+    <div class="form-group"><label>路線</label><input type="text" id="st_line" list="dl_line" value="${esc(s.line||'')}"><datalist id="dl_line">${lines.map(l=>`<option value="${esc(l)}">`).join('')}</datalist></div>
+    <div class="form-group"><label>分級</label><select id="st_grade"><option value="B" ${s.grade==='B'?'selected':''}>B</option><option value="C" ${s.grade==='C'?'selected':''}>C</option><option value="門市" ${s.grade==='門市'?'selected':''}>門市</option><option value="" ${!s.grade?'selected':''}>未分級</option></select></div>
+    <div class="form-group"><label>地址</label><input type="text" id="st_addr" value="${esc(s.address||'')}"></div>
+    <div class="form-group"><label>位置/出口</label><input type="text" id="st_exit" value="${esc(s.exit||'')}"></div>
+    <div class="form-group"><label>批次</label><input type="text" id="st_group" list="dl_group" value="${esc(s.group||'')}"><datalist id="dl_group">${groups.map(g=>`<option value="${esc(g)}">`).join('')}</datalist></div>
+    <div style="margin-top:20px"><button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">取消</button><button class="btn-primary" onclick="saveSt(${id||'null'})">💾 儲存</button></div>`;
 }
-
-function saveStation() {
-  const name = document.getElementById('stName').value.trim();
-  if (!name) { showToast('站名不可空白'); return; }
-  
-  const data = {
-    code: document.getElementById('stCode').value.trim(),
-    name: name,
-    line: document.getElementById('stLine').value.trim(),
-    grade: document.getElementById('stGrade').value,
-    address: document.getElementById('stAddress').value.trim(),
-    exit: document.getElementById('stExit').value.trim(),
-    group: document.getElementById('stGroup').value.trim()
-  };
-  
-  if (editingStation.id) {
-    Object.assign(DATA.stations.find(x => x.id === editingStation.id), data);
-  } else {
-    const newId = Math.max(0, ...DATA.stations.map(x => x.id)) + 1;
-    DATA.stations.push({ id: newId, ...data });
-  }
-  
-  saveLocal();
-  showToast('已儲存');
-  showAdminTab('station', document.querySelector('.admin-tab.active'));
-  renderAll();
+function saveSt(id){
+  const name=document.getElementById('st_name').value.trim();if(!name){showToast('站名不可空白');return}
+  const d={code:document.getElementById('st_code').value.trim(),name,line:document.getElementById('st_line').value.trim(),grade:document.getElementById('st_grade').value,address:document.getElementById('st_addr').value.trim(),exit:document.getElementById('st_exit').value.trim(),group:document.getElementById('st_group').value.trim()};
+  if(id){Object.assign(DATA.stations.find(x=>x.id===id),d)}else{const nid=Math.max(0,...DATA.stations.map(x=>x.id))+1;DATA.stations.push({id:nid,...d})}
+  saveLocal();showToast('已儲存');showAdminTab('station',document.querySelector('.admin-tab.active'));renderAll();
 }
-
-function deleteStation(id) {
-  const s = DATA.stations.find(x => x.id === id);
-  if (!s) return;
-  if (!confirm(`確定要刪除「${s.name}」？`)) return;
-  DATA.stations = DATA.stations.filter(x => x.id !== id);
-  saveLocal();
-  showToast('已刪除');
-  renderAdminStationList();
-  renderAll();
-}
+function delSt(id){const s=DATA.stations.find(x=>x.id===id);if(!s||!confirm(`刪除「${s.name}」？`))return;DATA.stations=DATA.stations.filter(x=>x.id!==id);saveLocal();showToast('已刪除');renderStList();renderAll()}
 
 // ---- 基本設定 ----
-function renderAdminMeta() {
-  return `
-    <h3 style="margin-bottom:16px;">⚙️ 基本設定</h3>
-    <div class="form-group">
-      <label>網站標題（顯示在表頭）</label>
-      <input type="text" id="metaTitle" value="${escapeHtml(DATA.meta.title||'')}">
-    </div>
-    <div class="form-group">
-      <label>客服電話</label>
-      <input type="text" id="metaSubtitle" value="${escapeHtml(DATA.meta.subtitle||'')}">
-    </div>
-    <div class="form-group">
-      <label>客服信箱</label>
-      <input type="text" id="metaEmail" value="${escapeHtml(DATA.meta.email||'')}">
-    </div>
-    <div class="form-group">
-      <label>官方 LINE ID</label>
-      <input type="text" id="metaLineId" value="${escapeHtml(DATA.meta.lineId||'')}">
-    </div>
-    <div class="form-group">
-      <label>YTM LINE ID</label>
-      <input type="text" id="metaYtmLineId" value="${escapeHtml(DATA.meta.ytmLineId||'')}">
-    </div>
-    <div class="form-group">
-      <label>跑馬燈訊息</label>
-      <textarea id="metaMarquee" rows="3">${escapeHtml(DATA.marquee||'')}</textarea>
-    </div>
-    <div class="form-group">
-      <label>版本</label>
-      <input type="text" id="metaVersion" value="${escapeHtml(DATA.meta.version||'')}">
-    </div>
-    <div style="margin-top:20px;">
-      <button class="btn-primary" onclick="saveMeta()">💾 儲存設定</button>
-    </div>
-  `;
+function renderMetaAdmin(){
+  return`<h3 style="margin-bottom:16px">⚙️ 基本設定</h3>
+    <div class="form-group"><label>網站標題</label><input type="text" id="m_title" value="${esc(DATA.meta.title||'')}"></div>
+    <div class="form-group"><label>客服電話</label><input type="text" id="m_sub" value="${esc(DATA.meta.subtitle||'')}"></div>
+    <div class="form-group"><label>客服信箱</label><input type="text" id="m_email" value="${esc(DATA.meta.email||'')}"></div>
+    <div class="form-group"><label>官方 LINE ID</label><input type="text" id="m_line" value="${esc(DATA.meta.lineId||'')}"></div>
+    <div class="form-group"><label>YTM LINE ID</label><input type="text" id="m_ytmline" value="${esc(DATA.meta.ytmLineId||'')}"></div>
+    <div class="form-group"><label>跑馬燈</label><textarea id="m_marquee" rows="3">${esc(DATA.marquee||'')}</textarea></div>
+    <div class="form-group"><label>版本</label><input type="text" id="m_ver" value="${esc(DATA.meta.version||'')}"></div>
+    <div style="margin-top:20px"><button class="btn-primary" onclick="saveMeta()">💾 儲存</button></div>`;
 }
-
-function saveMeta() {
-  DATA.meta.title = document.getElementById('metaTitle').value.trim();
-  DATA.meta.subtitle = document.getElementById('metaSubtitle').value.trim();
-  DATA.meta.email = document.getElementById('metaEmail').value.trim();
-  DATA.meta.lineId = document.getElementById('metaLineId').value.trim();
-  DATA.meta.ytmLineId = document.getElementById('metaYtmLineId').value.trim();
-  DATA.meta.version = document.getElementById('metaVersion').value.trim();
-  DATA.meta.lastUpdate = new Date().toISOString().split('T')[0];
-  DATA.marquee = document.getElementById('metaMarquee').value.trim();
-  saveLocal();
-  showToast('設定已儲存');
-  renderAll();
+function saveMeta(){
+  DATA.meta.title=document.getElementById('m_title').value.trim();
+  DATA.meta.subtitle=document.getElementById('m_sub').value.trim();
+  DATA.meta.email=document.getElementById('m_email').value.trim();
+  DATA.meta.lineId=document.getElementById('m_line').value.trim();
+  DATA.meta.ytmLineId=document.getElementById('m_ytmline').value.trim();
+  DATA.meta.version=document.getElementById('m_ver').value.trim();
+  DATA.marquee=document.getElementById('m_marquee').value.trim();
+  saveLocal();showToast('已儲存');renderAll();
 }
 
 // ---- 匯入/匯出 ----
-function renderAdminExport() {
-  return `
-    <div class="export-section">
-      <h3>💾 匯出 data.json</h3>
-      <p>匯出目前的資料為 <code>data.json</code> 檔案，上傳到 GitHub 後，所有使用者都會看到最新資料。</p>
-      <button class="btn-primary" onclick="exportData()">⬇️ 下載 data.json</button>
-    </div>
-    
-    <div class="export-section" style="background:#E3F2FD;border-color:#90CAF9;">
-      <h3 style="color:#1565C0;">📤 匯入 data.json</h3>
-      <p>從 <code>data.json</code> 檔案匯入資料（會覆蓋目前所有資料）</p>
-      <button class="btn-primary" style="background:#1565C0;" onclick="document.getElementById('importFile').click()">⬆️ 選擇檔案</button>
-      <input type="file" id="importFile" accept=".json,application/json" style="display:none" onchange="importData(this)">
-    </div>
-    
-    <div class="export-section" style="background:#FFF3E0;border-color:#FFB74D;">
-      <h3 style="color:#E65100;">🔄 從伺服器重新載入</h3>
-      <p>捨棄本機暫存的修改，重新從 <code>data.json</code> 載入。</p>
-      <button class="btn-primary" style="background:#E65100;" onclick="reloadFromServer()">重新載入</button>
-    </div>
-    
-    <div class="export-section" style="background:#FFEBEE;border-color:#EF9A9A;">
-      <h3 style="color:#C62828;">🗑️ 清除本機暫存</h3>
-      <p>清除瀏覽器暫存的資料並登出管理。</p>
-      <button class="btn-primary" style="background:#C62828;" onclick="clearLocal()">清除暫存</button>
-    </div>
-    
-    <div style="margin-top:20px;padding:16px;background:var(--brand-bg);border-radius:8px;font-size:0.9rem;color:var(--text-light);">
-      <strong style="color:var(--brand);">📖 部署工作流程</strong><br>
-      1. 在管理後台編輯 QA / 據點 / 分類 / 設定<br>
-      2. 編輯完成後，到此分頁按「⬇️ 下載 data.json」<br>
-      3. 把下載的 <code>data.json</code> 上傳到 GitHub 覆蓋原檔案<br>
-      4. 其他使用者重新整理後會看到更新通知，點一下就能套用<br><br>
-      <strong style="color:var(--brand);">📊 目前資料統計</strong><br>
-      QA 總數：${DATA.qa.length} 則 ｜ 據點總數：${DATA.stations.length} 站 ｜ 分類數：${DATA.categories.length} 類<br>
-      最後更新：${DATA.meta.lastUpdate || '（尚未設定）'}
-    </div>
-  `;
+function renderExportAdmin(){
+  return`
+    <div class="export-section"><h3>💾 匯出 data.json</h3><p>下載後上傳到 GitHub 覆蓋原檔，其他人就能看到最新內容</p><button class="btn-primary" onclick="exportData()">⬇️ 下載 data.json</button></div>
+    <div class="export-section" style="background:#E3F2FD;border-color:#90CAF9"><h3 style="color:#1565C0">📤 匯入 data.json</h3><p>會覆蓋目前所有資料</p><button class="btn-primary" style="background:#1565C0" onclick="document.getElementById('impFile').click()">⬆️ 選擇檔案</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="importData(this)"></div>
+    <div class="export-section" style="background:#FFF3E0;border-color:#FFB74D"><h3 style="color:#E65100">🔄 從伺服器重新載入</h3><p>捨棄本機暫存修改</p><button class="btn-primary" style="background:#E65100" onclick="reloadServer()">重新載入</button></div>
+    <div class="export-section" style="background:#FFEBEE;border-color:#EF9A9A"><h3 style="color:#C62828">🗑️ 清除暫存</h3><p>清除瀏覽器暫存並登出</p><button class="btn-primary" style="background:#C62828" onclick="clearAll()">清除</button></div>
+    <div style="margin-top:20px;padding:16px;background:var(--brand-bg);border-radius:8px;font-size:.9rem;color:var(--text-light)"><strong style="color:var(--brand)">📖 部署流程</strong><br>1. 前台直接點 ✏️ 編輯 QA / 後台管理分類&據點<br>2. 到此分頁下載 data.json<br>3. 上傳 GitHub 覆蓋原檔<br>4. 其他人重新整理即看到更新<br><br><strong style="color:var(--brand)">📊 統計</strong><br>QA：${DATA.qa.length} 則 ｜ 據點：${DATA.stations.length} 站 ｜ 分類：${DATA.categories.length} 類 ｜ 更新：${DATA.meta.lastUpdate||'—'}</div>`;
 }
+function exportData(){DATA.meta.lastUpdate=new Date().toISOString().split('T')[0];const j=JSON.stringify(DATA,null,2);const b=new Blob([j],{type:'application/json;charset=utf-8'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='data.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);showToast('已下載')}
+function importData(inp){const f=inp.files[0];if(!f)return;if(!confirm('匯入會覆蓋所有資料，確定？')){inp.value='';return}const r=new FileReader();r.onload=e=>{try{const p=JSON.parse(e.target.result);if(!p.qa||!p.categories){showToast('格式不正確');return}DATA=p;saveLocal();showToast('匯入成功');renderAll();showAdminTab('export',document.querySelector('.admin-tab.active'))}catch(er){showToast('解析失敗')}};r.readAsText(f);inp.value=''}
+async function reloadServer(){if(!confirm('捨棄暫存，確定？'))return;localStorage.removeItem('ytm_qa_data');try{DATA=await loadJson();showToast('已重新載入');renderAll();showAdminTab('export',document.querySelector('.admin-tab.active'))}catch(e){showToast('失敗')}}
+function clearAll(){if(!confirm('清除暫存並登出？'))return;localStorage.removeItem('ytm_qa_data');isAdmin=false;document.body.classList.remove('admin-mode');closeAdmin();showToast('已清除');location.reload()}
 
-function exportData() {
-  DATA.meta.lastUpdate = new Date().toISOString().split('T')[0];
-  const json = JSON.stringify(DATA, null, 2);
-  const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'data.json';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast('data.json 已下載');
-}
+function saveLocal(){DATA.meta.lastUpdate=new Date().toISOString().split('T')[0];try{localStorage.setItem('ytm_qa_data',JSON.stringify(DATA))}catch(e){console.warn('儲存失敗',e)}}
 
-function importData(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (!confirm('匯入會覆蓋目前所有資料，確定？')) { input.value=''; return; }
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const parsed = JSON.parse(e.target.result);
-      if (!parsed.qa || !parsed.categories) {
-        showToast('檔案格式不正確');
-        return;
-      }
-      DATA = parsed;
-      saveLocal();
-      showToast('匯入成功');
-      renderAll();
-      showAdminTab('export', document.querySelector('.admin-tab.active'));
-    } catch (err) {
-      showToast('檔案解析失敗：' + err.message);
-    }
-  };
-  reader.readAsText(file);
-  input.value = '';
-}
-
-async function reloadFromServer() {
-  if (!confirm('會捨棄本機暫存的修改，確定？')) return;
-  localStorage.removeItem('ytm_qa_data');
-  try {
-    DATA = await loadDataJson();
-    showToast('已從伺服器重新載入');
-    renderAll();
-    showAdminTab('export', document.querySelector('.admin-tab.active'));
-  } catch(e) {
-    showToast('重新載入失敗');
-  }
-}
-
-function clearLocal() {
-  if (!confirm('清除本機暫存並登出管理？')) return;
-  localStorage.removeItem('ytm_qa_data');
-  isAdmin = false;
-  closeAdmin();
-  showToast('已清除');
-  location.reload();
-}
-
-function saveLocal() {
-  DATA.meta.lastUpdate = new Date().toISOString().split('T')[0];
-  try { localStorage.setItem('ytm_qa_data', JSON.stringify(DATA)); }
-  catch(e) { console.warn('localStorage 儲存失敗', e); }
-}
-
-document.getElementById('adminModal').addEventListener('click', e => {
-  if (e.target.id === 'adminModal') closeAdmin();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeAdmin();
-});
+document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.id==='adminModal')closeAdmin()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
 </script>
-
 </body>
 </html>
