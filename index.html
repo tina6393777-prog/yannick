@@ -460,13 +460,60 @@ function wrapSel(taId,color){
   const np=s+`[[${color}:${sel}]]`.length;
   ta.setSelectionRange(np,np);
 }
-function doInsertImg(taId){document.getElementById(taId.replace('ie_content_','ie_imgfile_')).click()}
+function doInsertImg(taId){
+  // 彈出選擇：貼網址 or 選檔案
+  const choice=confirm('插入圖片方式：\n\n按「確定」→ 貼上圖片網址（GitHub 圖床等）\n按「取消」→ 從電腦選擇圖片檔案');
+  if(choice){
+    const url=prompt('請貼上圖片網址：\n\n💡 建議把圖片上傳到 GitHub repo 的 images 資料夾\n然後貼上 GitHub 的圖片原始網址\n\n例如：https://raw.githubusercontent.com/帳號/repo/main/images/圖片.jpg');
+    if(!url)return;
+    const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;
+    ta.value=ta.value.slice(0,pos)+'\n[[img:'+url.trim()+']]\n'+ta.value.slice(pos);
+    showToast('圖片網址已插入');
+  } else {
+    // 觸發檔案選擇
+    let fileInput=document.getElementById(taId.replace('ie_content_','ie_imgfile_'));
+    if(!fileInput){fileInput=document.getElementById('nq_imgfile')}
+    if(fileInput)fileInput.click();
+  }
+}
 function doImgFile(input,taId){
   const f=input.files[0];if(!f)return;
-  if(f.size>800*1024&&!confirm('圖片超過800KB，data.json會變大，仍繼續？')){input.value='';return}
-  const r=new FileReader();
-  r.onload=e=>{const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;ta.value=ta.value.slice(0,pos)+'\n[[img:'+e.target.result+']]\n'+ta.value.slice(pos);showToast('圖片已插入')};
-  r.readAsDataURL(f);input.value='';
+  // 壓縮到 200KB 以內
+  const maxSize=200*1024;
+  const img=new Image();
+  const reader=new FileReader();
+  reader.onload=e=>{
+    img.onload=()=>{
+      // 計算縮放比例
+      let w=img.width,h=img.height;
+      const maxDim=800;
+      if(w>maxDim||h>maxDim){
+        if(w>h){h=Math.round(h*maxDim/w);w=maxDim}
+        else{w=Math.round(w*maxDim/h);h=maxDim}
+      }
+      const canvas=document.createElement('canvas');
+      canvas.width=w;canvas.height=h;
+      const ctx=canvas.getContext('2d');
+      ctx.drawImage(img,0,0,w,h);
+      // 嘗試不同品質壓縮
+      let quality=0.7;
+      let result=canvas.toDataURL('image/jpeg',quality);
+      while(result.length>maxSize*1.37&&quality>0.1){
+        quality-=0.1;
+        result=canvas.toDataURL('image/jpeg',quality);
+      }
+      if(result.length>maxSize*1.37){
+        if(!confirm(`圖片壓縮後仍有 ${Math.round(result.length/1370)}KB，建議改用 GitHub 圖床。\n\n仍要嵌入嗎？`)){input.value='';return}
+      }
+      const ta=document.getElementById(taId);
+      const pos=ta.selectionStart||ta.value.length;
+      ta.value=ta.value.slice(0,pos)+'\n[[img:'+result+']]\n'+ta.value.slice(pos);
+      const kb=Math.round(result.length/1370);
+      showToast('圖片已壓縮插入（約'+kb+'KB）');
+    };
+    img.src=e.target.result;
+  };
+  reader.readAsDataURL(f);input.value='';
 }
 function doInsertVideo(taId){
   const url=prompt('請貼上影片網址（YouTube / Vimeo / mp4）：');if(!url)return;
@@ -626,7 +673,7 @@ function renderNewQA(){
       <button type="button" class="tool-btn c-blue" onclick="wrapSel('nq_content','blue')">🔵 藍</button>
       <button type="button" class="tool-btn c-purple" onclick="wrapSel('nq_content','purple')">🟣 紫</button>
       <div class="tool-sep"></div>
-      <button type="button" class="tool-btn" onclick="document.getElementById('nq_imgfile').click()">📷 圖片</button>
+      <button type="button" class="tool-btn" onclick="doInsertImg('nq_content')">📷 圖片</button>
       <button type="button" class="tool-btn" onclick="doInsertVideo('nq_content')">🎥 影片</button>
       <button type="button" class="tool-btn" onclick="doInsertLink('nq_content')">🔗 連結</button>
       <input type="file" id="nq_imgfile" accept="image/*" style="display:none" onchange="doImgFile(this,'nq_content')">
