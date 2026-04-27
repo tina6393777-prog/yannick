@@ -213,7 +213,7 @@
       "id": 19,
       "category": "complaint",
       "title": "客訴處理流程",
-      "content": "見下方附圖\n[[img:images/客戶來電客訴流程圖.jpg]]",
+      "content": "見下方附圖\n[[img:images/complaint_flow.jpg]]",
       "tags": [
         "客訴"
       ]
@@ -894,7 +894,7 @@
       "id": 99,
       "category": "system",
       "title": "APP購買流程及付款方式",
-      "content": "見下方附圖\n[[img:images/APP購買流程及付款方式.jpg]]",
+      "content": "見下方附圖\n[[img:images/app_purchase_flow.jpg]]",
       "tags": [
         "APP"
       ]
@@ -903,7 +903,7 @@
       "id": 100,
       "category": "system",
       "title": "官網購買流程及付款方式",
-      "content": "見下方附圖\n[[img:images/官網購買流程及付款方式.jpg]]",
+      "content": "見下方附圖\n[[img:images/web_purchase_flow.jpg]]",
       "tags": [
         "官網"
       ]
@@ -912,7 +912,7 @@
       "id": 101,
       "category": "product_img",
       "title": "Almond Peak(杏仁巧克力)",
-      "content": "[[img:images/杏仁果巧克力.jpg]]",
+      "content": "[[img:images/almond_peak.jpg]]",
       "tags": [
         "杏仁果"
       ]
@@ -921,7 +921,7 @@
       "id": 102,
       "category": "product_img",
       "title": "Almond Peak(杏仁巧克力)",
-      "content": "[[img:images/鹽味焦糖風味杏仁果巧克力.jpg]]",
+      "content": "[[img:images/almond_peak_caramel.jpg]]",
       "tags": [
         "杏仁果"
       ]
@@ -930,7 +930,7 @@
       "id": 103,
       "category": "product_img",
       "title": "Bisco百思可",
-      "content": "[[img:images/牛奶乳酸菌夾心餅乾.jpg]]",
+      "content": "[[img:images/bisco_milk.jpg]]",
       "tags": [
         "Bisco"
       ]
@@ -939,7 +939,7 @@
       "id": 104,
       "category": "product_img",
       "title": "Bisco百思可",
-      "content": "[[img:images/可可乳酸菌夾心餅乾.jpg]]",
+      "content": "[[img:images/bisco_cocoa.jpg]]",
       "tags": [
         "Bisco"
       ]
@@ -948,7 +948,7 @@
       "id": 105,
       "category": "product_img",
       "title": "Bisco百思可",
-      "content": "[[img:images/香草奶油乳酸菌夾心餅乾.jpg]]",
+      "content": "[[img:images/bisco_vanilla.jpg]]",
       "tags": [
         "Bisco"
       ]
@@ -957,7 +957,7 @@
       "id": 106,
       "category": "product_img",
       "title": "Bisco百思可",
-      "content": "[[img:images/綜合乳酸菌夾心餅乾牛奶草莓.jpg]]",
+      "content": "[[img:images/bisco_mix_milk_strawberry.jpg]]",
       "tags": [
         "Bisco"
       ]
@@ -966,7 +966,7 @@
       "id": 107,
       "category": "product_img",
       "title": "Bisco百思可",
-      "content": "[[img:images/綜合乳酸菌夾心餅乾香草奶油咖啡歐雷.jpg]]",
+      "content": "[[img:images/bisco_mix_vanilla_coffee.jpg]]",
       "tags": [
         "Bisco"
       ]
@@ -975,14 +975,14 @@
       "id": 108,
       "category": "product_img",
       "title": "Caplico卡布莉可",
-      "content": "[[img:images/綜合迷你甜筒餅乾.jpg]]",
+      "content": "[[img:images/caplico_mini.jpg]]",
       "tags": []
     },
     {
       "id": 109,
       "category": "product_img",
       "title": "Pocky百奇",
-      "content": "[[img:images/巧克力棒.jpg]]",
+      "content": "[[img:images/pocky_chocolate.jpg]]",
       "tags": [
         "Pocky"
       ]
@@ -991,7 +991,7 @@
       "id": 110,
       "category": "product_img",
       "title": "Pocky百奇",
-      "content": "[[img:images/杏仁粒粒巧克力棒.jpg]]",
+      "content": "[[img:images/pocky_almond_crush.jpg]]",
       "tags": [
         "Pocky"
       ]
@@ -1000,7 +1000,7 @@
       "id": 111,
       "category": "product_img",
       "title": "Pocky百奇",
-      "content": "[[img:images/草莓粒粒巧克力棒.jpg]]",
+      "content": "[[img:images/pocky_strawberry_crush.jpg]]",
       "tags": [
         "Pocky"
       ]
@@ -1009,7 +1009,7 @@
       "id": 112,
       "category": "product_img",
       "title": "Pocky百奇",
-      "content": "[[img:images/草莓棒.jpg]]",
+      "content": "[[img:images/pocky_strawberry.jpg]]",
       "tags": [
         "Pocky"
       ]
@@ -1018,7 +1018,7 @@
       "id": 113,
       "category": "product_img",
       "title": "Pocky百奇",
-      "content": "[[img:images/奢華牛奶巧克力棒.jpg]]",
+      "content": "[[img:images/pocky_luxury_milk.jpg]]",
       "tags": [
         "Pocky"
       ]
@@ -1027,7 +1027,7 @@
       "id": 114,
       "category": "product_img",
       "title": "Pocky百奇",
-      "content": "[[img:images/極細巧克力棒.jpg]]",
+      "content": "[[img:images/pocky_gokuboso.jpg]]",
       "tags": [
         "Pocky"
       ]
@@ -1036,7 +1036,7 @@
       "id": 115,
       "category": "product_img",
       "title": "Pretz百利滋",
-      "content": "[[img:images/香烤奶油棒.jpg]]",
+      "content": "[[img:images/pretz_butter.jpg]]",
       "tags": [
         "Pretz"
       ]
@@ -1045,7 +1045,7 @@
       "id": 116,
       "category": "product_img",
       "title": "Pretz百利滋",
-      "content": "[[img:images/野菜沙拉棒.jpg]]",
+      "content": "[[img:images/pretz_salad.jpg]]",
       "tags": [
         "Pretz"
       ]
@@ -1054,7 +1054,7 @@
       "id": 117,
       "category": "product_img",
       "title": "Pretz百利滋",
-      "content": "[[img:images/番茄野菜棒.jpg]]",
+      "content": "[[img:images/pretz_tomato.jpg]]",
       "tags": [
         "Pretz"
       ]
@@ -1063,35 +1063,35 @@
       "id": 118,
       "category": "product_img",
       "title": "神戶香烤可可",
-      "content": "[[img:images/香脆餅乾.jpg]]",
+      "content": "[[img:images/kobe_biscuit.jpg]]",
       "tags": []
     },
     {
       "id": 119,
       "category": "product_img",
       "title": "神戶香烤可可",
-      "content": "[[img:images/香濃牛奶.jpg]]",
+      "content": "[[img:images/kobe_milk.jpg]]",
       "tags": []
     },
     {
       "id": 120,
       "category": "product_img",
       "title": "神戶香烤可可",
-      "content": "[[img:images/醇厚可可.jpg]]",
+      "content": "[[img:images/kobe_cocoa.jpg]]",
       "tags": []
     },
     {
       "id": 121,
       "category": "product_img",
       "title": "杏仁飲",
-      "content": "[[img:images/杏仁飲有糖.jpg]]",
+      "content": "[[img:images/almond_koka_sugar.jpg]]",
       "tags": []
     },
     {
       "id": 122,
       "category": "product_img",
       "title": "杏仁飲",
-      "content": "[[img:images/杏仁飲無糖.jpg]]",
+      "content": "[[img:images/almond_koka_nosugar.jpg]]",
       "tags": []
     }
   ],
