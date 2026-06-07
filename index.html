@@ -784,7 +784,7 @@ document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.i
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
 
 // ======== AI 問答功能 ========
-const GEMINI_API_KEY = 'AQ.Ab8RN6LZxr7l4u-Ks2dgrefCSBm9LMy8nTnECAlKZwHaGS7Yvw'; // ← 把這裡換成你的 Gemini API Key
+const GROQ_API_KEY = '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'; // Groq API Key
 
 async function askAI(){
   const q = document.getElementById('aiQuestion').value.trim();
@@ -820,24 +820,29 @@ ${q}`;
 
   try{
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      'https://api.groq.com/openai/v1/chat/completions',
       {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer ' + GROQ_API_KEY
+        },
         body: JSON.stringify({
-          contents:[{parts:[{text: prompt}]}],
-          generationConfig:{maxOutputTokens:600, temperature:0.3}
+          model: 'llama-3.3-70b-versatile',
+          messages:[{role:'user', content: prompt}],
+          max_tokens: 600,
+          temperature: 0.3
         })
       }
     );
     const data = await res.json();
-    if(data.candidates && data.candidates[0]){
-      const answer = data.candidates[0].content.parts[0].text;
+    if(data.choices && data.choices[0]){
+      const answer = data.choices[0].message.content;
       box.className = 'ai-answer-box show';
       txt.textContent = answer;
     } else {
       box.className = 'ai-answer-box show';
-      txt.textContent = '⚠️ 無法取得回答，請確認 API Key 是否正確。';
+      txt.textContent = '⚠️ 無法取得回答，請確認 API Key 是否正確。\n' + JSON.stringify(data);
     }
   } catch(e){
     box.className = 'ai-answer-box show';
