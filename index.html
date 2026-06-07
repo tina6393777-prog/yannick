@@ -231,6 +231,15 @@ body.admin-mode .cat-manage-btn{display:inline-block}
 .ai-answer-box.loading{color:var(--text-light);font-style:italic}
 .ai-answer-label{font-size:.78rem;color:var(--brand);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:4px}
 .ai-key-hint{font-size:.75rem;color:var(--text-light);margin-top:8px;text-align:right}
+/* API Key 設定彈窗 */
+.key-modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:2000;justify-content:center;align-items:center;padding:20px}
+.key-modal.show{display:flex}
+.key-modal-box{background:#fff;border-radius:var(--radius);padding:24px;max-width:440px;width:100%;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+.key-modal-box h3{color:var(--brand);margin-bottom:8px;font-size:1rem}
+.key-modal-box p{font-size:.85rem;color:var(--text-light);margin-bottom:14px;line-height:1.6}
+.key-modal-box input{width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;outline:none;font-family:inherit;margin-bottom:12px}
+.key-modal-box input:focus{border-color:var(--brand)}
+.key-modal-actions{display:flex;gap:8px;justify-content:flex-end}
 </style>
 </head>
 <body>
@@ -272,7 +281,7 @@ body.admin-mode .cat-manage-btn{display:inline-block}
         <div class="ai-answer-label">🤖 AI 回答</div>
         <div id="aiAnswerText"></div>
       </div>
-      <div class="ai-key-hint">⚡ 由 Groq AI 提供，回答來源為亞尼克知識庫</div>
+      <div class="ai-key-hint">⚡ 由 Groq AI 提供，回答來源為亞尼克知識庫　｜　<a href="javascript:void(0)" onclick="openKeyModal()" style="color:var(--brand)">🔑 設定 API Key</a></div>
     </div>
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）..."><button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button></div>
     <div id="resultContainer"></div>
@@ -288,6 +297,19 @@ body.admin-mode .cat-manage-btn{display:inline-block}
 <div class="modal-header"><h2 id="adminTitle">⚙️ 管理後台</h2><button class="modal-close" onclick="closeAdmin()">✕</button></div>
 <div class="modal-body" id="adminBody"></div>
 </div>
+</div>
+
+<!-- API Key 設定彈窗 -->
+<div class="key-modal" id="keyModal">
+  <div class="key-modal-box">
+    <h3>🔑 設定 Groq API Key</h3>
+    <p>Key 只會存在你自己的瀏覽器裡，不會上傳到任何地方。<br>往後使用同一台電腦不需要重新輸入。</p>
+    <input type="password" id="keyInput" placeholder="貼上你的 Groq API Key（gsk_ 開頭）">
+    <div class="key-modal-actions">
+      <button class="btn-secondary" onclick="closeKeyModal()">取消</button>
+      <button class="btn-primary" onclick="confirmKey()">💾 儲存</button>
+    </div>
+  </div>
 </div>
 
 <div class="toast" id="toast"></div>
@@ -784,11 +806,32 @@ document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.i
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
 
 // ======== AI 問答功能 ========
-const GEMINI_API_KEY = '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'; // ← 把這裡換成你的 Gemini API Key
+// Groq API Key 存在瀏覽器本機，不寫在程式碼裡
+function getGroqKey(){return localStorage.getItem('groq_api_key')||'';}
+function saveGroqKey(k){localStorage.setItem('groq_api_key',k.trim());}
+function clearGroqKey(){localStorage.removeItem('groq_api_key');showToast('已清除 API Key');}
+
+// ======== API Key 彈窗控制 ========
+function openKeyModal(){
+  document.getElementById('keyInput').value=getGroqKey();
+  document.getElementById('keyModal').classList.add('show');
+  setTimeout(()=>document.getElementById('keyInput').focus(),100);
+}
+function closeKeyModal(){document.getElementById('keyModal').classList.remove('show');}
+function confirmKey(){
+  const k=document.getElementById('keyInput').value.trim();
+  if(!k){showToast('請輸入 API Key');return;}
+  if(!k.startsWith('gsk_')){showToast('格式不對，Key 應該是 gsk_ 開頭');return;}
+  saveGroqKey(k);closeKeyModal();showToast('✅ API Key 已儲存！');
+}
+document.getElementById('keyModal').addEventListener('click',e=>{if(e.target.id==='keyModal')closeKeyModal();});
 
 async function askAI(){
   const q = document.getElementById('aiQuestion').value.trim();
   if(!q){ showToast('請輸入問題'); return; }
+
+  const key = getGroqKey();
+  if(!key){ openKeyModal(); showToast('請先設定 Groq API Key'); return; }
 
   const btn = document.getElementById('aiSendBtn');
   const box = document.getElementById('aiAnswerBox');
@@ -799,10 +842,9 @@ async function askAI(){
   box.className = 'ai-answer-box show loading';
   txt.textContent = '🤖 AI 正在思考中，請稍候...';
 
-  // 從 data.json 抓出所有 QA 內容組成背景資料
   let context = '';
   if(DATA && DATA.qa){
-    const topItems = DATA.qa.slice(0, 40); // 最多取 40 筆避免超過限制
+    const topItems = DATA.qa.slice(0, 40);
     context = topItems.map(item =>
       `Q：${item.title}\nA：${item.content.replace(/<[^>]+>/g,'').substring(0,150)}`
     ).join('\n\n');
@@ -820,24 +862,33 @@ ${q}`;
 
   try{
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      'https://api.groq.com/openai/v1/chat/completions',
       {
         method:'POST',
-        headers:{'Content-Type':'application/json'},
+        headers:{
+          'Content-Type':'application/json',
+          'Authorization':'Bearer ' + key
+        },
         body: JSON.stringify({
-          contents:[{parts:[{text: prompt}]}],
-          generationConfig:{maxOutputTokens:600, temperature:0.3}
+          model: 'llama-3.3-70b-versatile',
+          messages:[{role:'user', content: prompt}],
+          max_tokens: 600,
+          temperature: 0.3
         })
       }
     );
     const data = await res.json();
-    if(data.candidates && data.candidates[0]){
-      const answer = data.candidates[0].content.parts[0].text;
+    if(data.choices && data.choices[0]){
+      const answer = data.choices[0].message.content;
       box.className = 'ai-answer-box show';
       txt.textContent = answer;
+    } else if(data.error){
+      box.className = 'ai-answer-box show';
+      txt.textContent = '⚠️ 錯誤：' + data.error.message;
+      if(data.error.code==='invalid_api_key'){openKeyModal();}
     } else {
       box.className = 'ai-answer-box show';
-      txt.textContent = '⚠️ 無法取得回答，請確認 API Key 是否正確。';
+      txt.textContent = '⚠️ 無法取得回答，請重試。';
     }
   } catch(e){
     box.className = 'ai-answer-box show';
