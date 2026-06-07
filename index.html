@@ -272,7 +272,7 @@ body.admin-mode .cat-manage-btn{display:inline-block}
         <div class="ai-answer-label">🤖 AI 回答</div>
         <div id="aiAnswerText"></div>
       </div>
-      <div class="ai-key-hint">⚡ 由 Gemini AI 提供，回答來源為亞尼克知識庫</div>
+      <div class="ai-key-hint">⚡ 由 Groq AI 提供，回答來源為亞尼克知識庫</div>
     </div>
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）..."><button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button></div>
     <div id="resultContainer"></div>
@@ -784,7 +784,7 @@ document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.i
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
 
 // ======== AI 問答功能 ========
-const GROQ_API_KEY = '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'; // Groq API Key
+const GEMINI_API_KEY = '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'; // ← 把這裡換成你的 Gemini API Key
 
 async function askAI(){
   const q = document.getElementById('aiQuestion').value.trim();
@@ -802,9 +802,9 @@ async function askAI(){
   // 從 data.json 抓出所有 QA 內容組成背景資料
   let context = '';
   if(DATA && DATA.qa){
-    const topItems = DATA.qa.slice(0, 80); // 最多取 80 筆避免超過限制
+    const topItems = DATA.qa.slice(0, 40); // 最多取 40 筆避免超過限制
     context = topItems.map(item =>
-      `Q：${item.title}\nA：${item.content.replace(/<[^>]+>/g,'').substring(0,300)}`
+      `Q：${item.title}\nA：${item.content.replace(/<[^>]+>/g,'').substring(0,150)}`
     ).join('\n\n');
   }
 
@@ -820,29 +820,24 @@ ${q}`;
 
   try{
     const res = await fetch(
-      'https://api.groq.com/openai/v1/chat/completions',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method:'POST',
-        headers:{
-          'Content-Type':'application/json',
-          'Authorization':'Bearer ' + GROQ_API_KEY
-        },
+        headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages:[{role:'user', content: prompt}],
-          max_tokens: 600,
-          temperature: 0.3
+          contents:[{parts:[{text: prompt}]}],
+          generationConfig:{maxOutputTokens:600, temperature:0.3}
         })
       }
     );
     const data = await res.json();
-    if(data.choices && data.choices[0]){
-      const answer = data.choices[0].message.content;
+    if(data.candidates && data.candidates[0]){
+      const answer = data.candidates[0].content.parts[0].text;
       box.className = 'ai-answer-box show';
       txt.textContent = answer;
     } else {
       box.className = 'ai-answer-box show';
-      txt.textContent = '⚠️ 無法取得回答，請確認 API Key 是否正確。\n' + JSON.stringify(data);
+      txt.textContent = '⚠️ 無法取得回答，請確認 API Key 是否正確。';
     }
   } catch(e){
     box.className = 'ai-answer-box show';
