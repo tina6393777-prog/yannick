@@ -216,6 +216,21 @@ body.fs-large{--fs:18px}body.fs-xlarge{--fs:20px}
 /* Category管理快速按鈕(admin) */
 .cat-manage-btn{display:none;margin-left:8px;background:var(--brand);color:#fff;border:none;padding:4px 10px;border-radius:14px;font-size:.75rem;cursor:pointer;vertical-align:middle;font-family:inherit}
 body.admin-mode .cat-manage-btn{display:inline-block}
+
+/* AI 問答區塊 */
+.ai-section{background:linear-gradient(135deg,#FFF5F5,#FFF);border:1.5px solid var(--brand-light);border-radius:var(--radius);padding:14px 16px;margin-bottom:16px;box-shadow:var(--shadow)}
+.ai-section-title{font-size:.9rem;font-weight:700;color:var(--brand);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ai-input-row{display:flex;gap:8px;align-items:center}
+.ai-input{flex:1;border:1.5px solid var(--border);border-radius:8px;padding:9px 14px;font-size:.95rem;outline:none;font-family:inherit;color:var(--text);background:#fff;transition:.2s}
+.ai-input:focus{border-color:var(--brand)}
+.ai-send-btn{background:var(--brand);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;transition:.2s;flex-shrink:0}
+.ai-send-btn:hover{background:var(--brand-dark)}
+.ai-send-btn:disabled{background:#ccc;cursor:not-allowed}
+.ai-answer-box{margin-top:12px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:14px 16px;font-size:.95rem;line-height:1.8;color:var(--text);display:none;white-space:pre-wrap;word-break:break-word}
+.ai-answer-box.show{display:block}
+.ai-answer-box.loading{color:var(--text-light);font-style:italic}
+.ai-answer-label{font-size:.78rem;color:var(--brand);font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.ai-key-hint{font-size:.75rem;color:var(--text-light);margin-top:8px;text-align:right}
 </style>
 </head>
 <body>
@@ -246,6 +261,19 @@ body.admin-mode .cat-manage-btn{display:inline-block}
     <div class="categories" id="categoryContainer"></div>
   </aside>
   <main class="content-area">
+    <!-- AI 問答區塊 -->
+    <div class="ai-section">
+      <div class="ai-section-title">🤖 問 AI 助理</div>
+      <div class="ai-input-row">
+        <input class="ai-input" type="text" id="aiQuestion" placeholder="輸入你的問題，例如：蛋糕保存期限是幾天？" onkeydown="if(event.key==='Enter')askAI()">
+        <button class="ai-send-btn" id="aiSendBtn" onclick="askAI()">送出</button>
+      </div>
+      <div class="ai-answer-box" id="aiAnswerBox">
+        <div class="ai-answer-label">🤖 AI 回答</div>
+        <div id="aiAnswerText"></div>
+      </div>
+      <div class="ai-key-hint">⚡ 由 Gemini AI 提供，回答來源為亞尼克知識庫</div>
+    </div>
     <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）..."><button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button></div>
     <div id="resultContainer"></div>
   </main>
@@ -754,6 +782,71 @@ function saveLocal(){DATA.meta.lastUpdate=new Date().toISOString().split('T')[0]
 
 document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.id==='adminModal')closeAdmin()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
+
+// ======== AI 問答功能 ========
+const GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY'; // ← 把這裡換成你的 Gemini API Key
+
+async function askAI(){
+  const q = document.getElementById('aiQuestion').value.trim();
+  if(!q){ showToast('請輸入問題'); return; }
+
+  const btn = document.getElementById('aiSendBtn');
+  const box = document.getElementById('aiAnswerBox');
+  const txt = document.getElementById('aiAnswerText');
+
+  btn.disabled = true;
+  btn.textContent = '查詢中...';
+  box.className = 'ai-answer-box show loading';
+  txt.textContent = '🤖 AI 正在思考中，請稍候...';
+
+  // 從 data.json 抓出所有 QA 內容組成背景資料
+  let context = '';
+  if(DATA && DATA.qa){
+    const topItems = DATA.qa.slice(0, 80); // 最多取 80 筆避免超過限制
+    context = topItems.map(item =>
+      `Q：${item.title}\nA：${item.content.replace(/<[^>]+>/g,'').substring(0,300)}`
+    ).join('\n\n');
+  }
+
+  const prompt = `你是亞尼克（YANNICK）蛋糕品牌的客服助理，請根據以下知識庫內容回答客戶問題。
+回答要簡潔明確，使用繁體中文，口氣親切專業。
+如果知識庫中沒有相關資料，請誠實說明並建議客戶撥打客服電話。
+
+【知識庫內容】
+${context}
+
+【客戶問題】
+${q}`;
+
+  try{
+    const res = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({
+          contents:[{parts:[{text: prompt}]}],
+          generationConfig:{maxOutputTokens:600, temperature:0.3}
+        })
+      }
+    );
+    const data = await res.json();
+    if(data.candidates && data.candidates[0]){
+      const answer = data.candidates[0].content.parts[0].text;
+      box.className = 'ai-answer-box show';
+      txt.textContent = answer;
+    } else {
+      box.className = 'ai-answer-box show';
+      txt.textContent = '⚠️ 無法取得回答，請確認 API Key 是否正確。';
+    }
+  } catch(e){
+    box.className = 'ai-answer-box show';
+    txt.textContent = '⚠️ 連線失敗：' + e.message;
+  }
+
+  btn.disabled = false;
+  btn.textContent = '送出';
+}
 </script>
 </body>
 </html>
