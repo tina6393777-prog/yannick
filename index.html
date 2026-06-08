@@ -213,10 +213,13 @@ body.fs-large{--fs:18px}body.fs-xlarge{--fs:20px}
 .scroll-top{position:fixed;bottom:20px;right:20px;width:44px;height:44px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(200,16,46,.3);opacity:0;pointer-events:none;transition:.3s;z-index:50;font-family:inherit}
 .scroll-top.show{opacity:1;pointer-events:auto}
 
+/* Category管理快速按鈕(admin) */
+.cat-manage-btn{display:none;margin-left:8px;background:var(--brand);color:#fff;border:none;padding:4px 10px;border-radius:14px;font-size:.75rem;cursor:pointer;vertical-align:middle;font-family:inherit}
+body.admin-mode .cat-manage-btn{display:inline-block}
+
 /* ===== AI 助手 ===== */
 .ai-fab{position:fixed;bottom:76px;right:20px;width:52px;height:52px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 16px rgba(200,16,46,.4);z-index:60;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center}
 .ai-fab:hover{transform:scale(1.1);background:var(--brand-dark)}
-.ai-fab .ai-badge{position:absolute;top:-2px;right:-2px;background:#FF5722;color:#fff;font-size:.6rem;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
 .ai-panel{position:fixed;bottom:140px;right:20px;width:380px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:60;display:none;flex-direction:column;max-height:520px;border:1px solid var(--border);overflow:hidden}
 .ai-panel.open{display:flex}
 .ai-panel-head{background:var(--brand);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
@@ -237,7 +240,6 @@ body.fs-large{--fs:18px}body.fs-xlarge{--fs:20px}
 .ai-send-btn:disabled{background:var(--border);cursor:not-allowed}
 .ai-key-hint{font-size:.78rem;color:var(--text-light);padding:6px 12px 10px;text-align:center;background:#fff;border-top:1px solid var(--border)}
 .ai-key-hint a{color:var(--brand);cursor:pointer;text-decoration:underline}
-/* key 設定 modal */
 .ai-key-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
 .ai-key-modal.open{display:flex}
 .ai-key-box{background:#fff;border-radius:14px;padding:24px;max-width:360px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.25)}
@@ -247,10 +249,6 @@ body.fs-large{--fs:18px}body.fs-xlarge{--fs:20px}
 .ai-key-box input:focus{border-color:var(--brand)}
 .ai-key-actions{display:flex;gap:8px;justify-content:flex-end}
 @media(max-width:480px){.ai-panel{width:calc(100vw - 32px);right:16px;bottom:130px}}
-
-/* Category管理快速按鈕(admin) */
-.cat-manage-btn{display:none;margin-left:8px;background:var(--brand);color:#fff;border:none;padding:4px 10px;border-radius:14px;font-size:.75rem;cursor:pointer;vertical-align:middle;font-family:inherit}
-body.admin-mode .cat-manage-btn{display:inline-block}
 </style>
 </head>
 <body>
@@ -290,10 +288,9 @@ body.admin-mode .cat-manage-btn{display:inline-block}
 
 <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
 
+
 <!-- AI 助手浮動按鈕 -->
-<button class="ai-fab" id="aiFab" onclick="toggleAI()" title="問 AI 助手">
-  🤖<span class="ai-badge" id="aiBadge" style="display:none">!</span>
-</button>
+<button class="ai-fab" id="aiFab" onclick="toggleAI()" title="問 AI 助手">🤖</button>
 
 <!-- AI 助手面板 -->
 <div class="ai-panel" id="aiPanel">
@@ -306,7 +303,7 @@ body.admin-mode .cat-manage-btn{display:inline-block}
     </div>
   </div>
   <div class="ai-msgs" id="aiMsgs">
-    <div class="ai-msg bot">👋 你好！我是 AI 客服助手，回答來源為亞尼克知識庫。<br>有什麼問題請直接問我！</div>
+    <div class="ai-msg bot">👋 你好！我是 AI 客服助手，回答來源為亞尼克知識庫。有什麼問題請直接問我！</div>
   </div>
   <div class="ai-input-row">
     <input type="text" id="aiInput" placeholder="輸入問題，例：蛋糕保存期限" onkeydown="if(event.key==='Enter'&&!event.isComposing)sendAI()">
@@ -327,7 +324,6 @@ body.admin-mode .cat-manage-btn{display:inline-block}
     </div>
   </div>
 </div>
-
 <div class="modal" id="adminModal">
 <div class="modal-content">
 <div class="modal-header"><h2 id="adminTitle">⚙️ 管理後台</h2><button class="modal-close" onclick="closeAdmin()">✕</button></div>
@@ -826,34 +822,38 @@ function clearAll(){if(!confirm('清除暫存並登出？'))return;localStorage.
 function saveLocal(){DATA.meta.lastUpdate=new Date().toISOString().split('T')[0];try{localStorage.setItem('ytm_qa_data',JSON.stringify(DATA))}catch(e){console.warn('儲存失敗',e)}}
 
 document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.id==='adminModal')closeAdmin()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAdmin();closeKeyModal()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
 
 // ========= AI 助手 =========
 const AI_KEY_STORE='ytm_groq_key';
 let aiOpen=false,aiLoading=false;
+
+// 同義詞對應表
+const SYNONYMS={
+  '故障':['異常','壞掉','不能用','無法使用','問題','錯誤'],
+  '異常':['故障','壞掉','不能用','問題'],
+  '售完':['賣完','沒有','缺貨','顯示完'],
+  '兌換':['換','領取','使用'],
+  '辦理':['申請','辦','開通'],
+  '電話':['代表號','聯絡'],
+  '地址':['位置','哪裡','門市'],
+  '保存':['存放','保鮮','冷藏'],
+  '退款':['退費','退錢','取消']
+};
 
 function toggleAI(){
   aiOpen=!aiOpen;
   document.getElementById('aiPanel').classList.toggle('open',aiOpen);
   if(aiOpen){
     document.getElementById('aiInput').focus();
-    document.getElementById('aiBadge').style.display='none';
-    // 如果還沒設定 Key，提示一下
-    if(!localStorage.getItem(AI_KEY_STORE)){
-      setTimeout(()=>{
-        if(!localStorage.getItem(AI_KEY_STORE))openKeyModal();
-      },500);
-    }
+    if(!localStorage.getItem(AI_KEY_STORE))setTimeout(()=>{if(!localStorage.getItem(AI_KEY_STORE))openKeyModal()},500);
   }
 }
-
 function clearAIChat(){
-  document.getElementById('aiMsgs').innerHTML='<div class="ai-msg bot">👋 你好！我是 AI 客服助手，回答來源為亞尼克知識庫。<br>有什麼問題請直接問我！</div>';
+  document.getElementById('aiMsgs').innerHTML='<div class="ai-msg bot">👋 你好！我是 AI 客服助手，回答來源為亞尼克知識庫。有什麼問題請直接問我！</div>';
 }
-
 function openKeyModal(){
-  const cur=localStorage.getItem(AI_KEY_STORE)||'';
-  document.getElementById('aiKeyInput').value=cur;
+  document.getElementById('aiKeyInput').value=localStorage.getItem(AI_KEY_STORE)||'';
   document.getElementById('aiKeyModal').classList.add('open');
   setTimeout(()=>document.getElementById('aiKeyInput').focus(),100);
 }
@@ -865,9 +865,7 @@ function saveKey(){
   localStorage.setItem(AI_KEY_STORE,k);
   closeKeyModal();
   showToast('✅ API Key 已儲存！');
-  document.getElementById('aiInput').focus();
 }
-
 function addAIMsg(text,role){
   const box=document.getElementById('aiMsgs');
   const div=document.createElement('div');
@@ -878,69 +876,42 @@ function addAIMsg(text,role){
   return div;
 }
 
-// 同義詞對應表（讓比對更聰明）
-const SYNONYMS={
-  '故障':['異常','壞掉','不能用','無法使用','問題','錯誤','失敗'],
-  '異常':['故障','壞掉','不能用','問題'],
-  '售完':['賣完','沒有','缺貨','顯示完','點選完'],
-  '兌換':['換','領取','取用','使用'],
-  '辦理':['申請','辦','開通'],
-  '電話':['代表號','聯絡','call','打'],
-  '地址':['位置','在哪','哪裡','門市'],
-  '保存':['存放','保鮮','放置','冷藏'],
-  '退款':['退費','退錢','refund','取消'],
-};
-
-// 展開同義詞搜尋詞
+// 展開同義詞
 function expandKeywords(question){
   const kw=question.toLowerCase();
   const kwSet=new Set([kw]);
-  // 拆詞
   kw.split('').forEach((_,i)=>{
-    for(let len=2;len<=6;len++){
-      const token=kw.slice(i,i+len);
-      if(token.length>=2)kwSet.add(token);
-    }
+    for(let len=2;len<=6;len++){kwSet.add(kw.slice(i,i+len))}
   });
-  // 加入同義詞
   kwSet.forEach(k=>{
     Object.entries(SYNONYMS).forEach(([key,syns])=>{
       if(k.includes(key)||key.includes(k))syns.forEach(s=>kwSet.add(s));
-      syns.forEach(s=>{if(k.includes(s)||s.includes(k)){kwSet.add(key);syns.forEach(ss=>kwSet.add(ss))}});
     });
   });
   return kwSet;
 }
 
-// 計算一筆 QA 與問題的相關分數
-function scoreQA(q, kwSet){
+// 計分
+function scoreQA(q,kwSet){
   const hay=(q.title+' '+(q.tags||[]).join(' ')+' '+q.content).toLowerCase();
   let score=0;
   kwSet.forEach(kw=>{
-    if(q.title.toLowerCase().includes(kw))score+=5; // 標題比中權重高
+    if(q.title.toLowerCase().includes(kw))score+=5;
     else if((q.tags||[]).join(' ').toLowerCase().includes(kw))score+=3;
-    else if(q.content.toLowerCase().includes(kw))score+=1;
+    else if(hay.includes(kw))score+=1;
   });
   return score;
 }
 
-// 建立給 AI 的 context（只傳比對到的內容，控制 token 數）
+// 建立 context（只傳相關內容，控制 token 數）
 function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
   const kwSet=expandKeywords(question);
   const parts=[];
+  const isStationQ=['門市','據點','哪裡','地址','哪有','分店','高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義'].some(k=>question.includes(k));
 
-  // 判斷是否為地區/據點問題
-  const isStationQ=['門市','據點','哪裡','地址','哪有','分店','ytm機台'].some(k=>question.includes(k))||
-    ['高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義','彰化','基隆','宜蘭','花蓮'].some(k=>question.includes(k));
-
-  // QA 知識庫：評分後取前5筆
   if(DATA.qa&&DATA.qa.length&&!isStationQ){
-    const scored=DATA.qa
-      .map(q=>({q,score:scoreQA(q,kwSet)}))
-      .filter(x=>x.score>0)
-      .sort((a,b)=>b.score-a.score)
-      .slice(0,5);
+    const scored=DATA.qa.map(q=>({q,score:scoreQA(q,kwSet)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
     if(scored.length>0){
       const qaText=scored.map(({q})=>{
         const clean=q.content
@@ -948,23 +919,15 @@ function buildContext(question){
           .replace(/\[\[video:.*?\]\]/g,'')
           .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
           .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-          .replace(/\s+/g,' ').trim()
-          .slice(0,400);
-        return '【'+q.title+'】
-'+clean;
-      }).join('
-
----
-
-');
-      parts.push('=== 相關 QA ===
-'+qaText);
+          .replace(/\s+/g,' ').trim().slice(0,400);
+        return '【'+q.title+'】\n'+clean;
+      }).join('\n\n---\n\n');
+      parts.push('=== 相關 QA ===\n'+qaText);
     }else{
-      parts.push('（知識庫中找不到與此問題相關的 QA）');
+      parts.push('（找不到相關 QA）');
     }
   }
 
-  // 據點資料：只在地區問題時傳入
   if(isStationQ&&DATA.stations&&DATA.stations.length){
     const stText=DATA.stations.map(s=>{
       let info='【'+s.name+'】';
@@ -973,15 +936,10 @@ function buildContext(question){
       if(s.exit)info+=' 位置：'+s.exit;
       if(s.phone)info+=' 電話：'+s.phone;
       return info;
-    }).join('
-');
-    parts.push('=== 門市與 YTM 據點 ===
-'+stText);
+    }).join('\n');
+    parts.push('=== 門市與 YTM 據點 ===\n'+stText);
   }
-
-  return parts.length?parts.join('
-
-'):'（知識庫中找不到相關資料）';
+  return parts.length?parts.join('\n\n'):'（找不到相關資料）';
 }
 
 async function sendAI(){
@@ -991,56 +949,32 @@ async function sendAI(){
   if(!q)return;
   const key=localStorage.getItem(AI_KEY_STORE);
   if(!key){openKeyModal();return}
-
   inp.value='';
   addAIMsg(q,'user');
   aiLoading=true;
   document.getElementById('aiSendBtn').disabled=true;
-  const thinkDiv=addAIMsg('思考中\u2026','bot thinking');
-
+  const thinkDiv=addAIMsg('思考中…','bot thinking');
   try{
     const context=buildContext(q);
-    const systemPrompt=`你是亞尼克（YANNICK）蛋糕品牌的客服助手，協助客服人員快速查詢標準答案。
-【規定】
-- 只根據下方知識庫內容回答，嚴禁自行捏造地址、電話、時間、價格等具體資料
-- 知識庫沒有的資訊說「知識庫無此資料」
-- 完全找不到時說「知識庫目前沒有這個資料，建議詢問主管」
-- 繁體中文，簡潔條列
-
-知識庫：
----
-${context}
----`;
-
+    const systemPrompt='你是亞尼克（YANNICK）蛋糕品牌的客服助手，協助客服人員快速查詢標準答案。\n【規定】\n- 只根據下方知識庫內容回答，嚴禁自行捏造地址、電話、時間、價格等具體資料\n- 知識庫沒有的資訊說「知識庫無此資料」\n- 完全找不到時說「知識庫目前沒有這個資料，建議詢問主管」\n- 繁體中文，簡潔條列\n\n知識庫：\n---\n'+context+'\n---';
     const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body:JSON.stringify({
-        model:'llama-3.1-8b-instant',
-        max_tokens:600,
-        temperature:0.1,
-        messages:[
-          {role:'system',content:systemPrompt},
-          {role:'user',content:q}
-        ]
-      })
+      body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:600,temperature:0.1,messages:[{role:'system',content:systemPrompt},{role:'user',content:q}]})
     });
     const data=await resp.json();
     if(data.error){
-      let errMsg=data.error.message;
-      if(errMsg.includes('Invalid API Key')||errMsg.includes('api_key'))errMsg='\u274C API Key \u4e0d\u6b63\u78ba\uff0c\u8acb\u91cd\u65b0\u8a2d\u5b9a';
-      else if(errMsg.includes('Rate limit'))errMsg='\u23f3 \u8acb\u6c42\u592a\u983b\u7e41\uff0c\u8acb\u7a0d\u7b49\u5e7e\u79d2\u518d\u554f';
-      else if(errMsg.includes('too large'))errMsg='\u26a0\ufe0f \u8cc7\u6599\u91cf\u904e\u5927\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66';
-      thinkDiv.className='ai-msg bot';
-      thinkDiv.innerHTML='\u26a0\ufe0f '+errMsg;
+      let msg=data.error.message;
+      if(msg.includes('Invalid API Key')||msg.includes('api_key'))msg='❌ API Key 不正確，請重新設定';
+      else if(msg.includes('Rate limit'))msg='⏳ 請求太頻繁，請稍等幾秒再問';
+      else if(msg.includes('too large'))msg='⚠️ 資料量過大，請稍後再試';
+      thinkDiv.className='ai-msg bot';thinkDiv.innerHTML='⚠️ '+msg;
     }else{
-      const ans=data.choices[0].message.content.trim();
       thinkDiv.className='ai-msg bot';
-      thinkDiv.innerHTML=ans.replace(/\n/g,'<br>');
+      thinkDiv.innerHTML=data.choices[0].message.content.trim().replace(/\n/g,'<br>');
     }
   }catch(e){
-    thinkDiv.className='ai-msg bot';
-    thinkDiv.innerHTML='\u26a0\ufe0f \u9023\u7dda\u5931\u6557\uff0c\u8acb\u78ba\u8a8d\u7db2\u8def\u8207 API Key \u8a2d\u5b9a\u662f\u5426\u6b63\u78ba';
+    thinkDiv.className='ai-msg bot';thinkDiv.innerHTML='⚠️ 連線失敗，請確認網路與 API Key 設定是否正確';
   }
   aiLoading=false;
   document.getElementById('aiSendBtn').disabled=false;
