@@ -878,22 +878,22 @@ function addAIMsg(text,role){
   return div;
 }
 
-// 整理知識庫供 AI 語意搜尋
+// 整理知識庫：標題 + 短摘要，給 AI 語意理解用
 function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
   const parts=[];
 
   if(DATA.qa&&DATA.qa.length){
-    const qaItems=DATA.qa.map((q,i)=>{
+    const qaItems=DATA.qa.map(q=>{
       const cleanContent=q.content
         .replace(/\[\[img:.*?\]\]/gs,'')
         .replace(/\[\[video:.*?\]\]/g,'')
         .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
         .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
         .replace(/\s+/g,' ').trim()
-        .slice(0,400);
-      return '【'+q.title+'】\n'+cleanContent;
-    }).join('\n\n');
+        .slice(0,120); // 每筆只取120字摘要
+      return '【'+q.title+'】'+cleanContent;
+    }).join('\n');
     parts.push('=== QA 知識庫 ===\n'+qaItems);
   }
 
@@ -912,47 +912,36 @@ function buildContext(question){
   return parts.length?parts.join('\n\n'):'（目前無知識庫資料）';
 }
 
-// 第一階段：用標題清單請 AI 選出相關編號
-function buildTitleIndex(){
+// 根據問題關鍵字，找出最相關的 QA 完整內容（補充用）
+function getRelevantFullContent(question){
   if(!DATA||!DATA.qa)return'';
-  return DATA.qa.map((q,i)=>i+'. '+q.title).join('\n');
-}
+  const kw=question.toLowerCase();
+  const tokens=kw.split(/[\s　，,、。？?！!]+/).filter(t=>t.length>=1);
+  let scored=DATA.qa.map(q=>{
+    const hay=(q.title+q.content+(q.tags||[]).join('')).toLowerCase();
+    let score=0;
+    if(hay.includes(kw))score+=10;
+    tokens.forEach(t=>{if(hay.includes(t))score+=1});
+    return{q,score};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
 
-// 根據 AI 選出的編號，取完整 QA 內容
-function getQAByIndexes(indexes){
-  if(!DATA||!DATA.qa)return'';
-  return indexes.map(i=>{
-    const q=DATA.qa[i];
-    if(!q)return'';
+  return scored.map(({q})=>{
     const cleanContent=q.content
       .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
       .replace(/\[\[video:.*?\]\]/g,'[影片]')
       .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
       .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
       .replace(/\s+/g,' ').trim()
-      .slice(0,600);
-    return '【'+q.title+'】\n'+cleanContent;
-  }).filter(Boolean).join('\n\n---\n\n');
+      .slice(0,500);
+    return'【'+q.title+'】\n'+cleanContent;
+  }).join('\n\n---\n\n');
 }
 
-// 站點資料（給第二階段用）
-function buildStationContext(){
-  if(!DATA||!DATA.stations||!DATA.stations.length)return'';
-  return DATA.stations.map(s=>{
-    let info='【'+s.name+'】';
-    if(s.line)info+=' 路線：'+s.line;
-    if(s.address)info+=' 地址：'+s.address;
-    if(s.exit)info+=' 位置：'+s.exit;
-    if(s.phone)info+=' 電話：'+s.phone;
-    return info;
-  }).join('\n');
-}
-
-async function callGroq(key, messages, model='llama-3.1-8b-instant', max_tokens=600){
+async function callGroq(key,messages,max_tokens=800){
   const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
     method:'POST',
     headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-    body:JSON.stringify({model,max_tokens,temperature:0.1,messages})
+    body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens,temperature:0.1,messages})
   });
   return resp.json();
 }
@@ -969,63 +958,43 @@ async function sendAI(){
   addAIMsg(q,'user');
   aiLoading=true;
   document.getElementById('aiSendBtn').disabled=true;
-  const thinkDiv=addAIMsg('搜尋知識庫中…','bot thinking');
+  const thinkDiv=addAIMsg('思考中…','bot thinking');
 
   try{
-    // ── 第一階段：把標題清單給 AI，請它選出最相關的編號 ──
-    const titleIndex=buildTitleIndex();
-    const stationCtx=buildStationContext();
-
-    // 判斷問題是否跟據點相關
-    const stationKws=['門市','據點','地址','哪裡','站','ytm','高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義','彰化'];
-    const isStationQ=stationKws.some(k=>q.includes(k));
-
-    let qaContent='';
-    if(titleIndex){
-      const pickResp=await callGroq(key,[
-        {role:'system',content:`你是知識庫搜尋助手。以下是QA知識庫的標題清單（格式：編號. 標題）：\n${titleIndex}\n\n請從中找出與用戶問題最相關的QA，回傳編號（最多5個），只回傳數字，用逗號分隔，例如：3,17,42。若完全沒有相關的，回傳：none`},
-        {role:'user',content:'用戶問題：'+q}
-      ]);
-      if(!pickResp.error){
-        const picked=pickResp.choices[0].message.content.trim();
-        if(picked!=='none'&&picked){
-          const indexes=picked.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n)&&n>=0&&n<DATA.qa.length);
-          if(indexes.length>0)qaContent=getQAByIndexes(indexes);
-        }
-      }
-    }
-
-    // ── 第二階段：用選出的內容正式回答 ──
-    let contextParts=[];
-    if(qaContent)contextParts.push('=== 相關 QA ===\n'+qaContent);
-    if(isStationQ&&stationCtx)contextParts.push('=== 門市與 YTM 據點 ===\n'+stationCtx);
-    const finalContext=contextParts.length?contextParts.join('\n\n'):'（知識庫中未找到相關資料）';
+    // 結合：關鍵字精確比中的完整內容 + 全庫標題+摘要（語意理解用）
+    const summaryCtx=buildContext(q);
+    const fullCtx=getRelevantFullContent(q);
+    const contextBlock=fullCtx
+      ?'【精確比對內容】\n'+fullCtx+'\n\n【全庫摘要（語意參考）】\n'+summaryCtx
+      :'【全庫摘要（語意參考）】\n'+summaryCtx;
 
     const systemPrompt=`你是亞尼克（YANNICK）蛋糕品牌的客服助手，協助客服人員快速查詢標準答案。
 【規定】
-- 只根據下方知識庫內容回答，不可自行推測或補充任何具體數字、地址、電話、時間
-- 知識庫沒有的資訊，說「知識庫無此資料」
-- 找不到相關資料時，說「知識庫目前沒有這個資料，建議詢問主管或查詢最新公告」
-- 繁體中文，簡潔有重點，多項資訊用條列方式
+- 優先根據「精確比對內容」回答；若無，再從「全庫摘要」找最相關的答案
+- 嚴禁自行捏造地址、電話、時間、價格等具體數字，只能照實呈現知識庫的資料
+- 知識庫沒有的資訊說「知識庫無此資料」
+- 完全找不到時說「知識庫目前沒有這個資料，建議詢問主管或查詢最新公告」
+- 繁體中文，簡潔條列
 
-知識庫內容：
+知識庫：
 ---
-${finalContext}
+${contextBlock}
 ---`;
 
-    thinkDiv.innerHTML='整理答案中…';
-    const ansResp=await callGroq(key,[
+    const data=await callGroq(key,[
       {role:'system',content:systemPrompt},
       {role:'user',content:q}
     ]);
 
-    if(ansResp.error){
-      let errMsg=ansResp.error.message;
+    if(data.error){
+      let errMsg=data.error.message;
       if(errMsg.includes('Invalid API Key')||errMsg.includes('api_key'))errMsg='❌ API Key 不正確，請重新設定';
+      else if(errMsg.includes('Rate limit'))errMsg='⏳ 請求太頻繁，請稍等幾秒再試';
+      else if(errMsg.includes('too large'))errMsg='⚠️ 資料量過大，請稍後再試';
       thinkDiv.className='ai-msg bot';
       thinkDiv.innerHTML='⚠️ '+errMsg;
     }else{
-      const ans=ansResp.choices[0].message.content.trim();
+      const ans=data.choices[0].message.content.trim();
       thinkDiv.className='ai-msg bot';
       thinkDiv.innerHTML=ans.replace(/\n/g,'<br>');
     }
