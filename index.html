@@ -878,14 +878,13 @@ function addAIMsg(text,role){
   return div;
 }
 
-// 把整個知識庫整理成文字，交給 AI 自行語意判斷相關性
+// 整理知識庫供 AI 語意搜尋
 function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
   const parts=[];
 
-  // QA 知識庫：全部內容都給 AI，讓 AI 自行判斷哪筆最相關
   if(DATA.qa&&DATA.qa.length){
-    const qaItems=DATA.qa.map(q=>{
+    const qaItems=DATA.qa.map((q,i)=>{
       const cleanContent=q.content
         .replace(/\[\[img:.*?\]\]/gs,'')
         .replace(/\[\[video:.*?\]\]/g,'')
@@ -898,7 +897,6 @@ function buildContext(question){
     parts.push('=== QA 知識庫 ===\n'+qaItems);
   }
 
-  // 據點資料：全部列出，一行一筆方便 AI 掃描
   if(DATA.stations&&DATA.stations.length){
     const stText=DATA.stations.map(s=>{
       let info='【'+s.name+'】';
@@ -914,6 +912,51 @@ function buildContext(question){
   return parts.length?parts.join('\n\n'):'（目前無知識庫資料）';
 }
 
+// 第一階段：用標題清單請 AI 選出相關編號
+function buildTitleIndex(){
+  if(!DATA||!DATA.qa)return'';
+  return DATA.qa.map((q,i)=>i+'. '+q.title).join('\n');
+}
+
+// 根據 AI 選出的編號，取完整 QA 內容
+function getQAByIndexes(indexes){
+  if(!DATA||!DATA.qa)return'';
+  return indexes.map(i=>{
+    const q=DATA.qa[i];
+    if(!q)return'';
+    const cleanContent=q.content
+      .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
+      .replace(/\[\[video:.*?\]\]/g,'[影片]')
+      .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
+      .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
+      .replace(/\s+/g,' ').trim()
+      .slice(0,600);
+    return '【'+q.title+'】\n'+cleanContent;
+  }).filter(Boolean).join('\n\n---\n\n');
+}
+
+// 站點資料（給第二階段用）
+function buildStationContext(){
+  if(!DATA||!DATA.stations||!DATA.stations.length)return'';
+  return DATA.stations.map(s=>{
+    let info='【'+s.name+'】';
+    if(s.line)info+=' 路線：'+s.line;
+    if(s.address)info+=' 地址：'+s.address;
+    if(s.exit)info+=' 位置：'+s.exit;
+    if(s.phone)info+=' 電話：'+s.phone;
+    return info;
+  }).join('\n');
+}
+
+async function callGroq(key, messages, model='llama-3.1-8b-instant', max_tokens=600){
+  const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model,max_tokens,temperature:0.1,messages})
+  });
+  return resp.json();
+}
+
 async function sendAI(){
   if(aiLoading)return;
   const inp=document.getElementById('aiInput');
@@ -926,46 +969,63 @@ async function sendAI(){
   addAIMsg(q,'user');
   aiLoading=true;
   document.getElementById('aiSendBtn').disabled=true;
-  const thinkDiv=addAIMsg('思考中…','bot thinking');
-
-  const context=buildContext(q);
-  const systemPrompt=`你是亞尼克（YANNICK）蛋糕品牌的客服助手，專門協助客服人員快速查詢標準答案。
-
-【嚴格規定】
-- 所有回答必須完全根據下方「知識庫內容」，逐字照實呈現，不可自行推測、補充、修改任何資訊
-- 嚴禁自行捏造或推測：地址、電話、營業時間、價格、人名、日期等具體數字或資料
-- 若知識庫內容沒有提到某項資訊（例如電話、地址），就說「知識庫無此資料」，絕對不可自行填入
-- 若問題完全找不到相關資料，回答：「知識庫目前沒有這個資料，建議查詢最新公告或詢問主管」
-- 使用繁體中文（台灣用語），回答簡潔有重點
-- 若有多筆據點資料，用條列方式一筆一筆列出，每筆只呈現知識庫有的欄位
-
-以下是知識庫內容（只能根據這些回答）：
----
-${context}
----`;
+  const thinkDiv=addAIMsg('搜尋知識庫中…','bot thinking');
 
   try{
-    const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body:JSON.stringify({
-        model:'llama-3.3-70b-versatile',
-        max_tokens:1000,
-        temperature:0.1,
-        messages:[
-          {role:'system',content:systemPrompt},
-          {role:'user',content:q}
-        ]
-      })
-    });
-    const data=await resp.json();
-    if(data.error){
-      let errMsg='連線失敗：'+data.error.message;
-      if(data.error.message.includes('Invalid API Key')||data.error.message.includes('api_key'))errMsg='❌ API Key 不正確，請重新設定';
+    // ── 第一階段：把標題清單給 AI，請它選出最相關的編號 ──
+    const titleIndex=buildTitleIndex();
+    const stationCtx=buildStationContext();
+
+    // 判斷問題是否跟據點相關
+    const stationKws=['門市','據點','地址','哪裡','站','ytm','高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義','彰化'];
+    const isStationQ=stationKws.some(k=>q.includes(k));
+
+    let qaContent='';
+    if(titleIndex){
+      const pickResp=await callGroq(key,[
+        {role:'system',content:`你是知識庫搜尋助手。以下是QA知識庫的標題清單（格式：編號. 標題）：\n${titleIndex}\n\n請從中找出與用戶問題最相關的QA，回傳編號（最多5個），只回傳數字，用逗號分隔，例如：3,17,42。若完全沒有相關的，回傳：none`},
+        {role:'user',content:'用戶問題：'+q}
+      ]);
+      if(!pickResp.error){
+        const picked=pickResp.choices[0].message.content.trim();
+        if(picked!=='none'&&picked){
+          const indexes=picked.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n)&&n>=0&&n<DATA.qa.length);
+          if(indexes.length>0)qaContent=getQAByIndexes(indexes);
+        }
+      }
+    }
+
+    // ── 第二階段：用選出的內容正式回答 ──
+    let contextParts=[];
+    if(qaContent)contextParts.push('=== 相關 QA ===\n'+qaContent);
+    if(isStationQ&&stationCtx)contextParts.push('=== 門市與 YTM 據點 ===\n'+stationCtx);
+    const finalContext=contextParts.length?contextParts.join('\n\n'):'（知識庫中未找到相關資料）';
+
+    const systemPrompt=`你是亞尼克（YANNICK）蛋糕品牌的客服助手，協助客服人員快速查詢標準答案。
+【規定】
+- 只根據下方知識庫內容回答，不可自行推測或補充任何具體數字、地址、電話、時間
+- 知識庫沒有的資訊，說「知識庫無此資料」
+- 找不到相關資料時，說「知識庫目前沒有這個資料，建議詢問主管或查詢最新公告」
+- 繁體中文，簡潔有重點，多項資訊用條列方式
+
+知識庫內容：
+---
+${finalContext}
+---`;
+
+    thinkDiv.innerHTML='整理答案中…';
+    const ansResp=await callGroq(key,[
+      {role:'system',content:systemPrompt},
+      {role:'user',content:q}
+    ]);
+
+    if(ansResp.error){
+      let errMsg=ansResp.error.message;
+      if(errMsg.includes('Invalid API Key')||errMsg.includes('api_key'))errMsg='❌ API Key 不正確，請重新設定';
       thinkDiv.className='ai-msg bot';
       thinkDiv.innerHTML='⚠️ '+errMsg;
     }else{
-      const ans=data.choices[0].message.content.trim();
+      const ans=ansResp.choices[0].message.content.trim();
       thinkDiv.className='ai-msg bot';
       thinkDiv.innerHTML=ans.replace(/\n/g,'<br>');
     }
