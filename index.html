@@ -882,41 +882,50 @@ function addAIMsg(text,role){
 function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
   const kw=question.toLowerCase();
+  // 拆成多個詞分別比對（例如「兌換贈捲」拆成「兌換」「贈捲」）
+  const kwTokens=kw.split(/[\s　，,、。？?！!]+/).filter(t=>t.length>=2);
   const parts=[];
 
-  // 1. 搜尋 QA 知識庫
-  if(DATA.qa){
-    let matched=DATA.qa.filter(q=>
-      q.title.toLowerCase().includes(kw)||
-      q.content.toLowerCase().includes(kw)||
-      (q.tags||[]).some(t=>t.toLowerCase().includes(kw))
-    );
-    if(matched.length>8)matched=matched.slice(0,8);
-    if(matched.length===0)matched=DATA.qa.slice(0,10);
-    const qaText=matched.map(q=>{
-      const cleanContent=q.content
-        .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
-        .replace(/\[\[video:.*?\]\]/g,'[影片]')
-        .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
-        .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-        .slice(0,400);
-      return '【'+q.title+'】\n'+cleanContent;
-    }).join('\n\n---\n\n');
-    if(qaText)parts.push('=== QA 知識庫 ===\n'+qaText);
+  // 輔助：判斷一筆資料是否和問題相關
+  function matchQA(q){
+    const haystack=(q.title+' '+q.content+' '+(q.tags||[]).join(' ')).toLowerCase();
+    // 整句完整比對
+    if(haystack.includes(kw))return true;
+    // 拆詞比對：只要有任一詞命中就算
+    if(kwTokens.some(t=>haystack.includes(t)))return true;
+    return false;
+  }
+  function matchStation(s){
+    const haystack=((s.name||'')+' '+(s.address||'')+' '+(s.line||'')+' '+(s.exit||'')+' '+(s.phone||'')).toLowerCase();
+    if(haystack.includes(kw))return true;
+    if(kwTokens.some(t=>haystack.includes(t)))return true;
+    return false;
   }
 
-  // 2. 搜尋據點資料（門市、YTM 站點）
+  // ── 1. QA 知識庫 ──
+  if(DATA.qa){
+    let matched=DATA.qa.filter(matchQA);
+    if(matched.length>8)matched=matched.slice(0,8);
+    if(matched.length>0){
+      const qaText=matched.map(q=>{
+        const cleanContent=q.content
+          .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
+          .replace(/\[\[video:.*?\]\]/g,'[影片]')
+          .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
+          .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
+          .slice(0,500);
+        return '【'+q.title+'】\n'+cleanContent;
+      }).join('\n\n---\n\n');
+      parts.push('=== QA 知識庫（相關結果）===\n'+qaText);
+    }
+  }
+
+  // ── 2. 據點資料 ──
   if(DATA.stations&&DATA.stations.length){
-    let stMatched=DATA.stations.filter(s=>
-      (s.name||'').toLowerCase().includes(kw)||
-      (s.address||'').toLowerCase().includes(kw)||
-      (s.line||'').toLowerCase().includes(kw)||
-      (s.exit||'').toLowerCase().includes(kw)||
-      (s.phone||'').toLowerCase().includes(kw)
-    );
-    const locationKws=['門市','據點','哪裡','地址','哪有','分店','站','ytm','高雄','台北','台中','新竹','桃園','屏東','新北'];
-    const isLocationQ=locationKws.some(lk=>kw.includes(lk));
-    if(stMatched.length===0&&isLocationQ)stMatched=DATA.stations;
+    let stMatched=DATA.stations.filter(matchStation);
+    // 問到地區性通用詞，回傳全部據點
+    const areaKws=['門市','據點','哪裡','地址','哪有','分店','ytm機台','所有站','全部站'];
+    if(stMatched.length===0&&areaKws.some(lk=>kw.includes(lk)))stMatched=DATA.stations;
     if(stMatched.length>0){
       const stText=stMatched.map(s=>{
         let info='【'+s.name+'】';
@@ -930,7 +939,8 @@ function buildContext(question){
     }
   }
 
-  return parts.length?parts.join('\n\n'):'（目前無相關資料）';
+  // 完全沒比中時，明確回傳「無資料」，不塞不相關內容
+  return parts.length?parts.join('\n\n'):'（知識庫中找不到與此問題相關的資料）';
 }
 
 async function sendAI(){
