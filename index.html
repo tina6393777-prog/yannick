@@ -878,31 +878,59 @@ function addAIMsg(text,role){
   return div;
 }
 
-// 從 QA 知識庫抓取相關內容給 AI 參考
+// 從 QA 知識庫＋據點資料抓取相關內容給 AI 參考
 function buildContext(question){
-  if(!DATA||!DATA.qa)return'（目前無知識庫資料）';
+  if(!DATA)return'（目前無知識庫資料）';
   const kw=question.toLowerCase();
-  // 先嘗試精確比對
-  let matched=DATA.qa.filter(q=>
-    q.title.toLowerCase().includes(kw)||
-    q.content.toLowerCase().includes(kw)||
-    (q.tags||[]).some(t=>t.toLowerCase().includes(kw))
-  );
-  // 若超過 8 筆，只取前 8 筆最相關的
-  if(matched.length>8)matched=matched.slice(0,8);
-  // 若完全沒有，取全部（讓 AI 自行判斷）
-  if(matched.length===0)matched=DATA.qa.slice(0,20);
-  // 整理成文字
-  return matched.map(q=>{
-    // 移除圖片、影片、顏色標記，只保留純文字
-    const cleanContent=q.content
-      .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
-      .replace(/\[\[video:.*?\]\]/g,'[影片]')
-      .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
-      .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-      .slice(0,500);
-    return `【${q.title}】\n${cleanContent}`;
-  }).join('\n\n---\n\n');
+  const parts=[];
+
+  // 1. 搜尋 QA 知識庫
+  if(DATA.qa){
+    let matched=DATA.qa.filter(q=>
+      q.title.toLowerCase().includes(kw)||
+      q.content.toLowerCase().includes(kw)||
+      (q.tags||[]).some(t=>t.toLowerCase().includes(kw))
+    );
+    if(matched.length>8)matched=matched.slice(0,8);
+    if(matched.length===0)matched=DATA.qa.slice(0,10);
+    const qaText=matched.map(q=>{
+      const cleanContent=q.content
+        .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
+        .replace(/\[\[video:.*?\]\]/g,'[影片]')
+        .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
+        .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
+        .slice(0,400);
+      return '【'+q.title+'】\n'+cleanContent;
+    }).join('\n\n---\n\n');
+    if(qaText)parts.push('=== QA 知識庫 ===\n'+qaText);
+  }
+
+  // 2. 搜尋據點資料（門市、YTM 站點）
+  if(DATA.stations&&DATA.stations.length){
+    let stMatched=DATA.stations.filter(s=>
+      (s.name||'').toLowerCase().includes(kw)||
+      (s.address||'').toLowerCase().includes(kw)||
+      (s.line||'').toLowerCase().includes(kw)||
+      (s.exit||'').toLowerCase().includes(kw)||
+      (s.phone||'').toLowerCase().includes(kw)
+    );
+    const locationKws=['門市','據點','哪裡','地址','哪有','分店','站','ytm','高雄','台北','台中','新竹','桃園','屏東','新北'];
+    const isLocationQ=locationKws.some(lk=>kw.includes(lk));
+    if(stMatched.length===0&&isLocationQ)stMatched=DATA.stations;
+    if(stMatched.length>0){
+      const stText=stMatched.map(s=>{
+        let info='【'+s.name+'】';
+        if(s.line)info+='\n路線/類別：'+s.line;
+        if(s.address)info+='\n地址：'+s.address;
+        if(s.exit)info+='\n位置/出口：'+s.exit;
+        if(s.phone)info+='\n電話：'+s.phone;
+        return info;
+      }).join('\n\n');
+      parts.push('=== 門市與 YTM 據點資料 ===\n'+stText);
+    }
+  }
+
+  return parts.length?parts.join('\n\n'):'（目前無相關資料）';
 }
 
 async function sendAI(){
