@@ -908,7 +908,8 @@ function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
   const kwSet=expandKeywords(question);
   const parts=[];
-  const isStationQ=['門市','據點','哪裡','地址','哪有','分店','高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義'].some(k=>question.includes(k));
+  const isStationQ=['門市','據點','哪裡','地址','哪有','分店','高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義'].some(k=>question.includes(k))
+    && !['外島','離島','澎湖','金門','馬祖','綠島','蘭嶼'].some(k=>question.includes(k));
 
   if(DATA.qa&&DATA.qa.length&&!isStationQ){
     const scored=DATA.qa.map(q=>({q,score:scoreQA(q,kwSet)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
