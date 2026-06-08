@@ -878,71 +878,40 @@ function addAIMsg(text,role){
   return div;
 }
 
-// 從 QA 知識庫＋據點資料抓取相關內容給 AI 參考
+// 把整個知識庫整理成文字，交給 AI 自行語意判斷相關性
 function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
-  const kw=question.toLowerCase();
-  // 拆成多個詞分別比對（例如「兌換贈捲」拆成「兌換」「贈捲」）
-  // 拆詞：長度 >= 1 都納入，並過濾掉純助詞
-  const stopWords=new Set(['的','是','有','嗎','呢','啊','喔','嗎','請問','我想','想知道','可以','告訴']);
-  const kwTokens=kw.split(/[\s　，,、。？?！!的是有嗎呢啊喔]+/).filter(t=>t.length>=1&&!stopWords.has(t));
   const parts=[];
 
-  // 輔助：判斷一筆資料是否和問題相關
-  function matchQA(q){
-    const haystack=(q.title+' '+q.content+' '+(q.tags||[]).join(' ')).toLowerCase();
-    // 整句完整比對
-    if(haystack.includes(kw))return true;
-    // 拆詞比對：只要有任一詞命中就算
-    if(kwTokens.some(t=>haystack.includes(t)))return true;
-    return false;
-  }
-  function matchStation(s){
-    const haystack=((s.name||'')+' '+(s.address||'')+' '+(s.line||'')+' '+(s.exit||'')+' '+(s.phone||'')).toLowerCase();
-    if(haystack.includes(kw))return true;
-    if(kwTokens.some(t=>haystack.includes(t)))return true;
-    return false;
-  }
-
-  // ── 1. QA 知識庫 ──
-  if(DATA.qa){
-    let matched=DATA.qa.filter(matchQA);
-    if(matched.length>8)matched=matched.slice(0,8);
-    if(matched.length>0){
-      const qaText=matched.map(q=>{
-        const cleanContent=q.content
-          .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
-          .replace(/\[\[video:.*?\]\]/g,'[影片]')
-          .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
-          .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-          .slice(0,500);
-        return '【'+q.title+'】\n'+cleanContent;
-      }).join('\n\n---\n\n');
-      parts.push('=== QA 知識庫（相關結果）===\n'+qaText);
-    }
+  // QA 知識庫：全部內容都給 AI，讓 AI 自行判斷哪筆最相關
+  if(DATA.qa&&DATA.qa.length){
+    const qaItems=DATA.qa.map(q=>{
+      const cleanContent=q.content
+        .replace(/\[\[img:.*?\]\]/gs,'')
+        .replace(/\[\[video:.*?\]\]/g,'')
+        .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
+        .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
+        .replace(/\s+/g,' ').trim()
+        .slice(0,400);
+      return '【'+q.title+'】\n'+cleanContent;
+    }).join('\n\n');
+    parts.push('=== QA 知識庫 ===\n'+qaItems);
   }
 
-  // ── 2. 據點資料 ──
+  // 據點資料：全部列出，一行一筆方便 AI 掃描
   if(DATA.stations&&DATA.stations.length){
-    let stMatched=DATA.stations.filter(matchStation);
-    // 問到地區性通用詞，回傳全部據點
-    const areaKws=['門市','據點','哪裡','地址','哪有','分店','ytm機台','所有站','全部站'];
-    if(stMatched.length===0&&areaKws.some(lk=>kw.includes(lk)))stMatched=DATA.stations;
-    if(stMatched.length>0){
-      const stText=stMatched.map(s=>{
-        let info='【'+s.name+'】';
-        if(s.line)info+='\n路線/類別：'+s.line;
-        if(s.address)info+='\n地址：'+s.address;
-        if(s.exit)info+='\n位置/出口：'+s.exit;
-        if(s.phone)info+='\n電話：'+s.phone;
-        return info;
-      }).join('\n\n');
-      parts.push('=== 門市與 YTM 據點資料 ===\n'+stText);
-    }
+    const stText=DATA.stations.map(s=>{
+      let info='【'+s.name+'】';
+      if(s.line)info+=' 路線：'+s.line;
+      if(s.address)info+=' 地址：'+s.address;
+      if(s.exit)info+=' 位置：'+s.exit;
+      if(s.phone)info+=' 電話：'+s.phone;
+      return info;
+    }).join('\n');
+    parts.push('=== 門市與 YTM 據點 ===\n'+stText);
   }
 
-  // 完全沒比中時，明確回傳「無資料」，不塞不相關內容
-  return parts.length?parts.join('\n\n'):'（知識庫中找不到與此問題相關的資料）';
+  return parts.length?parts.join('\n\n'):'（目前無知識庫資料）';
 }
 
 async function sendAI(){
@@ -980,9 +949,9 @@ ${context}
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
       body:JSON.stringify({
-        model:'llama-3.1-8b-instant',
-        max_tokens:800,
-        temperature:0.3,
+        model:'llama-3.3-70b-versatile',
+        max_tokens:1000,
+        temperature:0.1,
         messages:[
           {role:'system',content:systemPrompt},
           {role:'user',content:q}
