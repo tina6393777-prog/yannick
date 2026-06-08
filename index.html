@@ -883,7 +883,9 @@ function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
   const kw=question.toLowerCase();
   // 拆成多個詞分別比對（例如「兌換贈捲」拆成「兌換」「贈捲」）
-  const kwTokens=kw.split(/[\s　，,、。？?！!]+/).filter(t=>t.length>=2);
+  // 拆詞：長度 >= 1 都納入，並過濾掉純助詞
+  const stopWords=new Set(['的','是','有','嗎','呢','啊','喔','嗎','請問','我想','想知道','可以','告訴']);
+  const kwTokens=kw.split(/[\s　，,、。？?！!的是有嗎呢啊喔]+/).filter(t=>t.length>=1&&!stopWords.has(t));
   const parts=[];
 
   // 輔助：判斷一筆資料是否和問題相關
