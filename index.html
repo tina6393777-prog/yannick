@@ -878,26 +878,94 @@ function addAIMsg(text,role){
   return div;
 }
 
-// 整理知識庫：標題 + 短摘要，給 AI 語意理解用
+// 同義詞對應表（讓比對更聰明）
+const SYNONYMS={
+  '故障':['異常','壞掉','不能用','無法使用','問題','錯誤','失敗'],
+  '異常':['故障','壞掉','不能用','問題'],
+  '售完':['賣完','沒有','缺貨','顯示完','點選完'],
+  '兌換':['換','領取','取用','使用'],
+  '辦理':['申請','辦','開通'],
+  '電話':['代表號','聯絡','call','打'],
+  '地址':['位置','在哪','哪裡','門市'],
+  '保存':['存放','保鮮','放置','冷藏'],
+  '退款':['退費','退錢','refund','取消'],
+};
+
+// 展開同義詞搜尋詞
+function expandKeywords(question){
+  const kw=question.toLowerCase();
+  const kwSet=new Set([kw]);
+  // 拆詞
+  kw.split('').forEach((_,i)=>{
+    for(let len=2;len<=6;len++){
+      const token=kw.slice(i,i+len);
+      if(token.length>=2)kwSet.add(token);
+    }
+  });
+  // 加入同義詞
+  kwSet.forEach(k=>{
+    Object.entries(SYNONYMS).forEach(([key,syns])=>{
+      if(k.includes(key)||key.includes(k))syns.forEach(s=>kwSet.add(s));
+      syns.forEach(s=>{if(k.includes(s)||s.includes(k)){kwSet.add(key);syns.forEach(ss=>kwSet.add(ss))}});
+    });
+  });
+  return kwSet;
+}
+
+// 計算一筆 QA 與問題的相關分數
+function scoreQA(q, kwSet){
+  const hay=(q.title+' '+(q.tags||[]).join(' ')+' '+q.content).toLowerCase();
+  let score=0;
+  kwSet.forEach(kw=>{
+    if(q.title.toLowerCase().includes(kw))score+=5; // 標題比中權重高
+    else if((q.tags||[]).join(' ').toLowerCase().includes(kw))score+=3;
+    else if(q.content.toLowerCase().includes(kw))score+=1;
+  });
+  return score;
+}
+
+// 建立給 AI 的 context（只傳比對到的內容，控制 token 數）
 function buildContext(question){
   if(!DATA)return'（目前無知識庫資料）';
+  const kwSet=expandKeywords(question);
   const parts=[];
 
-  if(DATA.qa&&DATA.qa.length){
-    const qaItems=DATA.qa.map(q=>{
-      const cleanContent=q.content
-        .replace(/\[\[img:.*?\]\]/gs,'')
-        .replace(/\[\[video:.*?\]\]/g,'')
-        .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
-        .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-        .replace(/\s+/g,' ').trim()
-        .slice(0,120); // 每筆只取120字摘要
-      return '【'+q.title+'】'+cleanContent;
-    }).join('\n');
-    parts.push('=== QA 知識庫 ===\n'+qaItems);
+  // 判斷是否為地區/據點問題
+  const isStationQ=['門市','據點','哪裡','地址','哪有','分店','ytm機台'].some(k=>question.includes(k))||
+    ['高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義','彰化','基隆','宜蘭','花蓮'].some(k=>question.includes(k));
+
+  // QA 知識庫：評分後取前5筆
+  if(DATA.qa&&DATA.qa.length&&!isStationQ){
+    const scored=DATA.qa
+      .map(q=>({q,score:scoreQA(q,kwSet)}))
+      .filter(x=>x.score>0)
+      .sort((a,b)=>b.score-a.score)
+      .slice(0,5);
+    if(scored.length>0){
+      const qaText=scored.map(({q})=>{
+        const clean=q.content
+          .replace(/\[\[img:.*?\]\]/gs,'')
+          .replace(/\[\[video:.*?\]\]/g,'')
+          .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
+          .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
+          .replace(/\s+/g,' ').trim()
+          .slice(0,400);
+        return '【'+q.title+'】
+'+clean;
+      }).join('
+
+---
+
+');
+      parts.push('=== 相關 QA ===
+'+qaText);
+    }else{
+      parts.push('（知識庫中找不到與此問題相關的 QA）');
+    }
   }
 
-  if(DATA.stations&&DATA.stations.length){
+  // 據點資料：只在地區問題時傳入
+  if(isStationQ&&DATA.stations&&DATA.stations.length){
     const stText=DATA.stations.map(s=>{
       let info='【'+s.name+'】';
       if(s.line)info+=' 路線：'+s.line;
@@ -905,45 +973,15 @@ function buildContext(question){
       if(s.exit)info+=' 位置：'+s.exit;
       if(s.phone)info+=' 電話：'+s.phone;
       return info;
-    }).join('\n');
-    parts.push('=== 門市與 YTM 據點 ===\n'+stText);
+    }).join('
+');
+    parts.push('=== 門市與 YTM 據點 ===
+'+stText);
   }
 
-  return parts.length?parts.join('\n\n'):'（目前無知識庫資料）';
-}
+  return parts.length?parts.join('
 
-// 根據問題關鍵字，找出最相關的 QA 完整內容（補充用）
-function getRelevantFullContent(question){
-  if(!DATA||!DATA.qa)return'';
-  const kw=question.toLowerCase();
-  const tokens=kw.split(/[\s　，,、。？?！!]+/).filter(t=>t.length>=1);
-  let scored=DATA.qa.map(q=>{
-    const hay=(q.title+q.content+(q.tags||[]).join('')).toLowerCase();
-    let score=0;
-    if(hay.includes(kw))score+=10;
-    tokens.forEach(t=>{if(hay.includes(t))score+=1});
-    return{q,score};
-  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
-
-  return scored.map(({q})=>{
-    const cleanContent=q.content
-      .replace(/\[\[img:.*?\]\]/gs,'[圖片]')
-      .replace(/\[\[video:.*?\]\]/g,'[影片]')
-      .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
-      .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-      .replace(/\s+/g,' ').trim()
-      .slice(0,500);
-    return'【'+q.title+'】\n'+cleanContent;
-  }).join('\n\n---\n\n');
-}
-
-async function callGroq(key,messages,max_tokens=800){
-  const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-    method:'POST',
-    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-    body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens,temperature:0.1,messages})
-  });
-  return resp.json();
+'):'（知識庫中找不到相關資料）';
 }
 
 async function sendAI(){
@@ -958,41 +996,43 @@ async function sendAI(){
   addAIMsg(q,'user');
   aiLoading=true;
   document.getElementById('aiSendBtn').disabled=true;
-  const thinkDiv=addAIMsg('思考中…','bot thinking');
+  const thinkDiv=addAIMsg('思考中\u2026','bot thinking');
 
   try{
-    // 結合：關鍵字精確比中的完整內容 + 全庫標題+摘要（語意理解用）
-    const summaryCtx=buildContext(q);
-    const fullCtx=getRelevantFullContent(q);
-    const contextBlock=fullCtx
-      ?'【精確比對內容】\n'+fullCtx+'\n\n【全庫摘要（語意參考）】\n'+summaryCtx
-      :'【全庫摘要（語意參考）】\n'+summaryCtx;
-
+    const context=buildContext(q);
     const systemPrompt=`你是亞尼克（YANNICK）蛋糕品牌的客服助手，協助客服人員快速查詢標準答案。
 【規定】
-- 優先根據「精確比對內容」回答；若無，再從「全庫摘要」找最相關的答案
-- 嚴禁自行捏造地址、電話、時間、價格等具體數字，只能照實呈現知識庫的資料
+- 只根據下方知識庫內容回答，嚴禁自行捏造地址、電話、時間、價格等具體資料
 - 知識庫沒有的資訊說「知識庫無此資料」
-- 完全找不到時說「知識庫目前沒有這個資料，建議詢問主管或查詢最新公告」
+- 完全找不到時說「知識庫目前沒有這個資料，建議詢問主管」
 - 繁體中文，簡潔條列
 
 知識庫：
 ---
-${contextBlock}
+${context}
 ---`;
 
-    const data=await callGroq(key,[
-      {role:'system',content:systemPrompt},
-      {role:'user',content:q}
-    ]);
-
+    const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+      body:JSON.stringify({
+        model:'llama-3.1-8b-instant',
+        max_tokens:600,
+        temperature:0.1,
+        messages:[
+          {role:'system',content:systemPrompt},
+          {role:'user',content:q}
+        ]
+      })
+    });
+    const data=await resp.json();
     if(data.error){
       let errMsg=data.error.message;
-      if(errMsg.includes('Invalid API Key')||errMsg.includes('api_key'))errMsg='❌ API Key 不正確，請重新設定';
-      else if(errMsg.includes('Rate limit'))errMsg='⏳ 請求太頻繁，請稍等幾秒再試';
-      else if(errMsg.includes('too large'))errMsg='⚠️ 資料量過大，請稍後再試';
+      if(errMsg.includes('Invalid API Key')||errMsg.includes('api_key'))errMsg='\u274C API Key \u4e0d\u6b63\u78ba\uff0c\u8acb\u91cd\u65b0\u8a2d\u5b9a';
+      else if(errMsg.includes('Rate limit'))errMsg='\u23f3 \u8acb\u6c42\u592a\u983b\u7e41\uff0c\u8acb\u7a0d\u7b49\u5e7e\u79d2\u518d\u554f';
+      else if(errMsg.includes('too large'))errMsg='\u26a0\ufe0f \u8cc7\u6599\u91cf\u904e\u5927\uff0c\u8acb\u7a0d\u5f8c\u518d\u8a66';
       thinkDiv.className='ai-msg bot';
-      thinkDiv.innerHTML='⚠️ '+errMsg;
+      thinkDiv.innerHTML='\u26a0\ufe0f '+errMsg;
     }else{
       const ans=data.choices[0].message.content.trim();
       thinkDiv.className='ai-msg bot';
@@ -1000,7 +1040,7 @@ ${contextBlock}
     }
   }catch(e){
     thinkDiv.className='ai-msg bot';
-    thinkDiv.innerHTML='⚠️ 連線失敗，請確認網路與 API Key 設定是否正確';
+    thinkDiv.innerHTML='\u26a0\ufe0f \u9023\u7dda\u5931\u6557\uff0c\u8acb\u78ba\u8a8d\u7db2\u8def\u8207 API Key \u8a2d\u5b9a\u662f\u5426\u6b63\u78ba';
   }
   aiLoading=false;
   document.getElementById('aiSendBtn').disabled=false;
