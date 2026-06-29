@@ -454,7 +454,7 @@ function renderCard(q,kw){
     <div class="qa-admin-btns">
       <button onclick="event.stopPropagation();moveQA(${q.id},-1)">⬆</button>
       <button onclick="event.stopPropagation();moveQA(${q.id},1)">⬇</button>
-      <button onclick="event.stopPropagation();inlineEdit(${q.id})">✏️</button>
+      <button onclick="event.stopPropagation();inlineEdit(${q.id})">✏️</button><button onclick="event.stopPropagation();inlineDelete(${q.id})" style="background:#e74c3c">🗑️</button>
     </div>
     <div class="qa-header" onclick="toggleQA(${q.id})">
       <div class="qa-title">${cat?cat.icon:''} ${titleHl}${badges}</div>
