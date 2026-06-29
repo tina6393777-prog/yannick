@@ -7,115 +7,114 @@
 <title>亞尼克YTM客服助手</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--brand:#C8102E;--brand-dark:#A00D24;--brand-light:#E8847A;--brand-bg:#FFF5F5;--success:#2D9F60;--text:#2C2C2C;--text-light:#6B6B6B;--border:#E8E0E0;--bg:#FAF7F5;--white:#FFF;--shadow:0 2px 8px rgba(200,16,46,.08);--shadow-hover:0 6px 20px rgba(200,16,46,.15);--radius:12px;--fs:16px}
+:root{
+  --brand:#C8102E;--brand-dark:#A00D24;--brand-light:#E8847A;--brand-bg:#FFF5F5;
+  --success:#2D9F60;--text:#2C2C2C;--text-light:#6B6B6B;--border:#E8E0E0;
+  --bg:#F7F4F2;--white:#FFF;
+  --shadow:0 2px 8px rgba(200,16,46,.07);--shadow-hover:0 6px 20px rgba(200,16,46,.14);
+  --radius:14px;--fs:16px
+}
 html{font-size:var(--fs)}
-body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft JhengHei","PingFang TC","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;padding-bottom:40px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Microsoft JhengHei","PingFang TC","Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;padding-bottom:60px}
 
-/* Header */
-.header{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;padding:16px;box-shadow:0 4px 12px rgba(200,16,46,.2);position:sticky;top:0;z-index:100}
-.header-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.logo-box{background:#fff;border-radius:12px;padding:10px 16px;display:flex;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.1);flex-shrink:0}
-.logo-svg{height:76px;width:auto;display:block}
-.header-center{flex:1;min-width:180px}
-.header h1{font-size:1.25rem;margin-bottom:4px;letter-spacing:1px;font-weight:700}
-.header-contact{font-size:.8rem;opacity:.95;line-height:1.7}
-.header-contact strong{color:#FFE082;margin-right:4px}
+/* ===== HEADER ===== */
+.header{background:linear-gradient(135deg,var(--brand) 0%,var(--brand-dark) 100%);color:#fff;padding:14px 20px;box-shadow:0 3px 16px rgba(200,16,46,.22);position:sticky;top:0;z-index:200}
+.header-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:14px}
+.logo-box{background:#fff;border-radius:10px;padding:7px 13px;display:flex;align-items:center;box-shadow:0 2px 8px rgba(0,0,0,.12);flex-shrink:0}
+.logo-img{height:64px;width:auto;display:block}
+.header-center{flex:1;min-width:0}
+.header h1{font-size:1.15rem;font-weight:700;letter-spacing:.5px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.header-contact{font-size:.75rem;opacity:.9;line-height:1.7}
+.header-contact strong{color:#FFE082;margin-right:3px}
 .header-actions{display:flex;gap:6px;flex-shrink:0}
-.btn-icon{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 12px;border-radius:20px;font-size:.8rem;cursor:pointer;transition:.2s;white-space:nowrap;font-family:inherit}
+.btn-icon{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.28);color:#fff;padding:6px 12px;border-radius:20px;font-size:.78rem;cursor:pointer;transition:.2s;white-space:nowrap;font-family:inherit}
 .btn-icon:hover{background:rgba(255,255,255,.28)}
-@media(max-width:640px){.header-inner{gap:10px}.header h1{font-size:1.05rem}.header-contact{font-size:.72rem}.logo-svg{height:60px}.btn-icon{padding:5px 10px;font-size:.75rem}}
+@media(max-width:600px){
+  .header-inner{gap:10px}
+  .logo-img{height:48px}
+  .header h1{font-size:.95rem}
+  .header-contact{font-size:.68rem}
+  .btn-icon{padding:5px 8px;font-size:.72rem}
+}
 
-/* Marquee */
-.marquee-wrap{background:#FFF8E1;border-bottom:1px solid #F5D98E;overflow:hidden;padding:8px 0}
-.marquee{display:inline-block;white-space:nowrap;animation:marquee 40s linear infinite;font-size:.85rem;color:#8B4513}
+/* ===== MARQUEE ===== */
+.marquee-wrap{background:#FFF8E1;border-bottom:1px solid #F5D98E;overflow:hidden;padding:7px 0}
+.marquee{display:inline-block;white-space:nowrap;animation:marquee 40s linear infinite;font-size:.83rem;color:#8B4513}
 @keyframes marquee{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
 
-.container{max-width:1200px;margin:0 auto;padding:16px}
+/* ===== MAIN TABS ===== */
+.main-tabs-wrap{background:#fff;border-bottom:1px solid var(--border);position:sticky;top:97px;z-index:150;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+@media(max-width:600px){.main-tabs-wrap{top:85px}}
+.main-tabs{max-width:1100px;margin:0 auto;display:flex;gap:0;padding:0 16px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.main-tabs::-webkit-scrollbar{display:none}
+.main-tab{padding:13px 20px;border:none;background:none;cursor:pointer;color:var(--text-light);font-weight:600;font-size:.9rem;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-1px;font-family:inherit;transition:.18s;display:flex;align-items:center;gap:6px}
+.main-tab:hover{color:var(--brand)}
+.main-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
+.main-tab .tab-count{font-size:.72rem;background:var(--brand-bg);color:var(--brand);border-radius:10px;padding:1px 7px;font-weight:600}
+.main-tab.active .tab-count{background:var(--brand);color:#fff}
 
-/* Update Banner */
+/* ===== CONTAINER ===== */
+.container{max-width:1100px;margin:0 auto;padding:20px 16px}
+
+/* ===== UPDATE BANNER ===== */
 .update-banner{background:#E8F5E9;border:1px solid #81C784;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:none;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.9rem;color:#1B5E20}
 .update-banner.show{display:flex}
 .update-banner button{background:#2E7D32;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85rem;font-family:inherit}
 
-/* Search */
-.search-box{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:16px}
-.search-box input{flex:1;border:none;outline:none;font-size:1rem;color:var(--text);background:transparent;padding:4px 0;font-family:inherit}
-.search-icon{color:var(--brand);font-size:1.2rem}
-.search-clear{background:var(--border);border:none;border-radius:50%;width:24px;height:24px;font-size:.8rem;cursor:pointer;color:var(--text-light);display:none}
+/* ===== SEARCH ===== */
+.search-wrap{margin-bottom:18px}
+.search-box{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:11px 16px;display:flex;align-items:center;gap:10px;border:1.5px solid transparent;transition:.2s}
+.search-box:focus-within{border-color:var(--brand-light);box-shadow:var(--shadow-hover)}
+.search-box input{flex:1;border:none;outline:none;font-size:1rem;color:var(--text);background:transparent;font-family:inherit}
+.search-icon{color:var(--brand);font-size:1.1rem}
+.search-clear{background:var(--border);border:none;border-radius:50%;width:22px;height:22px;font-size:.78rem;cursor:pointer;color:var(--text-light);display:none;flex-shrink:0}
 .search-clear.show{display:block}
 
-/* Layout */
-.main-layout{display:flex;gap:16px;align-items:flex-start}
-.sidebar{width:220px;flex-shrink:0;position:sticky;top:120px;max-height:calc(100vh - 140px);overflow-y:auto;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:0;border:1px solid var(--border)}
-.sidebar-header{background:var(--brand);color:#fff;padding:12px 16px;font-weight:700;font-size:.95rem;border-radius:var(--radius) var(--radius) 0 0;text-align:center}
-.content-area{flex:1;min-width:0}
-.sidebar-toggle{display:none;position:fixed;bottom:70px;left:16px;width:44px;height:44px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(200,16,46,.3);z-index:50;font-family:inherit}
+/* ===== SUB-CATEGORY CHIPS ===== */
+.chip-bar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.chip{padding:6px 16px;background:var(--white);border:1.5px solid var(--border);border-radius:20px;font-size:.83rem;cursor:pointer;color:var(--text-light);transition:.18s;user-select:none;font-weight:500}
+.chip:hover{border-color:var(--brand-light);color:var(--brand)}
+.chip.active{background:var(--brand);color:#fff;border-color:var(--brand)}
+.chip .chip-n{font-size:.72rem;opacity:.8;margin-left:3px}
 
-/* Categories as sidebar list */
-.categories{display:flex;flex-direction:column;gap:0;margin-bottom:0}
-.category-card{background:var(--white);border:none;border-bottom:1px solid var(--border);border-radius:0;padding:12px 14px;text-align:left;cursor:pointer;transition:.2s;position:relative;display:flex;align-items:center;gap:10px}
-.category-card:last-child{border-bottom:none}
-.category-card:hover{background:var(--brand-bg)}
-.category-card.active{background:var(--brand);color:#fff}
-.category-card .icon{font-size:1.3rem;display:block;margin-bottom:0;flex-shrink:0}
-.category-card .name{font-size:.85rem;font-weight:600;flex:1}
-.category-card .count{position:static;background:var(--brand);color:#fff;font-size:.7rem;padding:2px 8px;border-radius:12px;font-weight:600;flex-shrink:0}
-.category-card.active .count{background:rgba(255,255,255,.3);color:#fff}
-
-@media(max-width:900px){
-  .main-layout{flex-direction:column}
-  .sidebar{width:100%;position:static;max-height:none;overflow:visible}
-  .sidebar.collapsed .categories{display:none}
-  .sidebar.collapsed .sidebar-header::after{content:' ▼';font-size:.8rem}
-  .sidebar-header{cursor:pointer}
-  .sidebar-toggle{display:none}
-}
-@media(min-width:901px){
-  .sidebar-toggle{display:none}
-}
-
-/* Section Title */
-.section-title{font-size:1.1rem;font-weight:700;color:var(--brand);margin:16px 0 12px;padding-left:12px;border-left:4px solid var(--brand);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+/* ===== SECTION TITLE ===== */
+.section-title{font-size:1rem;font-weight:700;color:var(--brand);margin:4px 0 14px;padding-left:11px;border-left:4px solid var(--brand);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .section-title .count-badge{font-size:.8rem;color:var(--text-light);font-weight:500}
 
-/* QA Cards */
-.qa-list{display:flex;flex-direction:column;gap:12px}
-.qa-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border);transition:.2s;position:relative}
-.qa-card:hover{box-shadow:var(--shadow-hover)}
+/* ===== QA CARDS ===== */
+.qa-list{display:flex;flex-direction:column;gap:10px}
+.qa-card{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border);transition:.18s;position:relative}
+.qa-card:hover{box-shadow:var(--shadow-hover);border-color:var(--brand-light)}
 .qa-header{padding:14px 16px;cursor:pointer;display:flex;align-items:flex-start;gap:10px;user-select:none}
 .qa-header:hover{background:var(--brand-bg)}
-.qa-title{flex:1;font-weight:600;color:var(--text);font-size:1rem;line-height:1.5}
-.qa-arrow{color:var(--brand);font-size:1rem;transition:transform .2s;flex-shrink:0;margin-top:2px}
+.qa-title{flex:1;font-weight:600;color:var(--text);font-size:.97rem;line-height:1.5}
+.qa-arrow{color:var(--brand);font-size:.95rem;transition:transform .2s;flex-shrink:0;margin-top:3px}
 .qa-card.open .qa-arrow{transform:rotate(180deg)}
 .qa-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;background:var(--brand-bg)}
 .qa-card.open .qa-content{max-height:10000px}
-.qa-body{padding:16px;font-size:.95rem;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:var(--text);border-top:1px solid var(--border)}
+.qa-body{padding:16px;font-size:.93rem;white-space:pre-wrap;word-break:break-word;line-height:1.8;color:var(--text);border-top:1px solid var(--border)}
 .qa-body img{max-width:100%;height:auto;border-radius:8px;margin:8px 0;display:block}
 .qa-body a{color:var(--brand);text-decoration:underline;word-break:break-all}
 .video-wrap{position:relative;padding-bottom:56.25%;height:0;margin:10px 0;border-radius:8px;overflow:hidden;background:#000}
 .video-wrap iframe,.video-wrap video{position:absolute;top:0;left:0;width:100%;height:100%;border:0}
 .qa-tags{padding:0 16px 12px;display:flex;flex-wrap:wrap;gap:6px}
-.tag{font-size:.75rem;padding:3px 10px;background:var(--border);color:var(--text-light);border-radius:12px}
-.badge{font-size:.7rem;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin-left:6px;vertical-align:middle}
+.tag{font-size:.73rem;padding:3px 10px;background:var(--border);color:var(--text-light);border-radius:12px}
+.badge{font-size:.68rem;padding:2px 8px;border-radius:10px;font-weight:600;display:inline-block;margin-left:6px;vertical-align:middle}
 .badge-urgent{background:#FFE5E5;color:#C8102E;border:1px solid #C8102E}
 .badge-internal{background:#FFF3CD;color:#856404;border:1px solid #FFC107}
 
-/* Edit Pencil & Sort (admin only) */
+/* ===== ADMIN EDIT ===== */
 .qa-admin-btns{position:absolute;top:8px;right:8px;display:none;gap:4px;z-index:5}
 body.admin-mode .qa-admin-btns{display:flex}
 .qa-admin-btns button{background:var(--brand);color:#fff;border:none;width:28px;height:28px;border-radius:50%;font-size:.75rem;cursor:pointer;box-shadow:0 2px 4px rgba(0,0,0,.12);opacity:.7;transition:.2s;padding:0;line-height:28px;text-align:center}
 .qa-admin-btns button:hover{opacity:1;transform:scale(1.1)}
-
-/* Inline Edit Panel */
 .qa-edit-panel{background:#fff;border-top:2px solid var(--brand);padding:16px;display:none}
 .qa-edit-panel.show{display:block}
 .edit-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;background:#F5F5F5;border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;margin-bottom:-1px}
 .tool-btn{padding:6px 10px;border:1px solid var(--border);background:#fff;border-radius:4px;cursor:pointer;font-size:.85rem;font-family:inherit;transition:.15s}
 .tool-btn:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
-.tool-btn.c-red{color:#C8102E;font-weight:700}
-.tool-btn.c-orange{color:#E67E22;font-weight:600}
-.tool-btn.c-green{color:#2D9F60;font-weight:600}
-.tool-btn.c-blue{color:#2E78B8;font-weight:600}
+.tool-btn.c-red{color:#C8102E;font-weight:700}.tool-btn.c-orange{color:#E67E22;font-weight:600}
+.tool-btn.c-green{color:#2D9F60;font-weight:600}.tool-btn.c-blue{color:#2E78B8;font-weight:600}
 .tool-btn.c-purple{color:#8E44AD;font-weight:600}
 .tool-sep{width:1px;background:#CCC;margin:0 4px}
 .edit-textarea{width:100%;min-height:200px;padding:10px;border:1px solid var(--border);border-radius:0 0 8px 8px;font-size:.95rem;font-family:"Microsoft JhengHei",monospace;line-height:1.6;resize:vertical;outline:none}
@@ -126,57 +125,90 @@ body.admin-mode .qa-admin-btns{display:flex}
 .edit-field input:focus,.edit-field select:focus{border-color:var(--brand)}
 .edit-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .edit-actions button{padding:8px 16px;border:none;border-radius:6px;font-size:.9rem;cursor:pointer;font-family:inherit;font-weight:600}
-.edit-save{background:var(--brand);color:#fff}
-.edit-save:hover{background:var(--brand-dark)}
+.edit-save{background:var(--brand);color:#fff}.edit-save:hover{background:var(--brand-dark)}
 .edit-cancel{background:var(--border);color:var(--text)}
 .edit-delete{background:#FFEBEE;color:#C62828}
 .edit-check{display:flex;gap:14px;margin-bottom:8px;flex-wrap:wrap}
 .edit-check label{display:flex;align-items:center;gap:4px;font-size:.85rem;cursor:pointer}
 .edit-check input{width:auto}
-
-/* Color text */
-.ct-red{color:#C8102E;font-weight:700}
-.ct-orange{color:#E67E22;font-weight:600}
-.ct-green{color:#2D9F60;font-weight:600}
-.ct-blue{color:#2E78B8;font-weight:600}
+.ct-red{color:#C8102E;font-weight:700}.ct-orange{color:#E67E22;font-weight:600}
+.ct-green{color:#2D9F60;font-weight:600}.ct-blue{color:#2E78B8;font-weight:600}
 .ct-purple{color:#8E44AD;font-weight:600}
+.cat-manage-btn{display:none;margin-left:8px;background:var(--brand);color:#fff;border:none;padding:4px 10px;border-radius:14px;font-size:.75rem;cursor:pointer;vertical-align:middle;font-family:inherit}
+body.admin-mode .cat-manage-btn{display:inline-block}
 
-/* Stations */
+/* ===== STATIONS ===== */
 .station-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
-.station-filter{padding:6px 14px;background:var(--white);border:1px solid var(--border);border-radius:16px;font-size:.85rem;cursor:pointer;color:var(--text-light);transition:.2s;user-select:none}
+.station-filter{padding:5px 14px;background:var(--white);border:1.5px solid var(--border);border-radius:16px;font-size:.83rem;cursor:pointer;color:var(--text-light);transition:.18s;user-select:none}
 .station-filter:hover{border-color:var(--brand);color:var(--brand)}
 .station-filter.active{background:var(--brand);color:#fff;border-color:var(--brand)}
-.station-search{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:.95rem;margin-bottom:12px;outline:none;font-family:inherit}
+.station-search{width:100%;padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:.93rem;margin-bottom:12px;outline:none;font-family:inherit}
 .station-search:focus{border-color:var(--brand)}
 .table-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto;-webkit-overflow-scrolling:touch}
-.station-table{width:100%;border-collapse:collapse;font-size:.9rem;min-width:700px}
-.station-table th{background:var(--brand);color:#fff;padding:10px 12px;text-align:left;font-weight:600;position:sticky;top:0;white-space:nowrap}
+.station-table{width:100%;border-collapse:collapse;font-size:.88rem;min-width:600px}
+.station-table th{background:var(--brand);color:#fff;padding:10px 12px;text-align:left;font-weight:600;white-space:nowrap}
 .station-table td{padding:10px 12px;border-bottom:1px solid var(--border)}
-.station-table tr:hover{background:var(--brand-bg)}
-.line-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.8rem;font-weight:600;white-space:nowrap;color:#fff}
-.line-板南線{background:#1E4A8C}.line-淡水信義線{background:#C8102E}.line-松山新店線{background:#2E8B3C}.line-中和新蘆線{background:#E8A300}.line-文湖線{background:#8B5A2B}.line-高雄捷運紅線{background:#E30613}.line-門市YTM{background:#555}
+.station-table tr:hover td{background:var(--brand-bg)}
+.line-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:.78rem;font-weight:600;white-space:nowrap;color:#fff}
+.line-板南線{background:#1E4A8C}.line-淡水信義線{background:#C8102E}.line-松山新店線{background:#2E8B3C}
+.line-中和新蘆線{background:#E8A300}.line-文湖線{background:#8B5A2B}.line-高雄捷運紅線{background:#E30613}
+.line-門市YTM{background:#555}
 
+/* ===== AI CHAT ===== */
+.ai-wrap{background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
+.ai-header{background:linear-gradient(135deg,var(--brand),var(--brand-dark));color:#fff;padding:16px 20px;display:flex;align-items:center;gap:10px}
+.ai-header-icon{font-size:1.6rem}
+.ai-header-text h2{font-size:1rem;font-weight:700;margin-bottom:2px}
+.ai-header-text p{font-size:.78rem;opacity:.85}
+.ai-body{padding:20px}
+.ai-key-row{display:flex;gap:8px;margin-bottom:16px;align-items:center}
+.ai-key-row input{flex:1;padding:9px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:.9rem;outline:none;font-family:inherit}
+.ai-key-row input:focus{border-color:var(--brand)}
+.ai-key-row button{padding:9px 16px;background:var(--brand);color:#fff;border:none;border-radius:8px;font-size:.85rem;cursor:pointer;font-family:inherit;white-space:nowrap;font-weight:600}
+.ai-key-row button:hover{background:var(--brand-dark)}
+.chat-history{min-height:120px;max-height:420px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;margin-bottom:16px;padding:4px 0}
+.chat-msg{display:flex;gap:10px;align-items:flex-start}
+.chat-msg.user{flex-direction:row-reverse}
+.chat-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.chat-msg.bot .chat-avatar{background:var(--brand-bg);color:var(--brand)}
+.chat-msg.user .chat-avatar{background:var(--brand);color:#fff}
+.chat-bubble{padding:10px 14px;border-radius:12px;font-size:.9rem;line-height:1.7;max-width:85%;word-break:break-word}
+.chat-msg.bot .chat-bubble{background:#F5F5F5;color:var(--text)}
+.chat-msg.user .chat-bubble{background:var(--brand);color:#fff;border-radius:12px 12px 4px 12px}
+.chat-typing{display:flex;gap:5px;align-items:center;padding:12px 14px;background:#F5F5F5;border-radius:12px;width:fit-content}
+.chat-typing span{width:7px;height:7px;background:var(--brand-light);border-radius:50%;animation:typing .9s ease-in-out infinite}
+.chat-typing span:nth-child(2){animation-delay:.2s}.chat-typing span:nth-child(3){animation-delay:.4s}
+@keyframes typing{0%,80%,100%{transform:scale(.7);opacity:.5}40%{transform:scale(1);opacity:1}}
+.ai-input-row{display:flex;gap:8px}
+.ai-input-row input{flex:1;padding:11px 16px;border:1.5px solid var(--border);border-radius:10px;font-size:.95rem;outline:none;font-family:inherit}
+.ai-input-row input:focus{border-color:var(--brand)}
+.ai-input-row button{padding:11px 20px;background:var(--brand);color:#fff;border:none;border-radius:10px;font-size:.95rem;cursor:pointer;font-family:inherit;font-weight:600}
+.ai-input-row button:hover{background:var(--brand-dark)}
+.ai-input-row button:disabled{background:#ccc;cursor:not-allowed}
+.ai-note{font-size:.78rem;color:var(--text-light);margin-top:10px;padding:8px 12px;background:var(--brand-bg);border-radius:8px}
+
+/* ===== EMPTY / MISC ===== */
 .empty-state{text-align:center;padding:40px 20px;color:var(--text-light)}
 .empty-state .big{font-size:3rem;margin-bottom:10px}
 
-/* Modal */
+/* ===== MODAL ===== */
 .modal{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.5);z-index:1000;justify-content:center;align-items:flex-start;padding:20px;overflow-y:auto}
 .modal.show{display:flex}
 .modal-content{background:#fff;border-radius:var(--radius);max-width:900px;width:100%;max-height:calc(100vh - 40px);display:flex;flex-direction:column;box-shadow:0 10px 40px rgba(0,0,0,.3)}
 .modal-header{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;background:var(--brand);color:#fff;border-radius:var(--radius) var(--radius) 0 0}
-.modal-header h2{font-size:1.1rem}
+.modal-header h2{font-size:1.05rem}
 .modal-close{background:rgba(255,255,255,.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;font-size:1.2rem;cursor:pointer}
 .modal-body{padding:20px;overflow-y:auto;flex:1}
 
+/* ===== ADMIN ===== */
 .login-form{text-align:center;padding:20px}
 .login-form input{width:100%;padding:12px;font-size:1rem;border:1px solid var(--border);border-radius:8px;margin:10px 0;outline:none;font-family:inherit}
 .login-form input:focus{border-color:var(--brand)}
-.btn-primary{background:var(--brand);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:.95rem;cursor:pointer;font-weight:600;transition:.2s;font-family:inherit}
+.btn-primary{background:var(--brand);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:.93rem;cursor:pointer;font-weight:600;transition:.2s;font-family:inherit}
 .btn-primary:hover{background:var(--brand-dark)}
-.btn-secondary{background:var(--border);color:var(--text);border:none;padding:10px 20px;border-radius:8px;font-size:.95rem;cursor:pointer;margin-right:8px;font-family:inherit}
-
+.btn-secondary{background:var(--border);color:var(--text);border:none;padding:10px 20px;border-radius:8px;font-size:.93rem;cursor:pointer;margin-right:8px;font-family:inherit}
 .admin-tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--border);overflow-x:auto}
-.admin-tab{padding:10px 14px;border:none;background:none;cursor:pointer;color:var(--text-light);font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:inherit;font-size:.9rem}
+.admin-tab{padding:10px 14px;border:none;background:none;cursor:pointer;color:var(--text-light);font-weight:600;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px;font-family:inherit;font-size:.88rem}
 .admin-tab.active{color:var(--brand);border-bottom-color:var(--brand)}
 .admin-toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
 .admin-toolbar input,.admin-toolbar select{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:.9rem}
@@ -186,144 +218,70 @@ body.admin-mode .qa-admin-btns{display:flex}
 .admin-item-info{flex:1;min-width:0}
 .admin-item-title{font-weight:600;color:var(--text);margin-bottom:2px;overflow:hidden;text-overflow:ellipsis}
 .admin-item-meta{font-size:.8rem;color:var(--text-light)}
-.admin-btn{padding:6px 12px;border:none;border-radius:6px;font-size:.85rem;cursor:pointer;font-weight:500;font-family:inherit}
-.admin-btn-edit{background:#E3F2FD;color:#1976D2}
-.admin-btn-del{background:#FFEBEE;color:#C62828}
-.admin-btn-edit:hover{background:#BBDEFB}
-.admin-btn-del:hover{background:#FFCDD2}
-
+.admin-btn{padding:6px 12px;border:none;border-radius:6px;font-size:.83rem;cursor:pointer;font-weight:500;font-family:inherit}
+.admin-btn-edit{background:#E3F2FD;color:#1976D2}.admin-btn-del{background:#FFEBEE;color:#C62828}
+.admin-btn-edit:hover{background:#BBDEFB}.admin-btn-del:hover{background:#FFCDD2}
 .form-group{margin-bottom:16px}
-.form-group label{display:block;font-weight:600;margin-bottom:6px;color:var(--text);font-size:.9rem}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:.95rem;outline:none;font-family:inherit}
+.form-group label{display:block;font-weight:600;margin-bottom:6px;color:var(--text);font-size:.88rem}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:.93rem;outline:none;font-family:inherit}
 .form-group textarea{min-height:150px;resize:vertical;line-height:1.6}
 .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--brand)}
-
 .icon-picker{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px;max-height:260px;overflow-y:auto;padding:10px;border:1px solid var(--border);border-radius:8px;background:#FAFAFA}
 .icon-option{font-size:1.5rem;padding:8px;text-align:center;cursor:pointer;border-radius:6px;background:#fff;border:2px solid transparent;transition:.15s}
 .icon-option:hover{border-color:var(--brand-light)}
 .icon-option.selected{border-color:var(--brand);background:var(--brand-bg)}
-
 .export-section{background:var(--brand-bg);padding:16px;border-radius:8px;margin-top:16px;border:1px solid var(--brand-light)}
 .export-section h3{color:var(--brand);margin-bottom:8px;font-size:1rem}
 .export-section p{font-size:.85rem;color:var(--text-light);margin-bottom:10px}
 
+/* ===== MISC ===== */
 .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--text);color:#fff;padding:12px 24px;border-radius:25px;font-size:.9rem;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:2000;opacity:0;transition:.3s;max-width:90%;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 body.fs-large{--fs:18px}body.fs-xlarge{--fs:20px}
-.scroll-top{position:fixed;bottom:20px;right:20px;width:44px;height:44px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.2rem;cursor:pointer;box-shadow:0 4px 12px rgba(200,16,46,.3);opacity:0;pointer-events:none;transition:.3s;z-index:50;font-family:inherit}
+.scroll-top{position:fixed;bottom:20px;right:20px;width:42px;height:42px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.1rem;cursor:pointer;box-shadow:0 4px 12px rgba(200,16,46,.3);opacity:0;pointer-events:none;transition:.3s;z-index:50;font-family:inherit}
 .scroll-top.show{opacity:1;pointer-events:auto}
-
-/* Category管理快速按鈕(admin) */
-.cat-manage-btn{display:none;margin-left:8px;background:var(--brand);color:#fff;border:none;padding:4px 10px;border-radius:14px;font-size:.75rem;cursor:pointer;vertical-align:middle;font-family:inherit}
-body.admin-mode .cat-manage-btn{display:inline-block}
-
-/* ===== AI 助手 ===== */
-.ai-fab{position:fixed;bottom:76px;right:20px;width:52px;height:52px;background:var(--brand);color:#fff;border:none;border-radius:50%;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 16px rgba(200,16,46,.4);z-index:60;font-family:inherit;transition:.2s;display:flex;align-items:center;justify-content:center}
-.ai-fab:hover{transform:scale(1.1);background:var(--brand-dark)}
-.ai-panel{position:fixed;bottom:140px;right:20px;width:380px;max-width:calc(100vw - 32px);background:#fff;border-radius:16px;box-shadow:0 8px 40px rgba(0,0,0,.2);z-index:60;display:none;flex-direction:column;max-height:520px;border:1px solid var(--border);overflow:hidden}
-.ai-panel.open{display:flex}
-.ai-panel-head{background:var(--brand);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.ai-panel-head h3{font-size:.95rem;font-weight:700;display:flex;align-items:center;gap:6px}
-.ai-panel-head .ai-head-btns{display:flex;gap:6px}
-.ai-head-btn{background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:.85rem;display:flex;align-items:center;justify-content:center}
-.ai-head-btn:hover{background:rgba(255,255,255,.35)}
-.ai-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:#FAF7F5}
-.ai-msg{max-width:88%;padding:10px 14px;border-radius:14px;font-size:.88rem;line-height:1.6;word-break:break-word}
-.ai-msg.user{background:var(--brand);color:#fff;align-self:flex-end;border-bottom-right-radius:4px}
-.ai-msg.bot{background:#fff;color:var(--text);align-self:flex-start;border:1px solid var(--border);border-bottom-left-radius:4px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-.ai-msg.bot.thinking{color:var(--text-light);font-style:italic}
-.ai-input-row{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--border);background:#fff;flex-shrink:0}
-.ai-input-row input{flex:1;border:1px solid var(--border);border-radius:20px;padding:8px 14px;font-size:.9rem;outline:none;font-family:inherit}
-.ai-input-row input:focus{border-color:var(--brand)}
-.ai-send-btn{background:var(--brand);color:#fff;border:none;border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:.2s}
-.ai-send-btn:hover{background:var(--brand-dark)}
-.ai-send-btn:disabled{background:var(--border);cursor:not-allowed}
-.ai-key-hint{font-size:.78rem;color:var(--text-light);padding:6px 12px 10px;text-align:center;background:#fff;border-top:1px solid var(--border)}
-.ai-key-hint a{color:var(--brand);cursor:pointer;text-decoration:underline}
-.ai-key-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.45);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
-.ai-key-modal.open{display:flex}
-.ai-key-box{background:#fff;border-radius:14px;padding:24px;max-width:360px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.25)}
-.ai-key-box h4{font-size:1rem;font-weight:700;color:var(--brand);margin-bottom:8px}
-.ai-key-box p{font-size:.85rem;color:var(--text-light);margin-bottom:14px;line-height:1.6}
-.ai-key-box input{width:100%;padding:10px;border:1px solid var(--border);border-radius:8px;font-size:.9rem;outline:none;font-family:inherit;margin-bottom:12px}
-.ai-key-box input:focus{border-color:var(--brand)}
-.ai-key-actions{display:flex;gap:8px;justify-content:flex-end}
-@media(max-width:480px){.ai-panel{width:calc(100vw - 32px);right:16px;bottom:130px}}
 </style>
 </head>
 <body>
+
+<!-- HEADER -->
 <div class="header">
 <div class="header-inner">
-<div class="logo-box">
-<img class="logo-svg" src="data:image/png;base64,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" alt="亞尼克 YANNICK">
-</div>
-<div class="header-center">
-<h1 id="headerTitle">亞尼克YTM客服助手</h1>
-<div class="header-contact" id="headerContact"></div>
-</div>
-<div class="header-actions">
-<button class="btn-icon" onclick="checkUpdate()" title="檢查更新">🔄</button>
-<button class="btn-icon" onclick="toggleFontSize()" title="字級">🔤</button>
-<button class="btn-icon" onclick="openAdmin()" title="管理">⚙️</button>
-</div>
+  <div class="logo-box">
+    <img class="logo-img" src="data:image/png;base64,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" alt="亞尼克 YANNICK">
+  </div>
+  <div class="header-center">
+    <h1 id="headerTitle">亞尼克YTM客服助手</h1>
+    <div class="header-contact" id="headerContact"></div>
+  </div>
+  <div class="header-actions">
+    <button class="btn-icon" onclick="checkUpdate()" title="檢查更新">🔄</button>
+    <button class="btn-icon" onclick="toggleFontSize()" title="字級">🔤</button>
+    <button class="btn-icon" onclick="openAdmin()" title="管理">⚙️</button>
+  </div>
 </div>
 </div>
 
+<!-- MARQUEE -->
 <div class="marquee-wrap"><div class="marquee" id="marqueeText"></div></div>
 
+<!-- MAIN TABS -->
+<div class="main-tabs-wrap">
+  <div class="main-tabs" id="mainTabsBar"></div>
+</div>
+
+<!-- CONTENT -->
 <div class="container">
-<div class="update-banner" id="updateBanner"><span>🆕 偵測到新版本！</span><button onclick="applyUpdate()">立即更新</button></div>
-<div class="main-layout">
-  <aside class="sidebar" id="sidebarPanel">
-    <div class="sidebar-header">📂 分類選單</div>
-    <div class="categories" id="categoryContainer"></div>
-  </aside>
-  <main class="content-area">
-    <div class="search-box"><span class="search-icon">🔍</span><input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤、站名）..."><button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button></div>
-    <div id="resultContainer"></div>
-  </main>
+  <div class="update-banner" id="updateBanner">
+    <span>🆕 偵測到新版本！</span>
+    <button onclick="applyUpdate()">立即更新</button>
+  </div>
+  <div id="pageContent"></div>
 </div>
-</div>
-<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">📂</button>
 
 <button class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</button>
 
-
-<!-- AI 助手浮動按鈕 -->
-<button class="ai-fab" id="aiFab" onclick="toggleAI()" title="問 AI 助手">🤖</button>
-
-<!-- AI 助手面板 -->
-<div class="ai-panel" id="aiPanel">
-  <div class="ai-panel-head">
-    <h3>🤖 問 AI 助手</h3>
-    <div class="ai-head-btns">
-      <button class="ai-head-btn" onclick="clearAIChat()" title="清除對話">🗑️</button>
-      <button class="ai-head-btn" onclick="openKeyModal()" title="設定 API Key">🔑</button>
-      <button class="ai-head-btn" onclick="toggleAI()">✕</button>
-    </div>
-  </div>
-  <div class="ai-msgs" id="aiMsgs">
-    <div class="ai-msg bot">👋 你好！我是 AI 客服助手，回答來源為亞尼克知識庫。有什麼問題請直接問我！</div>
-  </div>
-  <div class="ai-input-row">
-    <input type="text" id="aiInput" placeholder="輸入問題，例：蛋糕保存期限" onkeydown="if(event.key==='Enter'&&!event.isComposing)sendAI()">
-    <button class="ai-send-btn" id="aiSendBtn" onclick="sendAI()">➤</button>
-  </div>
-  <div class="ai-key-hint">⚡ 由 Groq AI 提供，回答來源為亞尼克知識庫 ｜ <a onclick="openKeyModal()">🔑 設定 API Key</a></div>
-</div>
-
-<!-- API Key 設定 Modal -->
-<div class="ai-key-modal" id="aiKeyModal">
-  <div class="ai-key-box">
-    <h4>🔑 設定 Groq API Key</h4>
-    <p>請至 <strong>console.groq.com</strong> 免費申請 API Key（gsk_ 開頭），填入後即可啟用 AI 問答功能。Key 僅儲存在您的瀏覽器中。</p>
-    <input type="password" id="aiKeyInput" placeholder="gsk_xxxxxxxxxxxxxxxx" autocomplete="off">
-    <div class="ai-key-actions">
-      <button class="btn-secondary" onclick="closeKeyModal()">取消</button>
-      <button class="btn-primary" onclick="saveKey()">💾 儲存</button>
-    </div>
-  </div>
-</div>
+<!-- ADMIN MODAL -->
 <div class="modal" id="adminModal">
 <div class="modal-content">
 <div class="modal-header"><h2 id="adminTitle">⚙️ 管理後台</h2><button class="modal-close" onclick="closeAdmin()">✕</button></div>
@@ -334,96 +292,169 @@ body.admin-mode .cat-manage-btn{display:inline-block}
 <div class="toast" id="toast"></div>
 
 <script>
-let DATA=null,currentCategory='all',isAdmin=false;
+let DATA=null, currentTab='qa', currentCategory='all', isAdmin=false;
 const ADMIN_PASSWORD='1234';
 const ICONS=['🏢','🎂','💳','🎁','🏪','🌐','💰','📍','📢','🛍️','🎯','⭐','🔥','💎','🎊','🎉','📝','📋','📊','📈','📌','📞','📱','💬','🚨','⚠️','🔒','🔑','✅','❌','❓','❗','🚀','✨','💡','🎓','📚','📖','🔧','⚙️','🍰','🍮','🧁','🍪','🍫','🍵','🥐','🥖','🚚','🏃','🎈','🎀','💝','🛒','🏆','🌟'];
 
-window.addEventListener('DOMContentLoaded',init);
+// AI 問答狀態
+let groqKey = localStorage.getItem('ytm_groq_key') || '';
+let chatHistory = [];
+let aiLoading = false;
+
+window.addEventListener('DOMContentLoaded', init);
 
 async function init(){
   try{
-    const local=localStorage.getItem('ytm_qa_data');
+    const local = localStorage.getItem('ytm_qa_data');
     if(local){try{DATA=JSON.parse(local)}catch(e){DATA=await loadJson()}}
-    else DATA=await loadJson();
-    renderAll();silentCheck();
+    else DATA = await loadJson();
+    renderAll(); silentCheck();
   }catch(e){
-    document.getElementById('resultContainer').innerHTML='<div class="empty-state"><div class="big">⚠️</div><p>無法載入資料，請確認 data.json</p><p style="font-size:.85rem;margin-top:8px">'+e.message+'</p></div>';
+    document.getElementById('pageContent').innerHTML='<div class="empty-state"><div class="big">⚠️</div><p>無法載入資料，請確認 data.json</p><p style="font-size:.85rem;margin-top:8px">'+e.message+'</p></div>';
   }
-  document.getElementById('searchInput').addEventListener('input',onSearch);
   window.addEventListener('scroll',()=>{document.getElementById('scrollTop').classList.toggle('show',scrollY>300)});
-  // 手機版 sidebar 點擊收合
-  document.querySelector('.sidebar-header')?.addEventListener('click',()=>{
-    if(window.innerWidth<=900)document.getElementById('sidebarPanel')?.classList.toggle('collapsed');
-  });
 }
 
 async function loadJson(){const r=await fetch('data.json?t='+Date.now());if(!r.ok)throw new Error('載入失敗');return r.json()}
 
-// Update check - 用 buildNum 數字比較
-async function silentCheck(){try{const s=await loadJson();const localBuild=DATA.meta.buildNum||0;const serverBuild=s.meta.buildNum||0;if(serverBuild>localBuild&&localStorage.getItem('ytm_qa_data')){window._pu=s;document.getElementById('updateBanner').classList.add('show')}}catch(e){}}
-async function checkUpdate(){showToast('檢查中...');try{const s=await loadJson();if(!localStorage.getItem('ytm_qa_data')){DATA=s;renderAll();showToast('已是最新');return}const localBuild=DATA.meta.buildNum||0;const serverBuild=s.meta.buildNum||0;if(serverBuild>localBuild){window._pu=s;document.getElementById('updateBanner').classList.add('show');showToast('發現新版本（v'+serverBuild+'）！')}else showToast('已是最新（v'+localBuild+'）')}catch(e){showToast('檢查失敗')}}
+async function silentCheck(){try{const s=await loadJson();const lb=DATA.meta.buildNum||0,sb=s.meta.buildNum||0;if(sb>lb&&localStorage.getItem('ytm_qa_data')){window._pu=s;document.getElementById('updateBanner').classList.add('show')}}catch(e){}}
+async function checkUpdate(){showToast('檢查中...');try{const s=await loadJson();if(!localStorage.getItem('ytm_qa_data')){DATA=s;renderAll();showToast('已是最新');return}const lb=DATA.meta.buildNum||0,sb=s.meta.buildNum||0;if(sb>lb){window._pu=s;document.getElementById('updateBanner').classList.add('show');showToast('發現新版本（v'+sb+'）！')}else showToast('已是最新（v'+lb+'）')}catch(e){showToast('檢查失敗')}}
 function applyUpdate(){if(!window._pu)return;DATA=window._pu;window._pu=null;localStorage.removeItem('ytm_qa_data');document.getElementById('updateBanner').classList.remove('show');renderAll();showToast('已更新至 v'+(DATA.meta.buildNum||0))}
 
-// Render
+// ===== RENDER ALL =====
 function renderAll(){
-  document.getElementById('headerTitle').textContent=DATA.meta.title||'亞尼克YTM客服助手';
-  let c='';
-  c+=`<div>📞 <strong>客服</strong>${DATA.meta.subtitle||''}</div>`;
-  if(DATA.meta.email)c+=`<div>📧 <strong>信箱</strong>${DATA.meta.email}</div>`;
-  if(DATA.meta.lineId)c+=`<div>💬 <strong>LINE</strong>${DATA.meta.lineId}${DATA.meta.ytmLineId?'｜YTM:'+DATA.meta.ytmLineId:''}</div>`;
-  document.getElementById('headerContact').innerHTML=c;
-  document.getElementById('marqueeText').textContent=DATA.marquee||'';
-  renderCategories();renderQA();
+  document.getElementById('headerTitle').textContent = DATA.meta.title||'亞尼克YTM客服助手';
+  let c = '';
+  c += `<div>📞 <strong>客服</strong>${DATA.meta.subtitle||''}</div>`;
+  if(DATA.meta.email) c += `<div>📧 <strong>信箱</strong>${DATA.meta.email}</div>`;
+  if(DATA.meta.lineId) c += `<div>💬 <strong>LINE</strong>${DATA.meta.lineId}${DATA.meta.ytmLineId?'｜YTM:'+DATA.meta.ytmLineId:''}</div>`;
+  document.getElementById('headerContact').innerHTML = c;
+  document.getElementById('marqueeText').textContent = DATA.marquee||'';
+  renderMainTabs();
+  renderPage();
 }
 
-function renderCategories(){
-  const box=document.getElementById('categoryContainer');
-  let h=`<div class="category-card ${currentCategory==='all'?'active':''}" onclick="selectCategory('all')"><span class="icon">📚</span><div class="name">全部</div><div class="count">${DATA.qa.length}</div></div>`;
+// ===== MAIN TABS =====
+function renderMainTabs(){
+  const qaCount = DATA.qa.length;
+  const stCount = DATA.stations?.length||0;
+  const tabs = [
+    {id:'qa',   icon:'📚', label:'知識庫',  count:qaCount},
+    {id:'ai',   icon:'🤖', label:'AI 問答', count:null},
+    {id:'station', icon:'🏪', label:'據點查詢', count:stCount},
+  ];
+  document.getElementById('mainTabsBar').innerHTML = tabs.map(t=>`
+    <button class="main-tab ${currentTab===t.id?'active':''}" onclick="selectMainTab('${t.id}')">
+      ${t.icon} ${t.label}
+      ${t.count!==null?`<span class="tab-count">${t.count}</span>`:''}
+    </button>
+  `).join('');
+}
+
+function selectMainTab(tab){
+  currentTab = tab;
+  currentCategory = 'all';
+  // 清搜尋
+  const si = document.getElementById('searchInput');
+  if(si){ si.value=''; document.getElementById('searchClear')?.classList.remove('show'); }
+  renderMainTabs();
+  renderPage();
+  scrollTo({top:0,behavior:'smooth'});
+}
+
+// ===== PAGE ROUTER =====
+function renderPage(){
+  const ct = document.getElementById('pageContent');
+  if(currentTab==='qa') ct.innerHTML = buildQAPage();
+  else if(currentTab==='ai') ct.innerHTML = buildAIPage();
+  else if(currentTab==='station') ct.innerHTML = buildStationPage();
+  // 重新綁事件
+  if(currentTab==='qa'){
+    document.getElementById('searchInput')?.addEventListener('input', onSearch);
+  }
+  if(currentTab==='ai') initAIPage();
+  if(currentTab==='station'){
+    document.getElementById('stationSearch')?.addEventListener('input', filterStations);
+  }
+}
+
+// ===== QA PAGE =====
+function buildQAPage(){
+  return `
+    <div class="search-wrap">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="搜尋關鍵字（標題、內容、標籤）...">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+      </div>
+    </div>
+    <div class="chip-bar" id="chipBar"></div>
+    <div id="qaResultArea"></div>
+  `;
+}
+
+function renderQAPage(){
+  renderChips();
+  renderQA();
+}
+
+function renderChips(){
+  const bar = document.getElementById('chipBar');
+  if(!bar) return;
+  let h = `<div class="chip ${currentCategory==='all'?'active':''}" onclick="selectCategory('all')">全部 <span class="chip-n">${DATA.qa.length}</span></div>`;
   DATA.categories.forEach(c=>{
-    const n=c.id==='station'?(DATA.stations?.length||0):DATA.qa.filter(q=>q.category===c.id).length;
-    h+=`<div class="category-card ${currentCategory===c.id?'active':''}" onclick="selectCategory('${c.id}')"><span class="icon">${c.icon}</span><div class="name">${esc(c.name)}</div><div class="count">${n}</div></div>`;
+    if(c.id==='station') return;
+    const n = DATA.qa.filter(q=>q.category===c.id).length;
+    h += `<div class="chip ${currentCategory===c.id?'active':''}" onclick="selectCategory('${c.id}')">${c.icon} ${esc(c.name)} <span class="chip-n">${n}</span></div>`;
   });
-  box.innerHTML=h;
+  bar.innerHTML = h;
 }
 
-function selectCategory(id){currentCategory=id;document.getElementById('searchInput').value='';document.getElementById('searchClear').classList.remove('show');renderCategories();renderQA();scrollTo({top:0,behavior:'smooth'});if(window.innerWidth<=900)document.getElementById('sidebarPanel')?.classList.add('collapsed')}
+function selectCategory(id){
+  currentCategory = id;
+  const si = document.getElementById('searchInput');
+  if(si){ si.value=''; document.getElementById('searchClear')?.classList.remove('show'); }
+  renderChips();
+  renderQA();
+  scrollTo({top:0,behavior:'smooth'});
+}
 
 function renderQA(){
-  const kw=document.getElementById('searchInput').value.trim().toLowerCase();
-  const ct=document.getElementById('resultContainer');
-  if(currentCategory==='station'){renderStations();return}
-  let list=DATA.qa;
-  if(currentCategory!=='all')list=list.filter(q=>q.category===currentCategory);
-  if(kw)list=list.filter(q=>q.title.toLowerCase().includes(kw)||q.content.toLowerCase().includes(kw)||(q.tags||[]).some(t=>t.toLowerCase().includes(kw)));
-  let sr=[];
-  if(kw&&DATA.stations)sr=DATA.stations.filter(s=>s.name.toLowerCase().includes(kw)||(s.address||'').toLowerCase().includes(kw)||(s.line||'').toLowerCase().includes(kw)||(s.exit||'').toLowerCase().includes(kw)||(s.code||'').toLowerCase().includes(kw));
-  if(!list.length&&!sr.length){ct.innerHTML='<div class="empty-state"><div class="big">🔍</div><p>找不到相關資料</p></div>';return}
-  let h='';
+  const kw = (document.getElementById('searchInput')?.value||'').trim().toLowerCase();
+  const ct = document.getElementById('qaResultArea');
+  if(!ct) return;
+  let list = DATA.qa;
+  if(currentCategory!=='all') list = list.filter(q=>q.category===currentCategory);
+  if(kw) list = list.filter(q=>q.title.toLowerCase().includes(kw)||q.content.toLowerCase().includes(kw)||(q.tags||[]).some(t=>t.toLowerCase().includes(kw)));
+  let sr = [];
+  if(kw && DATA.stations) sr = DATA.stations.filter(s=>s.name.toLowerCase().includes(kw)||(s.address||'').toLowerCase().includes(kw)||(s.line||'').toLowerCase().includes(kw)||(s.exit||'').toLowerCase().includes(kw));
+  if(!list.length && !sr.length){ct.innerHTML='<div class="empty-state"><div class="big">🔍</div><p>找不到相關資料</p></div>';return}
+  let h = '';
   if(list.length){
-    const title=kw?`搜尋結果：「${esc(kw)}」`:currentCategory==='all'?'全部 QA':DATA.categories.find(c=>c.id===currentCategory)?.name||'';
-    h+=`<div class="section-title">${title}<span class="count-badge">${list.length} 則</span><button class="cat-manage-btn" onclick="openAdmin();setTimeout(()=>showAdminTab('category'),100)">📂 管理分類</button></div>`;
-    h+='<div class="qa-list">';
+    const title = kw?`搜尋結果：「${esc(kw)}」`:currentCategory==='all'?'全部 QA':DATA.categories.find(c=>c.id===currentCategory)?.name||'';
+    h += `<div class="section-title">${title}<span class="count-badge">${list.length} 則</span><button class="cat-manage-btn" onclick="openAdmin();setTimeout(()=>showAdminTab('category'),100)">📂 管理分類</button></div>`;
+    h += '<div class="qa-list">';
     list.forEach(q=>h+=renderCard(q,kw));
-    h+='</div>';
+    h += '</div>';
   }
-  if(sr.length){h+=`<div class="section-title">📍 相關據點<span class="count-badge">${sr.length} 站</span></div>`+renderStationTable(sr)}
-  ct.innerHTML=h;
+  if(sr.length){ h += `<div class="section-title" style="margin-top:20px">📍 相關據點<span class="count-badge">${sr.length} 站</span></div>`+renderStationTable(sr) }
+  ct.innerHTML = h;
 }
 
 function renderCard(q,kw){
-  const cat=DATA.categories.find(c=>c.id===q.category);
-  let badges='';
-  if(q.urgent)badges+='<span class="badge badge-urgent">🚨 緊急</span>';
-  if(q.internal)badges+='<span class="badge badge-internal">🔒 內部</span>';
-  const content=fmt(q.content);
-  const titleHl=kw?hl(q.title,kw):esc(q.title);
-  let tags='';
-  if(q.tags&&q.tags.length)tags='<div class="qa-tags">'+q.tags.map(t=>`<span class="tag">#${esc(t)}</span>`).join('')+'</div>';
+  const cat = DATA.categories.find(c=>c.id===q.category);
+  let badges = '';
+  if(q.urgent) badges += '<span class="badge badge-urgent">🚨 緊急</span>';
+  if(q.internal) badges += '<span class="badge badge-internal">🔒 內部</span>';
+  const content = fmt(q.content);
+  const titleHl = kw?hl(q.title,kw):esc(q.title);
+  let tags = '';
+  if(q.tags&&q.tags.length) tags = '<div class="qa-tags">'+q.tags.map(t=>`<span class="tag">#${esc(t)}</span>`).join('')+'</div>';
   return `<div class="qa-card" data-id="${q.id}">
     <div class="qa-admin-btns">
-      <button onclick="event.stopPropagation();moveQA(${q.id},-1)" title="上移">⬆</button>
-      <button onclick="event.stopPropagation();moveQA(${q.id},1)" title="下移">⬇</button>
-      <button onclick="event.stopPropagation();inlineEdit(${q.id})" title="編輯">✏️</button>
+      <button onclick="event.stopPropagation();moveQA(${q.id},-1)">⬆</button>
+      <button onclick="event.stopPropagation();moveQA(${q.id},1)">⬇</button>
+      <button onclick="event.stopPropagation();inlineEdit(${q.id})">✏️</button>
     </div>
     <div class="qa-header" onclick="toggleQA(${q.id})">
       <div class="qa-title">${cat?cat.icon:''} ${titleHl}${badges}</div>
@@ -439,27 +470,33 @@ function renderCard(q,kw){
 
 function toggleQA(id){document.querySelector(`.qa-card[data-id="${id}"]`)?.classList.toggle('open')}
 
-// QA 排序
+function onSearch(){
+  const v = document.getElementById('searchInput')?.value||'';
+  document.getElementById('searchClear')?.classList.toggle('show', v.length>0);
+  renderQA();
+}
+function clearSearch(){
+  const si = document.getElementById('searchInput');
+  if(si) si.value='';
+  document.getElementById('searchClear')?.classList.remove('show');
+  renderQA();
+}
+
 function moveQA(id,dir){
   const idx=DATA.qa.findIndex(q=>q.id===id);if(idx<0)return;
-  // 如果在分類模式，只在同分類內排序
   if(currentCategory!=='all'){
     const sameCat=DATA.qa.filter(q=>q.category===currentCategory);
-    const catIdx=sameCat.findIndex(q=>q.id===id);
-    const targetCatIdx=catIdx+dir;
-    if(targetCatIdx<0||targetCatIdx>=sameCat.length)return;
-    const targetId=sameCat[targetCatIdx].id;
-    const globalIdx=DATA.qa.findIndex(q=>q.id===id);
-    const globalTargetIdx=DATA.qa.findIndex(q=>q.id===targetId);
-    [DATA.qa[globalIdx],DATA.qa[globalTargetIdx]]=[DATA.qa[globalTargetIdx],DATA.qa[globalIdx]];
-  } else {
-    const j=idx+dir;if(j<0||j>=DATA.qa.length)return;
-    [DATA.qa[idx],DATA.qa[j]]=[DATA.qa[j],DATA.qa[idx]];
-  }
+    const ci=sameCat.findIndex(q=>q.id===id);
+    const ti=ci+dir;if(ti<0||ti>=sameCat.length)return;
+    const tid=sameCat[ti].id;
+    const gi=DATA.qa.findIndex(q=>q.id===id);
+    const gti=DATA.qa.findIndex(q=>q.id===tid);
+    [DATA.qa[gi],DATA.qa[gti]]=[DATA.qa[gti],DATA.qa[gi]];
+  }else{const j=idx+dir;if(j<0||j>=DATA.qa.length)return;[DATA.qa[idx],DATA.qa[j]]=[DATA.qa[j],DATA.qa[idx]];}
   saveLocal();renderQA();
 }
 
-// ========= 前台直接編輯 =========
+// ===== INLINE EDIT =====
 function inlineEdit(id){
   const q=DATA.qa.find(x=>x.id===id);if(!q)return;
   const card=document.querySelector(`.qa-card[data-id="${id}"]`);
@@ -470,8 +507,7 @@ function inlineEdit(id){
   panel.innerHTML=`
     <div class="edit-field"><label>分類</label><select id="ie_cat_${id}">${catOptions}</select></div>
     <div class="edit-field"><label>標題</label><input type="text" id="ie_title_${id}" value="${esc(q.title)}"></div>
-    <div class="edit-field">
-      <label>內容 <small style="color:var(--text-light);font-weight:400">（選取文字後點顏色按鈕套用）</small></label>
+    <div class="edit-field"><label>內容 <small style="color:var(--text-light);font-weight:400">（選取後點顏色套用）</small></label>
       <div class="edit-toolbar">
         <button type="button" class="tool-btn c-red" onclick="wrapSel('ie_content_${id}','red')">🔴 紅</button>
         <button type="button" class="tool-btn c-orange" onclick="wrapSel('ie_content_${id}','orange')">🟠 橘</button>
@@ -495,12 +531,10 @@ function inlineEdit(id){
       <button class="edit-save" onclick="inlineSave(${id})">💾 儲存</button>
       <button class="edit-cancel" onclick="inlineCancel(${id})">取消</button>
       <button class="edit-delete" onclick="inlineDelete(${id})">🗑️ 刪除</button>
-    </div>
-  `;
+    </div>`;
   panel.classList.add('show');
   panel.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
-
 function inlineSave(id){
   const q=DATA.qa.find(x=>x.id===id);if(!q)return;
   const title=document.getElementById('ie_title_'+id).value.trim();
@@ -513,102 +547,182 @@ function inlineSave(id){
   const int_=document.getElementById('ie_internal_'+id).checked;
   if(urg)q.urgent=true;else delete q.urgent;
   if(int_)q.internal=true;else delete q.internal;
-  saveLocal();renderAll();showToast('已儲存（記得匯出 data.json）');
+  saveLocal();renderAll();renderPage();showToast('已儲存（記得匯出 data.json）');
 }
 function inlineCancel(id){const p=document.getElementById('editPanel'+id);if(p){p.classList.remove('show');p.innerHTML=''}}
-function inlineDelete(id){const q=DATA.qa.find(x=>x.id===id);if(!q)return;if(!confirm(`確定要刪除「${q.title}」？`))return;DATA.qa=DATA.qa.filter(x=>x.id!==id);saveLocal();renderAll();showToast('已刪除')}
+function inlineDelete(id){const q=DATA.qa.find(x=>x.id===id);if(!q)return;if(!confirm(`確定要刪除「${q.title}」？`))return;DATA.qa=DATA.qa.filter(x=>x.id!==id);saveLocal();renderAll();renderPage();showToast('已刪除')}
 
 // Editor helpers
-function wrapSel(taId,color){
-  const ta=document.getElementById(taId);if(!ta)return;
-  const s=ta.selectionStart,e=ta.selectionEnd;
-  if(s===e){showToast('請先選取要套用的文字');return}
-  const sel=ta.value.slice(s,e);
-  ta.value=ta.value.slice(0,s)+`[[${color}:${sel}]]`+ta.value.slice(e);
-  ta.focus();
-  const np=s+`[[${color}:${sel}]]`.length;
-  ta.setSelectionRange(np,np);
-}
-function doInsertImg(taId){
-  // 直接觸發檔案選擇
-  let fileInput=document.getElementById(taId.replace('ie_content_','ie_imgfile_'));
-  if(!fileInput){fileInput=document.getElementById('nq_imgfile')}
-  if(fileInput)fileInput.click();
-}
-function doImgFile(input,taId){
-  const f=input.files[0];if(!f)return;
-  showToast('圖片處理中...');
-  const img=new Image();
-  const reader=new FileReader();
-  reader.onload=e=>{
-    img.onload=()=>{
-      // 自動縮放到 800px 以內
-      let w=img.width,h=img.height;
-      const maxDim=800;
-      if(w>maxDim||h>maxDim){
-        if(w>h){h=Math.round(h*maxDim/w);w=maxDim}
-        else{w=Math.round(w*maxDim/h);h=maxDim}
-      }
-      const canvas=document.createElement('canvas');
-      canvas.width=w;canvas.height=h;
-      const ctx=canvas.getContext('2d');
-      ctx.drawImage(img,0,0,w,h);
-      // JPEG 壓縮，品質 70%
-      const result=canvas.toDataURL('image/jpeg',0.7);
-      const ta=document.getElementById(taId);
-      const pos=ta.selectionStart||ta.value.length;
-      ta.value=ta.value.slice(0,pos)+'\n[[img:'+result+']]\n'+ta.value.slice(pos);
-      const kb=Math.round(result.length/1370);
-      showToast('圖片已插入（'+kb+'KB）');
-    };
-    img.src=e.target.result;
-  };
-  reader.readAsDataURL(f);input.value='';
-}
-function doInsertVideo(taId){
-  const url=prompt('請貼上影片網址（YouTube / Vimeo / mp4）：');if(!url)return;
-  const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;
-  ta.value=ta.value.slice(0,pos)+'\n[[video:'+url.trim()+']]\n'+ta.value.slice(pos);showToast('影片已插入');
-}
-function doInsertLink(taId){
-  const text=prompt('連結顯示文字：');if(!text)return;
-  const url=prompt('網址：');if(!url)return;
-  const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;
-  ta.value=ta.value.slice(0,pos)+`[[link:${text}|${url}]]`+ta.value.slice(pos);showToast('連結已插入');
+function wrapSel(taId,color){const ta=document.getElementById(taId);if(!ta)return;const s=ta.selectionStart,e=ta.selectionEnd;if(s===e){showToast('請先選取要套用的文字');return}const sel=ta.value.slice(s,e);ta.value=ta.value.slice(0,s)+`[[${color}:${sel}]]`+ta.value.slice(e);ta.focus();const np=s+`[[${color}:${sel}]]`.length;ta.setSelectionRange(np,np)}
+function doInsertImg(taId){let fi=document.getElementById(taId.replace('ie_content_','ie_imgfile_'));if(!fi)fi=document.getElementById('nq_imgfile');if(fi)fi.click()}
+function doImgFile(input,taId){const f=input.files[0];if(!f)return;showToast('圖片處理中...');const img=new Image();const reader=new FileReader();reader.onload=e=>{img.onload=()=>{let w=img.width,h=img.height;const mx=800;if(w>mx||h>mx){if(w>h){h=Math.round(h*mx/w);w=mx}else{w=Math.round(w*mx/h);h=mx}}const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(img,0,0,w,h);const res=cv.toDataURL('image/jpeg',.7);const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;ta.value=ta.value.slice(0,pos)+'\n[[img:'+res+']]\n'+ta.value.slice(pos);showToast('圖片已插入（'+Math.round(res.length/1370)+'KB）')};img.src=e.target.result};reader.readAsDataURL(f);input.value=''}
+function doInsertVideo(taId){const url=prompt('請貼上影片網址（YouTube / Vimeo / mp4）：');if(!url)return;const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;ta.value=ta.value.slice(0,pos)+'\n[[video:'+url.trim()+']]\n'+ta.value.slice(pos);showToast('影片已插入')}
+function doInsertLink(taId){const text=prompt('連結顯示文字：');if(!text)return;const url=prompt('網址：');if(!url)return;const ta=document.getElementById(taId);const pos=ta.selectionStart||ta.value.length;ta.value=ta.value.slice(0,pos)+`[[link:${text}|${url}]]`+ta.value.slice(pos);showToast('連結已插入')}
+
+// ===== AI PAGE =====
+function buildAIPage(){
+  return `
+  <div class="ai-wrap">
+    <div class="ai-header">
+      <div class="ai-header-icon">🤖</div>
+      <div class="ai-header-text">
+        <h2>AI 智能問答</h2>
+        <p>根據亞尼克知識庫，由 AI 幫你快速找到答案</p>
+      </div>
+    </div>
+    <div class="ai-body">
+      <div class="ai-key-row">
+        <input type="password" id="groqKeyInput" placeholder="貼上 Groq API Key（只需輸入一次）" value="${groqKey?'••••••••••••':''}">
+        <button onclick="saveGroqKey()">儲存 Key</button>
+      </div>
+      <div class="chat-history" id="chatHistory"></div>
+      <div class="ai-input-row">
+        <input type="text" id="aiInput" placeholder="輸入問題，例如：寄捲可以退費嗎？" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}">
+        <button id="aiSendBtn" onclick="sendAI()">送出</button>
+      </div>
+      <div class="ai-note">💡 AI 僅參考本系統知識庫回答，若無相關資料會告知。使用前請先儲存 Groq API Key。</div>
+    </div>
+  </div>`;
 }
 
-// Stations
-function renderStations(){
-  const ct=document.getElementById('resultContainer');
-  const lines=[...new Set(DATA.stations.map(s=>s.line))].filter(Boolean);
-  let h=`<div class="section-title">📍 YTM 據點 <span class="count-badge">共 ${DATA.stations.length} 站</span></div>`;
-  h+='<input type="text" class="station-search" id="stationSearch" placeholder="🔍 搜尋站名、地址、捷運線、電話..." oninput="filterStations()">';
-  h+='<div class="station-filters" id="lineFilters"><div class="station-filter active" data-value="all" onclick="setSF(this,\'lineFilters\')">全部路線</div>';
-  lines.forEach(l=>h+=`<div class="station-filter" data-value="${esc(l)}" onclick="setSF(this,'lineFilters')">${esc(l)}</div>`);
-  h+='</div><div id="stationTableWrap">'+renderStationTable(DATA.stations)+'</div>';
-  ct.innerHTML=h;
+function initAIPage(){
+  renderChatHistory();
+  // 清空 key input 讓 placeholder 顯示正確
+  if(groqKey){
+    const ki = document.getElementById('groqKeyInput');
+    if(ki) ki.placeholder = 'API Key 已儲存（如需更換請重新貼上）';
+  }
 }
+
+function saveGroqKey(){
+  const val = document.getElementById('groqKeyInput')?.value.trim();
+  if(!val || val.startsWith('•')){showToast('請貼上正確的 API Key');return}
+  groqKey = val;
+  localStorage.setItem('ytm_groq_key', groqKey);
+  document.getElementById('groqKeyInput').value = '';
+  document.getElementById('groqKeyInput').placeholder = 'API Key 已儲存（如需更換請重新貼上）';
+  showToast('✅ API Key 已儲存！');
+}
+
+function renderChatHistory(){
+  const box = document.getElementById('chatHistory');
+  if(!box) return;
+  if(!chatHistory.length){
+    box.innerHTML = `<div class="chat-msg bot"><div class="chat-avatar">🤖</div><div class="chat-bubble">你好！我是亞尼克 AI 問答助手。<br>請輸入您的問題，我會根據知識庫幫您找答案 😊</div></div>`;
+    return;
+  }
+  box.innerHTML = chatHistory.map(m=>`
+    <div class="chat-msg ${m.role}">
+      <div class="chat-avatar">${m.role==='bot'?'🤖':'👤'}</div>
+      <div class="chat-bubble">${m.role==='bot'?m.text:esc(m.text)}</div>
+    </div>`).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+function buildContext(question){
+  const q = question.toLowerCase();
+  // 關鍵字評分
+  const scored = DATA.qa.map(item=>{
+    const txt = (item.title+' '+item.content+' '+(item.tags||[]).join(' ')).toLowerCase();
+    const words = q.split(/\s+/).filter(Boolean);
+    let score = 0;
+    words.forEach(w=>{ if(txt.includes(w)) score += w.length });
+    // 同義詞加分
+    const synonyms = {
+      '外島':['離島','澎湖','金門','馬祖','綠島','蘭嶼'],
+      '退款':['退費','退錢','退訂','退貨'],
+      '取貨':['提領','領貨','取餐','取件'],
+      '寄捲':['蛋糕捲','提貨券'],
+      'ytm':['機台','自動販賣機','自助'],
+    };
+    Object.entries(synonyms).forEach(([key,syns])=>{
+      if(syns.some(s=>q.includes(s))&&txt.includes(key)) score+=5;
+      if(q.includes(key)&&syns.some(s=>txt.includes(s))) score+=5;
+    });
+    return {...item, score};
+  }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
+
+  if(!scored.length) return '（知識庫中無相關資料）';
+  return scored.map(item=>`Q: ${item.title}\nA: ${item.content.slice(0,300)}`).join('\n\n---\n\n');
+}
+
+async function sendAI(){
+  if(aiLoading) return;
+  const input = document.getElementById('aiInput');
+  const question = input?.value.trim();
+  if(!question){showToast('請輸入問題');return}
+  if(!groqKey){showToast('請先儲存 Groq API Key');return}
+
+  input.value = '';
+  chatHistory.push({role:'user', text:question});
+  aiLoading = true;
+  document.getElementById('aiSendBtn').disabled = true;
+
+  // 顯示打字動畫
+  const box = document.getElementById('chatHistory');
+  if(box){
+    box.innerHTML += `<div class="chat-msg user"><div class="chat-avatar">👤</div><div class="chat-bubble">${esc(question)}</div></div>`;
+    box.innerHTML += `<div class="chat-msg bot" id="typingMsg"><div class="chat-avatar">🤖</div><div class="chat-typing"><span></span><span></span><span></span></div></div>`;
+    box.scrollTop = box.scrollHeight;
+  }
+
+  try{
+    const context = buildContext(question);
+    const sysPrompt = `你是亞尼克 YTM 客服助手，只根據以下知識庫內容回答，使用繁體中文（台灣用語），回答簡潔條列式。若知識庫無相關資料，請回答「這題我沒有資料，建議請主管確認」。\n\n知識庫：\n${context}`;
+
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+groqKey},
+      body:JSON.stringify({
+        model:'llama-3.1-8b-instant',
+        max_tokens:800,
+        messages:[
+          {role:'system', content:sysPrompt},
+          {role:'user', content:question}
+        ]
+      })
+    });
+    const data = await resp.json();
+    if(!resp.ok) throw new Error(data.error?.message||'API 錯誤');
+    const answer = data.choices?.[0]?.message?.content||'（無回應）';
+    chatHistory.push({role:'bot', text:answer.replace(/\n/g,'<br>')});
+  }catch(e){
+    chatHistory.push({role:'bot', text:'⚠️ 發生錯誤：'+esc(e.message)});
+  }
+
+  aiLoading = false;
+  document.getElementById('aiSendBtn').disabled = false;
+  renderChatHistory();
+}
+
+// ===== STATION PAGE =====
+function buildStationPage(){
+  const lines = [...new Set(DATA.stations.map(s=>s.line))].filter(Boolean);
+  let h = `<div class="section-title">📍 YTM 據點 <span class="count-badge">共 ${DATA.stations.length} 站</span></div>`;
+  h += '<input type="text" class="station-search" id="stationSearch" placeholder="🔍 搜尋站名、地址、捷運線...">';
+  h += '<div class="station-filters" id="lineFilters"><div class="station-filter active" data-value="all" onclick="setSF(this,&quot;lineFilters&quot;)">全部路線</div>';
+  lines.forEach(l=>h+=`<div class="station-filter" data-value="${esc(l)}" onclick="setSF(this,&quot;lineFilters&quot;)">${esc(l)}</div>`);
+  h += '</div><div id="stationTableWrap">'+renderStationTable(DATA.stations)+'</div>';
+  return h;
+}
+
 function renderStationTable(st){
-  if(!st||!st.length)return'<div class="empty-state"><p>沒有符合條件的據點</p></div>';
+  if(!st||!st.length) return '<div class="empty-state"><p>沒有符合條件的據點</p></div>';
   let h='<div class="table-wrap"><table class="station-table"><thead><tr><th>站名</th><th>路線</th><th>地址</th><th>位置/出口</th><th>電話</th></tr></thead><tbody>';
   st.forEach(s=>{const lk='line-'+(s.line||'').replace(/\s/g,'');h+=`<tr><td><strong>${esc(s.name)}</strong></td><td><span class="line-tag ${lk}">${esc(s.line||'')}</span></td><td>${esc(s.address||'—')}</td><td>${esc(s.exit||'—')}</td><td>${esc(s.phone||'—')}</td></tr>`});
   return h+'</tbody></table></div>';
 }
 function setSF(el,pid){document.querySelectorAll('#'+pid+' .station-filter').forEach(f=>f.classList.remove('active'));el.classList.add('active');filterStations()}
 function filterStations(){
-  const kw=(document.getElementById('stationSearch').value||'').toLowerCase();
+  const kw=(document.getElementById('stationSearch')?.value||'').toLowerCase();
   const line=document.querySelector('#lineFilters .active')?.dataset.value||'all';
   let r=DATA.stations;
   if(line!=='all')r=r.filter(s=>s.line===line);
-  if(kw)r=r.filter(s=>s.name.toLowerCase().includes(kw)||(s.address||'').toLowerCase().includes(kw)||(s.exit||'').toLowerCase().includes(kw)||(s.phone||'').toLowerCase().includes(kw)||(s.code||'').toLowerCase().includes(kw));
+  if(kw)r=r.filter(s=>s.name.toLowerCase().includes(kw)||(s.address||'').toLowerCase().includes(kw)||(s.exit||'').toLowerCase().includes(kw)||(s.phone||'').toLowerCase().includes(kw));
   document.getElementById('stationTableWrap').innerHTML=renderStationTable(r);
 }
 
-// Search
-function onSearch(){const v=document.getElementById('searchInput').value;document.getElementById('searchClear').classList.toggle('show',v.length>0);renderQA()}
-function clearSearch(){document.getElementById('searchInput').value='';document.getElementById('searchClear').classList.remove('show');renderQA()}
-
-// Format
+// ===== FORMAT =====
 function esc(s){return s==null?'':String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function fmt(c){
   if(!c)return'';let s=esc(c);
@@ -625,363 +739,59 @@ function fmt(c){
 }
 function hl(t,kw){if(!kw)return esc(t);const s=esc(t),k=esc(kw);return s.replace(new RegExp('('+k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark style="background:#FFE58F;padding:0 2px;border-radius:2px">$1</mark>')}
 
+// ===== OVERRIDE renderAll to also call renderPage =====
+const _origRenderAll = renderAll;
+
+// ===== MISC =====
 function toggleFontSize(){const b=document.body;if(b.classList.contains('fs-large')){b.classList.remove('fs-large');b.classList.add('fs-xlarge');showToast('字體：特大')}else if(b.classList.contains('fs-xlarge')){b.classList.remove('fs-xlarge');showToast('字體：一般')}else{b.classList.add('fs-large');showToast('字體：大')}}
 function scrollToTop(){scrollTo({top:0,behavior:'smooth'})}
-function toggleSidebar(){document.getElementById('sidebarPanel')?.classList.toggle('collapsed')}
 function showToast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 
-// ========= Admin =========
+// ===== ADMIN =====
 function openAdmin(){document.getElementById('adminModal').classList.add('show');if(!isAdmin)showLogin();else showPanel()}
 function closeAdmin(){document.getElementById('adminModal').classList.remove('show')}
+function showLogin(){document.getElementById('adminTitle').textContent='🔒 管理後台';document.getElementById('adminBody').innerHTML=`<div class="login-form"><div style="font-size:3rem;margin-bottom:10px">🔐</div><p style="color:var(--text-light);margin-bottom:16px">請輸入管理密碼</p><input type="password" id="adminPwd" placeholder="密碼" onkeydown="if(event.key===\'Enter\')doLogin()"><div style="margin-top:10px"><button class="btn-primary" onclick="doLogin()">登入</button></div></div>`;setTimeout(()=>document.getElementById('adminPwd')?.focus(),100)}
+function doLogin(){const p=document.getElementById('adminPwd').value;if(p===ADMIN_PASSWORD){isAdmin=true;document.body.classList.add('admin-mode');showPanel();renderAll();renderPage();showToast('登入成功，QA 卡片右上角出現 ✏️ 編輯按鈕')}else{showToast('密碼錯誤');document.getElementById('adminPwd').value='';document.getElementById('adminPwd').focus()}}
+function showPanel(){document.getElementById('adminTitle').textContent='⚙️ 管理後台';document.getElementById('adminBody').innerHTML=`<div class="admin-tabs"><button class="admin-tab active" onclick="showAdminTab('category',this)">📂 分類管理</button><button class="admin-tab" onclick="showAdminTab('newqa',this)">➕ 新增 QA</button><button class="admin-tab" onclick="showAdminTab('station',this)">📍 據點管理</button><button class="admin-tab" onclick="showAdminTab('meta',this)">⚙️ 基本設定</button><button class="admin-tab" onclick="showAdminTab('export',this)">💾 匯入/匯出</button></div><div id="adminTabContent"></div>`;showAdminTab('category')}
+function showAdminTab(tab,el){if(el)document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active')),el.classList.add('active');const box=document.getElementById('adminTabContent');if(tab==='category')box.innerHTML=renderCatAdmin();else if(tab==='newqa')box.innerHTML=renderNewQA();else if(tab==='station')box.innerHTML=renderStAdmin();else if(tab==='meta')box.innerHTML=renderMetaAdmin();else if(tab==='export')box.innerHTML=renderExportAdmin()}
 
-function showLogin(){
-  document.getElementById('adminTitle').textContent='🔒 管理後台';
-  document.getElementById('adminBody').innerHTML=`<div class="login-form"><div style="font-size:3rem;margin-bottom:10px">🔐</div><p style="color:var(--text-light);margin-bottom:16px">請輸入管理密碼</p><input type="password" id="adminPwd" placeholder="密碼" onkeydown="if(event.key==='Enter')doLogin()"><div style="margin-top:10px"><button class="btn-primary" onclick="doLogin()">登入</button></div></div>`;
-  setTimeout(()=>document.getElementById('adminPwd')?.focus(),100);
-}
-function doLogin(){
-  const p=document.getElementById('adminPwd').value;
-  if(p===ADMIN_PASSWORD){isAdmin=true;document.body.classList.add('admin-mode');showPanel();renderAll();showToast('登入成功，QA 卡片右上角出現 ✏️ 編輯按鈕')}
-  else{showToast('密碼錯誤');document.getElementById('adminPwd').value='';document.getElementById('adminPwd').focus()}
-}
-
-function showPanel(){
-  document.getElementById('adminTitle').textContent='⚙️ 管理後台';
-  document.getElementById('adminBody').innerHTML=`
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="showAdminTab('category',this)">📂 分類管理</button>
-      <button class="admin-tab" onclick="showAdminTab('newqa',this)">➕ 新增 QA</button>
-      <button class="admin-tab" onclick="showAdminTab('station',this)">📍 據點管理</button>
-      <button class="admin-tab" onclick="showAdminTab('meta',this)">⚙️ 基本設定</button>
-      <button class="admin-tab" onclick="showAdminTab('export',this)">💾 匯入/匯出</button>
-    </div>
-    <div id="adminTabContent"></div>`;
-  showAdminTab('category');
-}
-
-function showAdminTab(tab,el){
-  if(el)document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active')),el.classList.add('active');
-  const box=document.getElementById('adminTabContent');
-  if(tab==='category')box.innerHTML=renderCatAdmin();
-  else if(tab==='newqa')box.innerHTML=renderNewQA();
-  else if(tab==='station')box.innerHTML=renderStAdmin();
-  else if(tab==='meta')box.innerHTML=renderMetaAdmin();
-  else if(tab==='export')box.innerHTML=renderExportAdmin();
-}
-
-// ---- 分類管理 ----
-function renderCatAdmin(){
-  setTimeout(renderCatList,0);
-  return`<div class="admin-toolbar"><button class="btn-primary" onclick="editCat(null)">➕ 新增分類</button></div><div class="admin-list" id="catList"></div><div style="margin-top:12px;padding:10px;background:var(--brand-bg);border-radius:8px;font-size:.85rem;color:var(--text-light)">💡 拖動「⬆⬇」調整分類順序 ｜ 「YTM 據點」為系統分類不建議刪除</div>`;
-}
-function renderCatList(){
-  document.getElementById('catList').innerHTML=DATA.categories.map((c,i)=>{
-    const n=c.id==='station'?(DATA.stations?.length||0):DATA.qa.filter(q=>q.category===c.id).length;
-    return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${c.icon} ${esc(c.name)}</div><div class="admin-item-meta">ID: ${esc(c.id)} ｜ ${n} 則</div></div><button class="admin-btn admin-btn-edit" onclick="moveCat(${i},-1)" ${i===0?'disabled style="opacity:.3"':''}>⬆</button><button class="admin-btn admin-btn-edit" onclick="moveCat(${i},1)" ${i===DATA.categories.length-1?'disabled style="opacity:.3"':''}>⬇</button><button class="admin-btn admin-btn-edit" onclick="editCat('${c.id}')">編輯</button>${c.id!=='station'?`<button class="admin-btn admin-btn-del" onclick="delCat('${c.id}')">刪除</button>`:''}</div>`;
-  }).join('');
-}
-function moveCat(i,d){const j=i+d;if(j<0||j>=DATA.categories.length)return;[DATA.categories[i],DATA.categories[j]]=[DATA.categories[j],DATA.categories[i]];saveLocal();renderCatList();renderCategories()}
-
-function editCat(id){
-  const c=id?DATA.categories.find(x=>x.id===id):{id:'',name:'',icon:'📢'};
-  const isNew=!id;
-  const grid=ICONS.map(i=>`<div class="icon-option ${i===c.icon?'selected':''}" data-icon="${i}" onclick="pickIcon(this)">${i}</div>`).join('');
-  document.getElementById('adminTabContent').innerHTML=`
-    <button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">← 返回</button>
-    <h3 style="margin:16px 0">${isNew?'➕ 新增分類':'✏️ 編輯分類'}</h3>
-    <div class="form-group"><label>分類名稱</label><input type="text" id="catName" value="${esc(c.name)}" placeholder="例：行銷活動"></div>
-    <div class="form-group"><label>分類 ID（英文/數字）</label><input type="text" id="catId" value="${esc(c.id)}" ${!isNew?'readonly style="background:#F5F5F5"':''} placeholder="例：marketing"></div>
-    <div class="form-group"><label>圖示（點選一個）</label><div class="icon-picker">${grid}</div>
-    <div style="margin-top:8px;font-size:.85rem">目前：<span id="iconPv" style="font-size:1.8rem;vertical-align:middle">${c.icon}</span> <span style="margin-left:10px;color:var(--text-light)">或自行輸入：</span><input type="text" id="iconCustom" style="display:inline-block;width:60px;padding:4px;margin-left:4px" oninput="document.getElementById('iconPv').textContent=this.value||'${c.icon}'"></div></div>
-    <div style="margin-top:20px"><button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">取消</button><button class="btn-primary" onclick="saveCat(${isNew})">💾 儲存</button></div>`;
-}
+function renderCatAdmin(){setTimeout(renderCatList,0);return`<div class="admin-toolbar"><button class="btn-primary" onclick="editCat(null)">➕ 新增分類</button></div><div class="admin-list" id="catList"></div><div style="margin-top:12px;padding:10px;background:var(--brand-bg);border-radius:8px;font-size:.85rem;color:var(--text-light)">💡 拖動「⬆⬇」調整分類順序 ｜ 「YTM 據點」為系統分類不建議刪除</div>`}
+function renderCatList(){document.getElementById('catList').innerHTML=DATA.categories.map((c,i)=>{const n=c.id==='station'?(DATA.stations?.length||0):DATA.qa.filter(q=>q.category===c.id).length;return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${c.icon} ${esc(c.name)}</div><div class="admin-item-meta">ID: ${esc(c.id)} ｜ ${n} 則</div></div><button class="admin-btn admin-btn-edit" onclick="moveCat(${i},-1)" ${i===0?'disabled style="opacity:.3"':''}>⬆</button><button class="admin-btn admin-btn-edit" onclick="moveCat(${i},1)" ${i===DATA.categories.length-1?'disabled style="opacity:.3"':''}>⬇</button><button class="admin-btn admin-btn-edit" onclick="editCat(\'${c.id}\')">編輯</button>${c.id!=='station'?`<button class="admin-btn admin-btn-del" onclick="delCat(\'${c.id}\')">刪除</button>`:''}</div>`}).join('')}
+function moveCat(i,d){const j=i+d;if(j<0||j>=DATA.categories.length)return;[DATA.categories[i],DATA.categories[j]]=[DATA.categories[j],DATA.categories[i]];saveLocal();renderCatList();renderAll();renderPage()}
+function editCat(id){const c=id?DATA.categories.find(x=>x.id===id):{id:'',name:'',icon:'📢'};const isNew=!id;const grid=ICONS.map(i=>`<div class="icon-option ${i===c.icon?'selected':''}" data-icon="${i}" onclick="pickIcon(this)">${i}</div>`).join('');document.getElementById('adminTabContent').innerHTML=`<button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">← 返回</button><h3 style="margin:16px 0">${isNew?'➕ 新增分類':'✏️ 編輯分類'}</h3><div class="form-group"><label>分類名稱</label><input type="text" id="catName" value="${esc(c.name)}" placeholder="例：行銷活動"></div><div class="form-group"><label>分類 ID（英文/數字）</label><input type="text" id="catId" value="${esc(c.id)}" ${!isNew?'readonly style="background:#F5F5F5"':''} placeholder="例：marketing"></div><div class="form-group"><label>圖示（點選一個）</label><div class="icon-picker">${grid}</div><div style="margin-top:8px;font-size:.85rem">目前：<span id="iconPv" style="font-size:1.8rem;vertical-align:middle">${c.icon}</span> <span style="margin-left:10px;color:var(--text-light)">或自行輸入：</span><input type="text" id="iconCustom" style="display:inline-block;width:60px;padding:4px;margin-left:4px" oninput="document.getElementById('iconPv').textContent=this.value||'${c.icon}'"></div></div><div style="margin-top:20px"><button class="btn-secondary" onclick="showAdminTab('category',document.querySelector('.admin-tab.active'))">取消</button><button class="btn-primary" onclick="saveCat(${isNew})">💾 儲存</button></div>`}
 function pickIcon(el){document.querySelectorAll('.icon-option').forEach(o=>o.classList.remove('selected'));el.classList.add('selected');document.getElementById('iconPv').textContent=el.dataset.icon;document.getElementById('iconCustom').value=''}
-function saveCat(isNew){
-  const name=document.getElementById('catName').value.trim(),idVal=document.getElementById('catId').value.trim();
-  const custom=document.getElementById('iconCustom').value.trim(),selected=document.querySelector('.icon-option.selected')?.dataset.icon;
-  const icon=custom||selected||'📢';
-  if(!name){showToast('名稱不可空白');return}
-  if(!idVal||!/^[a-zA-Z0-9_]+$/.test(idVal)){showToast('ID 只能用英文/數字/底線');return}
-  if(isNew){if(DATA.categories.find(x=>x.id===idVal)){showToast('ID 已存在');return}DATA.categories.push({id:idVal,name,icon})}
-  else{const c=DATA.categories.find(x=>x.id===idVal);c.name=name;c.icon=icon}
-  saveLocal();showToast('已儲存');showAdminTab('category',document.querySelector('.admin-tab.active'));renderAll();
-}
-function delCat(id){const c=DATA.categories.find(x=>x.id===id);if(!c)return;const n=DATA.qa.filter(q=>q.category===id).length;if(n>0){alert(`還有 ${n} 則 QA，請先移到其他分類`);return}if(!confirm(`刪除「${c.name}」？`))return;DATA.categories=DATA.categories.filter(x=>x.id!==id);saveLocal();showToast('已刪除');renderCatList();renderAll()}
+function saveCat(isNew){const name=document.getElementById('catName').value.trim(),idVal=document.getElementById('catId').value.trim();const custom=document.getElementById('iconCustom').value.trim(),selected=document.querySelector('.icon-option.selected')?.dataset.icon;const icon=custom||selected||'📢';if(!name){showToast('名稱不可空白');return}if(!idVal||!/^[a-zA-Z0-9_]+$/.test(idVal)){showToast('ID 只能用英文/數字/底線');return}if(isNew){if(DATA.categories.find(x=>x.id===idVal)){showToast('ID 已存在');return}DATA.categories.push({id:idVal,name,icon})}else{const c=DATA.categories.find(x=>x.id===idVal);c.name=name;c.icon=icon}saveLocal();showToast('已儲存');showAdminTab('category',document.querySelector('.admin-tab.active'));renderAll();renderPage()}
+function delCat(id){const c=DATA.categories.find(x=>x.id===id);if(!c)return;const n=DATA.qa.filter(q=>q.category===id).length;if(n>0){alert(`還有 ${n} 則 QA，請先移到其他分類`);return}if(!confirm(`刪除「${c.name}」？`))return;DATA.categories=DATA.categories.filter(x=>x.id!==id);saveLocal();showToast('已刪除');renderCatList();renderAll();renderPage()}
 
-// ---- 新增 QA (後台) ----
-function renderNewQA(){
-  const catOptions=DATA.categories.filter(c=>c.id!=='station').map(c=>`<option value="${c.id}">${c.icon} ${esc(c.name)}</option>`).join('');
-  return`
-    <h3 style="margin-bottom:16px">➕ 新增 QA</h3>
-    <div class="form-group"><label>分類</label><select id="nq_cat">${catOptions}</select></div>
-    <div class="form-group"><label>標題</label><input type="text" id="nq_title" placeholder="輸入標題"></div>
-    <div class="form-group"><label>內容</label>
-    <div class="edit-toolbar">
-      <button type="button" class="tool-btn c-red" onclick="wrapSel('nq_content','red')">🔴 紅</button>
-      <button type="button" class="tool-btn c-orange" onclick="wrapSel('nq_content','orange')">🟠 橘</button>
-      <button type="button" class="tool-btn c-green" onclick="wrapSel('nq_content','green')">🟢 綠</button>
-      <button type="button" class="tool-btn c-blue" onclick="wrapSel('nq_content','blue')">🔵 藍</button>
-      <button type="button" class="tool-btn c-purple" onclick="wrapSel('nq_content','purple')">🟣 紫</button>
-      <div class="tool-sep"></div>
-      <button type="button" class="tool-btn" onclick="doInsertImg('nq_content')">📷 圖片</button>
-      <button type="button" class="tool-btn" onclick="doInsertVideo('nq_content')">🎥 影片</button>
-      <button type="button" class="tool-btn" onclick="doInsertLink('nq_content')">🔗 連結</button>
-      <input type="file" id="nq_imgfile" accept="image/*" style="display:none" onchange="doImgFile(this,'nq_content')">
-    </div>
-    <textarea class="edit-textarea" id="nq_content" placeholder="輸入內容... 選取文字後點顏色按鈕套用色彩"></textarea></div>
-    <div class="form-group"><label>標籤（逗號分隔）</label><input type="text" id="nq_tags" placeholder="關鍵字1, 關鍵字2"></div>
-    <div class="edit-check" style="margin-bottom:12px"><label><input type="checkbox" id="nq_urgent"> 🚨 緊急</label><label><input type="checkbox" id="nq_internal"> 🔒 內部</label></div>
-    <button class="btn-primary" onclick="saveNewQA()">💾 儲存新增</button>`;
-}
-function saveNewQA(){
-  const title=document.getElementById('nq_title').value.trim(),content=document.getElementById('nq_content').value.trim();
-  if(!title||!content){showToast('標題與內容不可空白');return}
-  const newId=Math.max(0,...DATA.qa.map(x=>x.id))+1;
-  const q={id:newId,category:document.getElementById('nq_cat').value,title,content,tags:document.getElementById('nq_tags').value.split(',').map(s=>s.trim()).filter(Boolean)};
-  if(document.getElementById('nq_urgent').checked)q.urgent=true;
-  if(document.getElementById('nq_internal').checked)q.internal=true;
-  DATA.qa.push(q);saveLocal();renderAll();showToast('已新增！');
-  document.getElementById('nq_title').value='';document.getElementById('nq_content').value='';document.getElementById('nq_tags').value='';
-}
+function renderNewQA(){const catOptions=DATA.categories.filter(c=>c.id!=='station').map(c=>`<option value="${c.id}">${c.icon} ${esc(c.name)}</option>`).join('');return`<h3 style="margin-bottom:16px">➕ 新增 QA</h3><div class="form-group"><label>分類</label><select id="nq_cat">${catOptions}</select></div><div class="form-group"><label>標題</label><input type="text" id="nq_title" placeholder="輸入標題"></div><div class="form-group"><label>內容</label><div class="edit-toolbar"><button type="button" class="tool-btn c-red" onclick="wrapSel('nq_content','red')">🔴 紅</button><button type="button" class="tool-btn c-orange" onclick="wrapSel('nq_content','orange')">🟠 橘</button><button type="button" class="tool-btn c-green" onclick="wrapSel('nq_content','green')">🟢 綠</button><button type="button" class="tool-btn c-blue" onclick="wrapSel('nq_content','blue')">🔵 藍</button><button type="button" class="tool-btn c-purple" onclick="wrapSel('nq_content','purple')">🟣 紫</button><div class="tool-sep"></div><button type="button" class="tool-btn" onclick="doInsertImg('nq_content')">📷 圖片</button><button type="button" class="tool-btn" onclick="doInsertVideo('nq_content')">🎥 影片</button><button type="button" class="tool-btn" onclick="doInsertLink('nq_content')">🔗 連結</button><input type="file" id="nq_imgfile" accept="image/*" style="display:none" onchange="doImgFile(this,'nq_content')"></div><textarea class="edit-textarea" id="nq_content" placeholder="輸入內容..."></textarea></div><div class="form-group"><label>標籤（逗號分隔）</label><input type="text" id="nq_tags" placeholder="關鍵字1, 關鍵字2"></div><div class="edit-check" style="margin-bottom:12px"><label><input type="checkbox" id="nq_urgent"> 🚨 緊急</label><label><input type="checkbox" id="nq_internal"> 🔒 內部</label></div><button class="btn-primary" onclick="saveNewQA()">💾 儲存新增</button>`}
+function saveNewQA(){const title=document.getElementById('nq_title').value.trim(),content=document.getElementById('nq_content').value.trim();if(!title||!content){showToast('標題與內容不可空白');return}const newId=Math.max(0,...DATA.qa.map(x=>x.id))+1;const q={id:newId,category:document.getElementById('nq_cat').value,title,content,tags:document.getElementById('nq_tags').value.split(',').map(s=>s.trim()).filter(Boolean)};if(document.getElementById('nq_urgent').checked)q.urgent=true;if(document.getElementById('nq_internal').checked)q.internal=true;DATA.qa.push(q);saveLocal();renderAll();renderPage();showToast('已新增！');document.getElementById('nq_title').value='';document.getElementById('nq_content').value='';document.getElementById('nq_tags').value=''}
 
-// ---- 據點管理 ----
-function renderStAdmin(){
-  setTimeout(renderStList,0);
-  return`<div class="admin-toolbar"><button class="btn-primary" onclick="editSt(null)">➕ 新增據點</button><input type="text" id="stSearch" placeholder="搜尋站名..." style="flex:1" oninput="renderStList()"></div><div class="admin-list" id="stList"></div>`;
-}
-function renderStList(){
-  const kw=(document.getElementById('stSearch')?.value||'').toLowerCase();
-  let list=DATA.stations||[];
-  if(kw)list=list.filter(s=>s.name.toLowerCase().includes(kw)||(s.line||'').toLowerCase().includes(kw));
-  document.getElementById('stList').innerHTML=list.map((s,i)=>`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${esc(s.name)}</div><div class="admin-item-meta">${esc(s.line||'')} ｜ ${esc(s.address||'')}</div></div><button class="admin-btn admin-btn-edit" onclick="moveStation(${s.id},-1)" title="上移">⬆</button><button class="admin-btn admin-btn-edit" onclick="moveStation(${s.id},1)" title="下移">⬇</button><button class="admin-btn admin-btn-edit" onclick="editSt(${s.id})">編輯</button><button class="admin-btn admin-btn-del" onclick="delSt(${s.id})">刪除</button></div>`).join('')||'<div style="padding:20px;text-align:center;color:var(--text-light)">沒有資料</div>';
-}
-function moveStation(id,dir){
-  const idx=DATA.stations.findIndex(s=>s.id===id);if(idx<0)return;
-  const j=idx+dir;if(j<0||j>=DATA.stations.length)return;
-  [DATA.stations[idx],DATA.stations[j]]=[DATA.stations[j],DATA.stations[idx]];
-  saveLocal();renderStList();renderAll();
-}
-function editSt(id){
-  const s=id?DATA.stations.find(x=>x.id===id):{id:null,name:'',line:'',address:'',exit:'',phone:''};
-  const lines=[...new Set(DATA.stations.map(x=>x.line))].filter(Boolean);
-  document.getElementById('adminTabContent').innerHTML=`
-    <button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">← 返回</button>
-    <h3 style="margin:16px 0">${id?'✏️ 編輯據點':'➕ 新增據點'}</h3>
-    <div class="form-group"><label>站名 / 門市名稱 *</label><input type="text" id="st_name" value="${esc(s.name||'')}"></div>
-    <div class="form-group"><label>捷運線 / 類別</label><input type="text" id="st_line" list="dl_line" value="${esc(s.line||'')}" placeholder="例：板南線、高雄捷運紅線、門市 YTM"><datalist id="dl_line">${lines.map(l=>`<option value="${esc(l)}">`).join('')}</datalist></div>
-    <div class="form-group"><label>地址</label><input type="text" id="st_addr" value="${esc(s.address||'')}"></div>
-    <div class="form-group"><label>位置/出口</label><input type="text" id="st_exit" value="${esc(s.exit||'')}"></div>
-    <div class="form-group"><label>電話</label><input type="text" id="st_phone" value="${esc(s.phone||'')}" placeholder="例：(02) 2657-4837"></div>
-    <div style="margin-top:20px"><button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">取消</button><button class="btn-primary" onclick="saveSt(${id||'null'})">💾 儲存</button></div>`;
-}
-function saveSt(id){
-  const name=document.getElementById('st_name').value.trim();if(!name){showToast('站名不可空白');return}
-  const d={name,line:document.getElementById('st_line').value.trim(),address:document.getElementById('st_addr').value.trim(),exit:document.getElementById('st_exit').value.trim(),phone:document.getElementById('st_phone').value.trim()};
-  if(id){Object.assign(DATA.stations.find(x=>x.id===id),d)}else{const nid=Math.max(0,...DATA.stations.map(x=>x.id))+1;DATA.stations.push({id:nid,...d})}
-  saveLocal();showToast('已儲存');showAdminTab('station',document.querySelector('.admin-tab.active'));renderAll();
-}
-function delSt(id){const s=DATA.stations.find(x=>x.id===id);if(!s||!confirm(`刪除「${s.name}」？`))return;DATA.stations=DATA.stations.filter(x=>x.id!==id);saveLocal();showToast('已刪除');renderStList();renderAll()}
+function renderStAdmin(){setTimeout(renderStList,0);return`<div class="admin-toolbar"><button class="btn-primary" onclick="editSt(null)">➕ 新增據點</button><input type="text" id="stSearch" placeholder="搜尋站名..." style="flex:1" oninput="renderStList()"></div><div class="admin-list" id="stList"></div>`}
+function renderStList(){const kw=(document.getElementById('stSearch')?.value||'').toLowerCase();let list=DATA.stations||[];if(kw)list=list.filter(s=>s.name.toLowerCase().includes(kw)||(s.line||'').toLowerCase().includes(kw));document.getElementById('stList').innerHTML=list.map((s)=>`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${esc(s.name)}</div><div class="admin-item-meta">${esc(s.line||'')} ｜ ${esc(s.address||'')}</div></div><button class="admin-btn admin-btn-edit" onclick="moveStation(${s.id},-1)">⬆</button><button class="admin-btn admin-btn-edit" onclick="moveStation(${s.id},1)">⬇</button><button class="admin-btn admin-btn-edit" onclick="editSt(${s.id})">編輯</button><button class="admin-btn admin-btn-del" onclick="delSt(${s.id})">刪除</button></div>`).join('')||'<div style="padding:20px;text-align:center;color:var(--text-light)">沒有資料</div>'}
+function moveStation(id,dir){const idx=DATA.stations.findIndex(s=>s.id===id);if(idx<0)return;const j=idx+dir;if(j<0||j>=DATA.stations.length)return;[DATA.stations[idx],DATA.stations[j]]=[DATA.stations[j],DATA.stations[idx]];saveLocal();renderStList();renderAll();renderPage()}
+function editSt(id){const s=id?DATA.stations.find(x=>x.id===id):{id:null,name:'',line:'',address:'',exit:'',phone:''};const lines=[...new Set(DATA.stations.map(x=>x.line))].filter(Boolean);document.getElementById('adminTabContent').innerHTML=`<button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">← 返回</button><h3 style="margin:16px 0">${id?'✏️ 編輯據點':'➕ 新增據點'}</h3><div class="form-group"><label>站名 / 門市名稱 *</label><input type="text" id="st_name" value="${esc(s.name||'')}"></div><div class="form-group"><label>捷運線 / 類別</label><input type="text" id="st_line" list="dl_line" value="${esc(s.line||'')}" placeholder="例：板南線"><datalist id="dl_line">${lines.map(l=>`<option value="${esc(l)}">`).join('')}</datalist></div><div class="form-group"><label>地址</label><input type="text" id="st_addr" value="${esc(s.address||'')}"></div><div class="form-group"><label>位置/出口</label><input type="text" id="st_exit" value="${esc(s.exit||'')}"></div><div class="form-group"><label>電話</label><input type="text" id="st_phone" value="${esc(s.phone||'')}"></div><div style="margin-top:20px"><button class="btn-secondary" onclick="showAdminTab('station',document.querySelector('.admin-tab.active'))">取消</button><button class="btn-primary" onclick="saveSt(${id||'null'})">💾 儲存</button></div>`}
+function saveSt(id){const name=document.getElementById('st_name').value.trim();if(!name){showToast('站名不可空白');return}const d={name,line:document.getElementById('st_line').value.trim(),address:document.getElementById('st_addr').value.trim(),exit:document.getElementById('st_exit').value.trim(),phone:document.getElementById('st_phone').value.trim()};if(id){Object.assign(DATA.stations.find(x=>x.id===id),d)}else{const nid=Math.max(0,...DATA.stations.map(x=>x.id))+1;DATA.stations.push({id:nid,...d})}saveLocal();showToast('已儲存');showAdminTab('station',document.querySelector('.admin-tab.active'));renderAll();renderPage()}
+function delSt(id){const s=DATA.stations.find(x=>x.id===id);if(!s||!confirm(`刪除「${s.name}」？`))return;DATA.stations=DATA.stations.filter(x=>x.id!==id);saveLocal();showToast('已刪除');renderStList();renderAll();renderPage()}
 
-// ---- 基本設定 ----
-function renderMetaAdmin(){
-  return`<h3 style="margin-bottom:16px">⚙️ 基本設定</h3>
-    <div class="form-group"><label>網站標題</label><input type="text" id="m_title" value="${esc(DATA.meta.title||'')}"></div>
-    <div class="form-group"><label>客服電話</label><input type="text" id="m_sub" value="${esc(DATA.meta.subtitle||'')}"></div>
-    <div class="form-group"><label>客服信箱</label><input type="text" id="m_email" value="${esc(DATA.meta.email||'')}"></div>
-    <div class="form-group"><label>官方 LINE ID</label><input type="text" id="m_line" value="${esc(DATA.meta.lineId||'')}"></div>
-    <div class="form-group"><label>YTM LINE ID</label><input type="text" id="m_ytmline" value="${esc(DATA.meta.ytmLineId||'')}"></div>
-    <div class="form-group"><label>跑馬燈</label><textarea id="m_marquee" rows="3">${esc(DATA.marquee||'')}</textarea></div>
-    <div class="form-group"><label>版本</label><input type="text" id="m_ver" value="${esc(DATA.meta.version||'')}"></div>
-    <div style="margin-top:20px"><button class="btn-primary" onclick="saveMeta()">💾 儲存</button></div>`;
-}
-function saveMeta(){
-  DATA.meta.title=document.getElementById('m_title').value.trim();
-  DATA.meta.subtitle=document.getElementById('m_sub').value.trim();
-  DATA.meta.email=document.getElementById('m_email').value.trim();
-  DATA.meta.lineId=document.getElementById('m_line').value.trim();
-  DATA.meta.ytmLineId=document.getElementById('m_ytmline').value.trim();
-  DATA.meta.version=document.getElementById('m_ver').value.trim();
-  DATA.marquee=document.getElementById('m_marquee').value.trim();
-  saveLocal();showToast('已儲存');renderAll();
-}
+function renderMetaAdmin(){return`<h3 style="margin-bottom:16px">⚙️ 基本設定</h3><div class="form-group"><label>網站標題</label><input type="text" id="m_title" value="${esc(DATA.meta.title||'')}"></div><div class="form-group"><label>客服電話</label><input type="text" id="m_sub" value="${esc(DATA.meta.subtitle||'')}"></div><div class="form-group"><label>客服信箱</label><input type="text" id="m_email" value="${esc(DATA.meta.email||'')}"></div><div class="form-group"><label>官方 LINE ID</label><input type="text" id="m_line" value="${esc(DATA.meta.lineId||'')}"></div><div class="form-group"><label>YTM LINE ID</label><input type="text" id="m_ytmline" value="${esc(DATA.meta.ytmLineId||'')}"></div><div class="form-group"><label>跑馬燈</label><textarea id="m_marquee" rows="3">${esc(DATA.marquee||'')}</textarea></div><div class="form-group"><label>版本</label><input type="text" id="m_ver" value="${esc(DATA.meta.version||'')}"></div><div style="margin-top:20px"><button class="btn-primary" onclick="saveMeta()">💾 儲存</button></div>`}
+function saveMeta(){DATA.meta.title=document.getElementById('m_title').value.trim();DATA.meta.subtitle=document.getElementById('m_sub').value.trim();DATA.meta.email=document.getElementById('m_email').value.trim();DATA.meta.lineId=document.getElementById('m_line').value.trim();DATA.meta.ytmLineId=document.getElementById('m_ytmline').value.trim();DATA.meta.version=document.getElementById('m_ver').value.trim();DATA.marquee=document.getElementById('m_marquee').value.trim();saveLocal();showToast('已儲存');renderAll();renderPage()}
 
-// ---- 匯入/匯出 ----
-function renderExportAdmin(){
-  return`
-    <div class="export-section"><h3>💾 匯出 data.json</h3><p>下載後上傳到 GitHub 覆蓋原檔，其他人就能看到最新內容</p><button class="btn-primary" onclick="exportData()">⬇️ 下載 data.json</button></div>
-    <div class="export-section" style="background:#E3F2FD;border-color:#90CAF9"><h3 style="color:#1565C0">📤 匯入 data.json</h3><p>會覆蓋目前所有資料</p><button class="btn-primary" style="background:#1565C0" onclick="document.getElementById('impFile').click()">⬆️ 選擇檔案</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="importData(this)"></div>
-    <div class="export-section" style="background:#FFF3E0;border-color:#FFB74D"><h3 style="color:#E65100">🔄 從伺服器重新載入</h3><p>捨棄本機暫存修改</p><button class="btn-primary" style="background:#E65100" onclick="reloadServer()">重新載入</button></div>
-    <div class="export-section" style="background:#FFEBEE;border-color:#EF9A9A"><h3 style="color:#C62828">🗑️ 清除暫存</h3><p>清除瀏覽器暫存並登出</p><button class="btn-primary" style="background:#C62828" onclick="clearAll()">清除</button></div>
-    <div style="margin-top:20px;padding:16px;background:var(--brand-bg);border-radius:8px;font-size:.9rem;color:var(--text-light)"><strong style="color:var(--brand)">📖 部署流程</strong><br>1. 前台直接點 ✏️ 編輯 QA / 後台管理分類&據點<br>2. 到此分頁下載 data.json（每次下載版本號自動 +1）<br>3. 上傳 GitHub 覆蓋原檔<br>4. 其他人打開網頁會自動偵測到新版本，一鍵更新<br><br><strong style="color:var(--brand)">📊 統計</strong><br>QA：${DATA.qa.length} 則 ｜ 據點：${DATA.stations.length} 站 ｜ 分類：${DATA.categories.length} 類<br>版本號：<strong>v${DATA.meta.buildNum||0}</strong> ｜ 更新日期：${DATA.meta.lastUpdate||'—'}</div>`;
-}
+function renderExportAdmin(){return`<div class="export-section"><h3>💾 匯出 data.json</h3><p>下載後上傳到 GitHub 覆蓋原檔，其他人就能看到最新內容</p><button class="btn-primary" onclick="exportData()">⬇️ 下載 data.json</button></div><div class="export-section" style="background:#E3F2FD;border-color:#90CAF9"><h3 style="color:#1565C0">📤 匯入 data.json</h3><p>會覆蓋目前所有資料</p><button class="btn-primary" style="background:#1565C0" onclick="document.getElementById('impFile').click()">⬆️ 選擇檔案</button><input type="file" id="impFile" accept=".json" style="display:none" onchange="importData(this)"></div><div class="export-section" style="background:#FFF3E0;border-color:#FFB74D"><h3 style="color:#E65100">🔄 從伺服器重新載入</h3><p>捨棄本機暫存修改</p><button class="btn-primary" style="background:#E65100" onclick="reloadServer()">重新載入</button></div><div class="export-section" style="background:#FFEBEE;border-color:#EF9A9A"><h3 style="color:#C62828">🗑️ 清除暫存</h3><p>清除瀏覽器暫存並登出</p><button class="btn-primary" style="background:#C62828" onclick="clearAll()">清除</button></div><div style="margin-top:20px;padding:16px;background:var(--brand-bg);border-radius:8px;font-size:.9rem;color:var(--text-light)"><strong style="color:var(--brand)">📊 統計</strong><br>QA：${DATA.qa.length} 則 ｜ 據點：${DATA.stations.length} 站 ｜ 分類：${DATA.categories.length} 類<br>版本號：<strong>v${DATA.meta.buildNum||0}</strong></div>`}
 function exportData(){DATA.meta.lastUpdate=new Date().toISOString().split('T')[0];DATA.meta.buildNum=(DATA.meta.buildNum||0)+1;saveLocal();const j=JSON.stringify(DATA,null,2);const b=new Blob([j],{type:'application/json;charset=utf-8'});const u=URL.createObjectURL(b);const a=document.createElement('a');a.href=u;a.download='data.json';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);showToast('已下載 data.json（v'+DATA.meta.buildNum+'）');showAdminTab('export',document.querySelector('.admin-tab.active'))}
-function importData(inp){const f=inp.files[0];if(!f)return;if(!confirm('匯入會覆蓋所有資料，確定？')){inp.value='';return}const r=new FileReader();r.onload=e=>{try{const p=JSON.parse(e.target.result);if(!p.qa||!p.categories){showToast('格式不正確');return}DATA=p;saveLocal();showToast('匯入成功');renderAll();showAdminTab('export',document.querySelector('.admin-tab.active'))}catch(er){showToast('解析失敗')}};r.readAsText(f);inp.value=''}
-async function reloadServer(){if(!confirm('捨棄暫存，確定？'))return;localStorage.removeItem('ytm_qa_data');try{DATA=await loadJson();showToast('已重新載入');renderAll();showAdminTab('export',document.querySelector('.admin-tab.active'))}catch(e){showToast('失敗')}}
+function importData(inp){const f=inp.files[0];if(!f)return;if(!confirm('匯入會覆蓋所有資料，確定？')){inp.value='';return}const r=new FileReader();r.onload=e=>{try{const p=JSON.parse(e.target.result);if(!p.qa||!p.categories){showToast('格式不正確');return}DATA=p;saveLocal();showToast('匯入成功');renderAll();renderPage()}catch(er){showToast('解析失敗')}};r.readAsText(f);inp.value=''}
+async function reloadServer(){if(!confirm('捨棄暫存，確定？'))return;localStorage.removeItem('ytm_qa_data');try{DATA=await loadJson();showToast('已重新載入');renderAll();renderPage()}catch(e){showToast('失敗')}}
 function clearAll(){if(!confirm('清除暫存並登出？'))return;localStorage.removeItem('ytm_qa_data');isAdmin=false;document.body.classList.remove('admin-mode');closeAdmin();showToast('已清除');location.reload()}
-
 function saveLocal(){DATA.meta.lastUpdate=new Date().toISOString().split('T')[0];try{localStorage.setItem('ytm_qa_data',JSON.stringify(DATA))}catch(e){console.warn('儲存失敗',e)}}
 
 document.getElementById('adminModal').addEventListener('click',e=>{if(e.target.id==='adminModal')closeAdmin()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeAdmin()});
 
-// ========= AI 助手 =========
-const AI_KEY_STORE='ytm_groq_key';
-let aiOpen=false,aiLoading=false;
-
-// 同義詞對應表
-const SYNONYMS={
-  '故障':['異常','壞掉','不能用','無法使用','問題','錯誤'],
-  '異常':['故障','壞掉','不能用','問題'],
-  '售完':['賣完','沒有','缺貨','顯示完'],
-  '兌換':['換','領取','使用'],
-  '辦理':['申請','辦','開通'],
-  '電話':['代表號','聯絡'],
-  '地址':['位置','哪裡','門市'],
-  '保存':['存放','保鮮','冷藏'],
-  '退款':['退費','退錢','取消']
+// 知識庫 tab 需要在 renderPage 後補上 renderQAPage
+const _origRenderPage = renderPage;
+renderPage = function(){
+  _origRenderPage();
+  if(currentTab==='qa') setTimeout(()=>renderQAPage(), 0);
 };
-
-function toggleAI(){
-  aiOpen=!aiOpen;
-  document.getElementById('aiPanel').classList.toggle('open',aiOpen);
-  if(aiOpen){
-    document.getElementById('aiInput').focus();
-    if(!localStorage.getItem(AI_KEY_STORE))setTimeout(()=>{if(!localStorage.getItem(AI_KEY_STORE))openKeyModal()},500);
-  }
-}
-function clearAIChat(){
-  document.getElementById('aiMsgs').innerHTML='<div class="ai-msg bot">👋 你好！我是 AI 客服助手，回答來源為亞尼克知識庫。有什麼問題請直接問我！</div>';
-}
-function openKeyModal(){
-  document.getElementById('aiKeyInput').value=localStorage.getItem(AI_KEY_STORE)||'';
-  document.getElementById('aiKeyModal').classList.add('open');
-  setTimeout(()=>document.getElementById('aiKeyInput').focus(),100);
-}
-function closeKeyModal(){document.getElementById('aiKeyModal').classList.remove('open')}
-function saveKey(){
-  const k=document.getElementById('aiKeyInput').value.trim();
-  if(!k){showToast('請輸入 API Key');return}
-  if(!k.startsWith('gsk_')){showToast('Key 格式不對，應為 gsk_ 開頭');return}
-  localStorage.setItem(AI_KEY_STORE,k);
-  closeKeyModal();
-  showToast('✅ API Key 已儲存！');
-}
-function addAIMsg(text,role){
-  const box=document.getElementById('aiMsgs');
-  const div=document.createElement('div');
-  div.className='ai-msg '+role;
-  div.innerHTML=text.replace(/\n/g,'<br>');
-  box.appendChild(div);
-  box.scrollTop=box.scrollHeight;
-  return div;
-}
-
-// 展開同義詞
-function expandKeywords(question){
-  const kw=question.toLowerCase();
-  const kwSet=new Set([kw]);
-  kw.split('').forEach((_,i)=>{
-    for(let len=2;len<=6;len++){kwSet.add(kw.slice(i,i+len))}
-  });
-  kwSet.forEach(k=>{
-    Object.entries(SYNONYMS).forEach(([key,syns])=>{
-      if(k.includes(key)||key.includes(k))syns.forEach(s=>kwSet.add(s));
-    });
-  });
-  return kwSet;
-}
-
-// 計分
-function scoreQA(q,kwSet){
-  const hay=(q.title+' '+(q.tags||[]).join(' ')+' '+q.content).toLowerCase();
-  let score=0;
-  kwSet.forEach(kw=>{
-    if(q.title.toLowerCase().includes(kw))score+=5;
-    else if((q.tags||[]).join(' ').toLowerCase().includes(kw))score+=3;
-    else if(hay.includes(kw))score+=1;
-  });
-  return score;
-}
-
-// 建立 context（只傳相關內容，控制 token 數）
-function buildContext(question){
-  if(!DATA)return'（目前無知識庫資料）';
-  const kwSet=expandKeywords(question);
-  const parts=[];
-  const isStationQ=['門市','據點','哪裡','地址','哪有','分店','高雄','台北','台中','新竹','桃園','屏東','新北','台南','嘉義'].some(k=>question.includes(k))
-    && !['外島','離島','澎湖','金門','馬祖','綠島','蘭嶼'].some(k=>question.includes(k));
-
-  if(DATA.qa&&DATA.qa.length&&!isStationQ){
-    const scored=DATA.qa.map(q=>({q,score:scoreQA(q,kwSet)})).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
-    if(scored.length>0){
-      const qaText=scored.map(({q})=>{
-        const clean=q.content
-          .replace(/\[\[img:.*?\]\]/gs,'')
-          .replace(/\[\[video:.*?\]\]/g,'')
-          .replace(/\[\[(red|orange|green|blue|purple):(.*?)\]\]/g,'$2')
-          .replace(/\[\[link:(.*?)\|.*?\]\]/g,'$1')
-          .replace(/\s+/g,' ').trim().slice(0,400);
-        return '【'+q.title+'】\n'+clean;
-      }).join('\n\n---\n\n');
-      parts.push('=== 相關 QA ===\n'+qaText);
-    }else{
-      parts.push('（找不到相關 QA）');
-    }
-  }
-
-  if(isStationQ&&DATA.stations&&DATA.stations.length){
-    const stText=DATA.stations.map(s=>{
-      let info='【'+s.name+'】';
-      if(s.line)info+=' 路線：'+s.line;
-      if(s.address)info+=' 地址：'+s.address;
-      if(s.exit)info+=' 位置：'+s.exit;
-      if(s.phone)info+=' 電話：'+s.phone;
-      return info;
-    }).join('\n');
-    parts.push('=== 門市與 YTM 據點 ===\n'+stText);
-  }
-  return parts.length?parts.join('\n\n'):'（找不到相關資料）';
-}
-
-async function sendAI(){
-  if(aiLoading)return;
-  const inp=document.getElementById('aiInput');
-  const q=inp.value.trim();
-  if(!q)return;
-  const key=localStorage.getItem(AI_KEY_STORE);
-  if(!key){openKeyModal();return}
-  inp.value='';
-  addAIMsg(q,'user');
-  aiLoading=true;
-  document.getElementById('aiSendBtn').disabled=true;
-  const thinkDiv=addAIMsg('思考中…','bot thinking');
-  try{
-    const context=buildContext(q);
-    const systemPrompt='你是亞尼克（YANNICK）蛋糕品牌的客服助手，協助客服人員快速查詢標準答案。\n【規定】\n- 只根據下方知識庫內容回答，嚴禁自行捏造地址、電話、時間、價格等具體資料\n- 知識庫沒有的資訊說「知識庫無此資料」\n- 完全找不到時說「知識庫目前沒有這個資料，建議詢問主管」\n- 繁體中文，簡潔條列\n\n知識庫：\n---\n'+context+'\n---';
-    const resp=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body:JSON.stringify({model:'llama-3.1-8b-instant',max_tokens:600,temperature:0.1,messages:[{role:'system',content:systemPrompt},{role:'user',content:q}]})
-    });
-    const data=await resp.json();
-    if(data.error){
-      let msg=data.error.message;
-      if(msg.includes('Invalid API Key')||msg.includes('api_key'))msg='❌ API Key 不正確，請重新設定';
-      else if(msg.includes('Rate limit'))msg='⏳ 請求太頻繁，請稍等幾秒再問';
-      else if(msg.includes('too large'))msg='⚠️ 資料量過大，請稍後再試';
-      thinkDiv.className='ai-msg bot';thinkDiv.innerHTML='⚠️ '+msg;
-    }else{
-      thinkDiv.className='ai-msg bot';
-      thinkDiv.innerHTML=data.choices[0].message.content.trim().replace(/\n/g,'<br>');
-    }
-  }catch(e){
-    thinkDiv.className='ai-msg bot';thinkDiv.innerHTML='⚠️ 連線失敗，請確認網路與 API Key 設定是否正確';
-  }
-  aiLoading=false;
-  document.getElementById('aiSendBtn').disabled=false;
-  document.getElementById('aiMsgs').scrollTop=document.getElementById('aiMsgs').scrollHeight;
-  inp.focus();
-}
 </script>
 </body>
 </html>
