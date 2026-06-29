@@ -708,8 +708,8 @@ function buildStationPage(){
 
 function renderStationTable(st){
   if(!st||!st.length) return '<div class="empty-state"><p>沒有符合條件的據點</p></div>';
-  let h='<div class="table-wrap"><table class="station-table"><thead><tr><th>站名</th><th>路線</th><th>地址</th><th>位置/出口</th><th>電話</th></tr></thead><tbody>';
-  st.forEach(s=>{const lk='line-'+(s.line||'').replace(/\s/g,'');h+=`<tr><td><strong>${esc(s.name)}</strong></td><td><span class="line-tag ${lk}">${esc(s.line||'')}</span></td><td>${esc(s.address||'—')}</td><td>${esc(s.exit||'—')}</td><td>${esc(s.phone||'—')}</td></tr>`});
+  let h='<div class="table-wrap"><table class="station-table"><thead><tr><th>站名</th><th>路線</th><th>地址</th><th>位置/出口</th></tr></thead><tbody>';
+  st.forEach(s=>{const lk='line-'+(s.line||'').replace(/\s/g,'');h+=`<tr><td><strong>${esc(s.name)}</strong></td><td><span class="line-tag ${lk}">${esc(s.line||'')}</span></td><td>${esc(s.address||'—')}</td><td>${esc(s.exit||'—')}</td></tr>`});
   return h+'</tbody></table></div>';
 }
 function setSF(el,pid){document.querySelectorAll('#'+pid+' .station-filter').forEach(f=>f.classList.remove('active'));el.classList.add('active');filterStations()}
