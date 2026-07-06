@@ -626,7 +626,11 @@ function buildContext(question){
     const txt = (item.title+' '+item.content+' '+(item.tags||[]).join(' ')).toLowerCase();
     const words = q.split(/\s+/).filter(Boolean);
     let score = 0;
-    words.forEach(w=>{ if(txt.includes(w)) score += w.length });
+    words.forEach(w=>{ if(txt.includes(w)) score += w.length*2 });
+    // 中文雙字詞比對（沒有空格也能命中，例：「高雄門市」→「高雄」「門市」）
+    const grams = new Set();
+    words.forEach(w=>{ for(let i=0;i<w.length-1;i++) grams.add(w.slice(i,i+2)) });
+    grams.forEach(g=>{ if(txt.includes(g)) score += 2 });
     // 同義詞加分
     const synonyms = {
       '外島':['離島','澎湖','金門','馬祖','綠島','蘭嶼'],
@@ -645,8 +649,11 @@ function buildContext(question){
   // ===== 據點資料比對 =====
   let stationCtx = '';
   if(DATA.stations && DATA.stations.length){
-    const locWords = ['門市','據點','地點','位置','哪裡','哪裏','地址','出口','捷運','幾站','幾台','機台','分店','站點'];
+    const locWords = ['據點','地點','位置','哪裡','哪裏','地址','出口','捷運','幾站','幾台','機台','站點','ytm'];
     const hasLocIntent = locWords.some(w=>q.includes(w));
+    // 「門市／分店／實體店」指的是實體店面，答案在知識庫 QA，不是 YTM 機台據點
+    const isStoreQuestion = ['門市','分店','實體店','專櫃'].some(w=>q.includes(w)) && !['ytm','機台','據點','捷運'].some(w=>q.includes(w));
+    if(!isStoreQuestion){
 
     const matched = DATA.stations.filter(s=>{
       const nm=(s.name||'').toLowerCase(), ln=(s.line||'').toLowerCase(), ad=(s.address||'').toLowerCase();
@@ -676,11 +683,12 @@ function buildContext(question){
         Object.entries(lineCount).map(([l,c])=>`${l} ${c} 站`).join('、') +
         '。（未找到與問題直接符合的據點，可請同仁改用「據點查詢」分頁篩選）';
     }
+    }
   }
 
   let ctx = '';
   if(scored.length) ctx += scored.map(item=>`Q: ${item.title}\nA: ${item.content.slice(0,300)}`).join('\n\n---\n\n');
-  if(stationCtx) ctx += (ctx?'\n\n===== 據點資料 =====\n':'===== 據點資料 =====\n') + stationCtx;
+  if(stationCtx) ctx += (ctx?'\n\n===== YTM 機台據點資料（非實體門市）=====\n':'===== YTM 機台據點資料（非實體門市）=====\n') + stationCtx;
   if(!ctx) return '（知識庫中無相關資料）';
   return ctx;
 }
@@ -707,7 +715,7 @@ async function sendAI(){
 
   try{
     const context = buildContext(question);
-    const sysPrompt = `你是亞尼克 YTM 客服助手，只根據以下知識庫內容回答，使用繁體中文（台灣用語），回答簡潔條列式。若知識庫無相關資料，請回答「這題我沒有資料，建議請主管確認」。據點（門市）的名稱、地址、路線、出口，只能引用「據點資料」段落的內容，絕對不可自行編造地址、電話或站名。\n\n知識庫：\n${context}`;
+    const sysPrompt = `你是亞尼克 YTM 客服助手，只根據以下知識庫內容回答，使用繁體中文（台灣用語），回答簡潔條列式。若知識庫無相關資料，請回答「這題我沒有資料，建議請主管確認」。注意：「門市」是實體店面，答案請依知識庫 QA 內容回答；「YTM 據點」是捷運站等地的蛋糕機台，只能引用「YTM 機台據點資料」段落。兩者不可混用，且絕對不可自行編造地址、電話或站名。\n\n知識庫：\n${context}`;
 
     const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
