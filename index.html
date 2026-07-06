@@ -642,8 +642,47 @@ function buildContext(question){
     return {...item, score};
   }).filter(x=>x.score>0).sort((a,b)=>b.score-a.score).slice(0,5);
 
-  if(!scored.length) return '（知識庫中無相關資料）';
-  return scored.map(item=>`Q: ${item.title}\nA: ${item.content.slice(0,300)}`).join('\n\n---\n\n');
+  // ===== 據點資料比對 =====
+  let stationCtx = '';
+  if(DATA.stations && DATA.stations.length){
+    const locWords = ['門市','據點','地點','位置','哪裡','哪裏','地址','出口','捷運','幾站','幾台','機台','分店','站點'];
+    const hasLocIntent = locWords.some(w=>q.includes(w));
+
+    const matched = DATA.stations.filter(s=>{
+      const nm=(s.name||'').toLowerCase(), ln=(s.line||'').toLowerCase(), ad=(s.address||'').toLowerCase();
+      // 問題包含站名（去掉尾字「站」也算）
+      const nmCore = nm.replace(/站$/,'');
+      if(nmCore.length>=2 && q.includes(nmCore)) return true;
+      // 問題包含捷運線名（去掉尾字「線」也算）
+      const lnCore = ln.replace(/線$/,'');
+      if(lnCore.length>=2 && (q.includes(ln)||q.includes(lnCore))) return true;
+      // 問題包含地址中的縣市（例：高雄、台北）
+      const city = ad.match(/^(..)[市縣]/);
+      if(city && q.includes(city[1])) return true;
+      // 問題包含地址中的行政區（例：中山區）
+      const dist = ad.match(/[市縣](..)區/);
+      if(dist && q.includes(dist[1]+'區')) return true;
+      return false;
+    });
+
+    if(matched.length){
+      const show = matched.slice(0,20);
+      stationCtx = `符合的據點共 ${matched.length} 站${matched.length>20?'（僅列出前 20 站）':''}：\n` +
+        show.map(s=>`・${s.name}｜${s.line||''}｜${s.address||''}${s.exit?('｜'+s.exit):''}`).join('\n');
+    } else if(hasLocIntent){
+      const lineCount = {};
+      DATA.stations.forEach(s=>{ const l=s.line||'其他'; lineCount[l]=(lineCount[l]||0)+1 });
+      stationCtx = `目前 YTM 據點共 ${DATA.stations.length} 站，分布：` +
+        Object.entries(lineCount).map(([l,c])=>`${l} ${c} 站`).join('、') +
+        '。（未找到與問題直接符合的據點，可請同仁改用「據點查詢」分頁篩選）';
+    }
+  }
+
+  let ctx = '';
+  if(scored.length) ctx += scored.map(item=>`Q: ${item.title}\nA: ${item.content.slice(0,300)}`).join('\n\n---\n\n');
+  if(stationCtx) ctx += (ctx?'\n\n===== 據點資料 =====\n':'===== 據點資料 =====\n') + stationCtx;
+  if(!ctx) return '（知識庫中無相關資料）';
+  return ctx;
 }
 
 async function sendAI(){
@@ -668,7 +707,7 @@ async function sendAI(){
 
   try{
     const context = buildContext(question);
-    const sysPrompt = `你是亞尼克 YTM 客服助手，只根據以下知識庫內容回答，使用繁體中文（台灣用語），回答簡潔條列式。若知識庫無相關資料，請回答「這題我沒有資料，建議請主管確認」。\n\n知識庫：\n${context}`;
+    const sysPrompt = `你是亞尼克 YTM 客服助手，只根據以下知識庫內容回答，使用繁體中文（台灣用語），回答簡潔條列式。若知識庫無相關資料，請回答「這題我沒有資料，建議請主管確認」。據點（門市）的名稱、地址、路線、出口，只能引用「據點資料」段落的內容，絕對不可自行編造地址、電話或站名。\n\n知識庫：\n${context}`;
 
     const resp = await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
