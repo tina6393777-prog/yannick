@@ -580,7 +580,7 @@ function buildAIPage(){
         <input type="text" id="aiInput" placeholder="輸入問題，例如：寄捲可以退費嗎？" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAI()}">
         <button id="aiSendBtn" onclick="sendAI()">送出</button>
       </div>
-      <div class="ai-note">💡 AI 僅參考本系統知識庫回答，若無相關資料會告知。使用前請先儲存 Groq API Key。（版本 v2026.07.06-C）</div>
+      <div class="ai-note">💡 AI 僅參考本系統知識庫回答，若無相關資料會告知。使用前請先儲存 Groq API Key。（版本 v2026.07.09-A）</div>
     </div>
   </div>`;
 }
@@ -687,7 +687,7 @@ function buildContext(question){
   }
 
   let ctx = '';
-  if(scored.length) ctx += scored.map(item=>`Q: ${item.title}\nA: ${item.content.slice(0,300)}`).join('\n\n---\n\n');
+  if(scored.length) ctx += scored.map(item=>`Q: ${item.title}\nA: ${item.content.slice(0,800)}`).join('\n\n---\n\n');
   if(stationCtx) ctx += (ctx?'\n\n===== YTM 機台據點資料（非實體門市）=====\n':'===== YTM 機台據點資料（非實體門市）=====\n') + stationCtx;
   if(!ctx) return '（知識庫中無相關資料）';
   return ctx;
